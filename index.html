@@ -74,23 +74,110 @@ background:linear-gradient(180deg,#161d29,#0f141d);box-shadow:0 20px 55px #0006;
  .topbar{padding:8px}.brand{font-size:12px}.badge{display:none}.toolbar .text{display:none}.toolbar .btn{width:42px;padding:0}
  .config{grid-template-columns:1fr}.searchrow{grid-template-columns:1fr}.cards{gap:9px;padding:9px}.cardtype{display:none}.detailgrid{grid-template-columns:1fr}
 }
+
+.illustrated-hero{
+  max-width:1580px;margin:18px auto 0;padding:0 18px;
+  min-height:190px;display:grid;grid-template-columns:290px 1fr 290px;align-items:center;
+  border:1px solid #d6a64f35;border-radius:22px;overflow:hidden;
+  background:
+    linear-gradient(90deg,rgba(126,31,46,.18),transparent 32%,transparent 68%,rgba(86,65,145,.18)),
+    linear-gradient(180deg,#171c26,#0b0f16);
+  box-shadow:0 24px 70px #0008,inset 0 1px #ffffff0d;
+  position:relative;
+}
+.illustrated-hero:before,.illustrated-hero:after{
+  content:"";position:absolute;top:16px;bottom:16px;width:2px;
+  background:linear-gradient(transparent,#d6a64f88,transparent)
+}
+.illustrated-hero:before{left:29%}.illustrated-hero:after{right:29%}
+.hero-art{height:190px;display:flex;align-items:center;justify-content:center}
+.hero-art svg{width:100%;height:100%;filter:drop-shadow(0 16px 24px #0008)}
+.hero-copy{text-align:center;padding:22px 10px;position:relative;z-index:2}
+.eyebrow{display:block;color:var(--gold2);font-size:11px;text-transform:uppercase;letter-spacing:.2em;font-weight:1000}
+.hero-copy h1{font-family:Georgia,serif;font-size:clamp(34px,5vw,66px);line-height:.95;margin:10px 0;
+ color:#f5e5bb;text-shadow:0 2px #000,0 0 28px #d6a64f35}
+.hero-copy p{margin:0 auto;color:#bcc3cf;max-width:540px}
+.art-btn .button-rune{
+  width:25px;height:25px;display:grid;place-items:center;border-radius:50%;
+  background:radial-gradient(circle at 35% 30%,#f6da96,#7e5418 70%);
+  color:#171006;border:1px solid #f2ce7b;box-shadow:inset 0 1px #fff8,0 3px 9px #0008;font-weight:1000
+}
+.field-note{display:block;color:#7f8a99;font-size:9px;margin-top:5px}
+.config{position:relative}
+.config:before{
+ content:"";position:absolute;inset:0;pointer-events:none;opacity:.08;
+ background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cpath d='M50 4l9 29 30 0-24 18 9 29-24-18-24 18 9-29-24-18 30 0z' fill='none' stroke='%23d6a64f' stroke-width='1'/%3E%3C/svg%3E");
+ background-size:110px 110px;
+}
+.panelhead:before{
+ content:"";width:24px;height:24px;border-radius:7px;
+ background:linear-gradient(145deg,#d7aa55,#77501d);
+ box-shadow:inset 0 1px #fff7,0 4px 10px #0008;
+}
+.catalog .panelhead:before{clip-path:polygon(10% 10%,90% 10%,90% 90%,10% 90%)}
+.deckpanel .panelhead:before{clip-path:polygon(50% 0,92% 25%,78% 90%,22% 90%,8% 25%)}
+@media(max-width:950px){
+ .illustrated-hero{grid-template-columns:160px 1fr 160px;min-height:150px}
+ .hero-art{height:150px}.hero-copy h1{font-size:38px}
+}
+@media(max-width:640px){
+ .illustrated-hero{grid-template-columns:1fr;min-height:170px;padding:14px}
+ .hero-left,.hero-right{position:absolute;width:150px;height:120px;opacity:.35}
+ .hero-left{left:-35px;bottom:-10px}.hero-right{right:-30px;top:-5px}
+ .illustrated-hero:before,.illustrated-hero:after{display:none}
+ .hero-copy{padding:20px 8px}
+}
+
 </style>
 </head>
 <body>
 <header class="topbar">
- <div class="logo">CA</div><div class="brand">Commander Armies</div><div class="badge">BUILD 3.0 · CLEAN</div>
+ <div class="logo">CA</div><div class="brand">Commander Armies</div><div class="badge">BUILD 3.1 · ILLUSTRATED</div>
  <div class="spacer"></div>
  <div class="toolbar">
-   <button class="btn" id="newBtn">＋ <span class="text">Nuovo</span></button>
-   <button class="btn" id="exportBtn">⇩ <span class="text">Esporta</span></button>
-   <button class="btn primary" id="saveBtn">◆ <span class="text">Salva</span></button>
+   <button class="btn art-btn" id="newBtn"><span class="button-rune">✦</span><span class="text">Nuovo</span></button>
+   <button class="btn art-btn" id="exportBtn"><span class="button-rune">⇩</span><span class="text">Esporta</span></button>
+   <button class="btn primary art-btn" id="saveBtn"><span class="button-rune">◆</span><span class="text">Salva</span></button>
  </div>
 </header>
+
+
+<section class="illustrated-hero" aria-label="Commander Armies">
+  <div class="hero-art hero-left">
+    <svg viewBox="0 0 320 190" role="img" aria-label="Stendardo fantasy">
+      <defs>
+        <linearGradient id="blade" x1="0" x2="1"><stop stop-color="#f4d58a"/><stop offset=".45" stop-color="#8b611f"/><stop offset=".7" stop-color="#e9c46f"/><stop offset="1" stop-color="#5e3c12"/></linearGradient>
+        <radialGradient id="glow"><stop stop-color="#e7b85c" stop-opacity=".5"/><stop offset="1" stop-color="#e7b85c" stop-opacity="0"/></radialGradient>
+      </defs>
+      <circle cx="92" cy="95" r="72" fill="url(#glow)"/>
+      <path d="M78 18 L98 18 L104 128 L90 162 L76 128 Z" fill="url(#blade)" opacity=".95"/>
+      <path d="M30 71 Q92 28 154 71 L140 119 Q92 92 44 119 Z" fill="#7e1f2e" stroke="#d4aa57" stroke-width="4"/>
+      <path d="M58 84 L92 60 L126 84 L113 108 L71 108 Z" fill="#151923" stroke="#e1bc69" stroke-width="3"/>
+      <path d="M92 66 L101 85 L122 88 L107 102 L111 123 L92 113 L73 123 L77 102 L62 88 L83 85 Z" fill="#d6a64f"/>
+    </svg>
+  </div>
+  <div class="hero-copy">
+    <span class="eyebrow">Costruisci la tua armata</span>
+    <h1>Commander Armies</h1>
+    <p>Un comandante. Una Tribe. Una Key. Cento carte per guidare l’esercito.</p>
+  </div>
+  <div class="hero-art hero-right">
+    <svg viewBox="0 0 320 190" role="img" aria-label="Portale arcano">
+      <defs>
+        <radialGradient id="portal"><stop stop-color="#ddd0ff"/><stop offset=".28" stop-color="#7a5fc4"/><stop offset=".62" stop-color="#2d214c"/><stop offset="1" stop-color="#111722" stop-opacity="0"/></radialGradient>
+      </defs>
+      <ellipse cx="205" cy="94" rx="77" ry="73" fill="url(#portal)" opacity=".9"/>
+      <path d="M205 26 C255 26 280 57 280 94 C280 133 250 162 205 162 C160 162 130 133 130 94 C130 56 157 26 205 26Z" fill="none" stroke="#c6b2ff" stroke-width="5"/>
+      <path d="M205 39 L219 69 L250 73 L227 95 L233 127 L205 111 L177 127 L183 95 L160 73 L191 69 Z" fill="none" stroke="#e8dcff" stroke-width="3"/>
+      <circle cx="205" cy="94" r="15" fill="#efe9ff"/>
+    </svg>
+  </div>
+</section>
 
 <main>
 <section class="config">
  <div class="field"><label>Nome mazzo</label><input id="deckName" value="Nuovo mazzo"></div>
- <div class="field"><label>Tribe</label><select id="tribe"></select></div>
+ <div class="field"><label>Tribe</label><select id="tribe"></select><small class="field-note">Elenco completo caricato da Scryfall</small></div>
  <div class="field"><label>Key</label><select id="key"></select></div>
  <div class="field"><label>Bracket</label><select id="bracket"><option>1</option><option selected>2</option><option>3</option><option>4</option><option>5</option></select></div>
  <div class="field"><label>&nbsp;</label><button class="btn primary" id="commanderBtn">Scegli comandante</button></div>
@@ -143,7 +230,8 @@ background:linear-gradient(180deg,#161d29,#0f141d);box-shadow:0 20px 55px #0006;
 <script>
 const $=s=>document.querySelector(s);
 const STORAGE="commanderArmiesBuild3";
-const TRIBES=["Advisor","Angel","Artificer","Assassin","Beast","Bird","Cat","Cleric","Demon","Dog","Dragon","Druid","Dwarf","Eldrazi","Elemental","Elf","Faerie","Goblin","Human","Knight","Merfolk","Minotaur","Monk","Mutant","Ninja","Orc","Phyrexian","Pirate","Rogue","Samurai","Shaman","Skeleton","Sliver","Soldier","Spirit","Vampire","Warrior","Wizard","Wolf","Zombie"];
+const FALLBACK_TRIBES=["Angel","Artificer","Assassin","Beast","Bird","Cat","Cleric","Demon","Dragon","Druid","Dwarf","Eldrazi","Elemental","Elf","Faerie","Goblin","Human","Knight","Merfolk","Mutant","Ninja","Orc","Phyrexian","Pirate","Rogue","Samurai","Shaman","Skeleton","Sliver","Soldier","Spirit","Vampire","Warrior","Wizard","Wolf","Zombie"];
+let TRIBES=[...FALLBACK_TRIBES];
 const KEYS={
  "Danno":["damage","deals damage"],
  "Sacrificio":["sacrifice","dies"],
@@ -159,9 +247,24 @@ const KEYS={
 const state={name:"Nuovo mazzo",tribe:"Vampire",key:"Danno",bracket:2,commander:null,cards:{}};
 
 function fillSelects(){
- $("#tribe").innerHTML=TRIBES.map(x=>`<option>${x}</option>`).join("");
- $("#key").innerHTML=Object.keys(KEYS).map(x=>`<option>${x}</option>`).join("");
- $("#tribe").value=state.tribe;$("#key").value=state.key;$("#bracket").value=String(state.bracket);
+ const tribeValue=state.tribe||"Vampire";
+ $("#tribe").innerHTML=TRIBES.map(x=>`<option value="${x}">${x}</option>`).join("");
+ if(TRIBES.includes(tribeValue))$("#tribe").value=tribeValue;
+ $("#key").innerHTML=Object.keys(KEYS).map(x=>`<option value="${x}">${x}</option>`).join("");
+ $("#key").value=state.key||Object.keys(KEYS)[0];
+ $("#bracket").value=String(state.bracket||2);
+}
+async function loadCreatureTypes(){
+ try{
+  const res=await fetch("https://api.scryfall.com/catalog/creature-types");
+  const data=await res.json();
+  if(res.ok&&Array.isArray(data.data)&&data.data.length){
+    TRIBES=[...data.data].sort((a,b)=>a.localeCompare(b));
+    fillSelects();
+  }
+ }catch(e){
+  console.warn("Catalogo Tribe non disponibile: uso elenco locale.",e);
+ }
 }
 function imageOf(c){return c.image_uris?.normal||c.card_faces?.[0]?.image_uris?.normal||""}
 function textOf(c){return [c.name,c.type_line,c.oracle_text,c.card_faces?.map(f=>[f.name,f.type_line,f.oracle_text].join(" ")).join(" ")].filter(Boolean).join(" ").toLowerCase()}
@@ -170,7 +273,6 @@ function legal(c){
  const t=textOf(c),tribe=(state.tribe||"").toLowerCase(),terms=KEYS[state.key]||[];
  if(t.includes(tribe))return {ok:true,reason:"Corrisponde alla Tribe."};
  if(terms.some(x=>t.includes(x)))return {ok:true,reason:"Corrisponde alla Key."};
- if(["sol ring","arcane signet","command tower"].includes(c.name.toLowerCase()))return {ok:true,reason:"Evergreen."};
  return {ok:false,reason:"Non corrisponde a Tribe o Key."};
 }
 function save(){
@@ -223,8 +325,22 @@ async function fetchCards(query,commander=false){
  }catch(e){status.textContent=e.message;root.innerHTML=`<div class="empty">Ricerca non riuscita.</div>`}
 }
 function searchCards(){
- save();let q=$("#search").value.trim()||"*";const type=$("#typeFilter").value;
- if(type)q+=` type:${type}`;if(state.commander?.color_identity?.length)q+=` id<=${state.commander.color_identity.join("")}`;
+ save();
+ const typed=$("#search").value.trim();
+ const type=$("#typeFilter").value;
+ const tribe=(state.tribe||"").replace(/"/g,"");
+ const terms=KEYS[state.key]||[];
+ let q="";
+ if(typed){
+   q=`${typed}`;
+ }else{
+   const tribeQuery=`(t:${tribe} or o:"${tribe}")`;
+   const keyQuery=terms.length?`(${terms.map(x=>`o:"${x}"`).join(" or ")})`:"";
+   q=keyQuery?`(${tribeQuery} or ${keyQuery})`:tribeQuery;
+ }
+ if(type)q+=` type:${type}`;
+ if(state.commander?.color_identity?.length)q+=` id<=${state.commander.color_identity.join("")}`;
+ q+=" game:paper";
  fetchCards(q,false);
 }
 function showDetail(c){
@@ -246,6 +362,7 @@ $("#exportBtn").onclick=()=>{save();const a=document.createElement("a");a.href=U
 $("#catalogTab").onclick=()=>{document.body.classList.remove("showdeck");$("#catalogTab").classList.add("active");$("#deckTab").classList.remove("active")};
 $("#deckTab").onclick=()=>{document.body.classList.add("showdeck");$("#deckTab").classList.add("active");$("#catalogTab").classList.remove("active")};
 load();
+loadCreatureTypes();
 </script>
 </body>
 </html>
