@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#171717" />
+  <title>Commander Armies v19 — NO CACHE</title>
+  
+  <link rel="stylesheet" href="styles.v19.css" />
+</head>
+<body>
+  <div class="build-ribbon">BUILD v19 · NO CACHE</div>
+  <header class="topbar">
+    <button id="homeBtn" class="brand-home" aria-label="Home"><span class="brand-mark">CA</span></button>
+    <div>
+      <h1 id="pageTitle">Commander Armies</h1>
+      <p id="pageSubtitle">Deck builder • v19 NO CACHE</p>
+    </div>
+    <button id="saveBtn" class="icon-btn" aria-label="Salva">💾</button>
+  </header>
+
+  <main id="app"></main>
+
+  <dialog id="modal">
+    <form method="dialog" class="modal-card">
+      <h2 id="modalTitle">Dettagli</h2>
+      <div id="modalBody"></div>
+      <menu><button>Chiudi</button></menu>
+    </form>
+  </dialog>
+
+  <template id="cardTemplate">
+    <article class="card-tile">
+      <img class="card-image" alt="Carta Magic" />
+      <div class="card-meta">
+        <strong class="card-name"></strong>
+        <small class="card-type"></small>
+        <div class="card-actions">
+          <button class="secondary details-btn">Dettagli</button>
+          <button class="primary add-btn">＋</button>
+        </div>
+      </div>
+    </article>
+  </template>
+
+  <script src="app.v19.js" defer></script>
+</body>
+</html>
