@@ -1,1512 +1,251 @@
 <!doctype html>
 <html lang="it">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#0b0d12">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Commander Armies</title>
 <style>
-:root{--bg:#090b10;--panel:#11141c;--panel2:#171b24;--line:#2d3340;--gold:#d5ad52;--gold2:#f0d58b;--text:#f4f0e6;--muted:#aaaebb;--shadow:0 16px 40px rgba(0,0,0,.35)}
-*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:radial-gradient(circle at 20% 0,#1a2030 0,#090b10 38%);color:var(--text);font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}button,input,select{font:inherit}button{cursor:pointer}.app{min-height:100vh}.topbar{position:sticky;top:0;z-index:30;display:flex;align-items:center;gap:14px;min-height:72px;padding:10px max(16px,env(safe-area-inset-left));border-bottom:1px solid var(--line);background:rgba(9,11,16,.92);backdrop-filter:blur(14px)}.brandmark{width:48px;height:48px;border:2px solid var(--gold);border-radius:14px;display:grid;place-items:center;color:var(--gold2);font-weight:900}.brand h1{font-size:20px;margin:0}.brand p{margin:2px 0 0;color:var(--muted);font-size:13px}.top-actions{margin-left:auto;display:flex;gap:8px}.btn{border:1px solid var(--line);background:var(--panel2);color:var(--text);border-radius:12px;padding:10px 14px}.btn.gold{background:linear-gradient(135deg,var(--gold),#9f762b);color:#111;font-weight:800;border-color:#e7c56f}.layout{display:grid;grid-template-columns:minmax(0,1fr) 390px;gap:18px;padding:18px;max-width:1680px;margin:auto}.panel{background:linear-gradient(180deg,rgba(23,27,36,.97),rgba(15,18,25,.97));border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow)}.setup{padding:16px;margin-bottom:16px}.setup-grid{display:grid;grid-template-columns:1.2fr 1.4fr 1fr 1fr .8fr;gap:12px}.field label{display:block;color:var(--muted);font-size:13px;margin:0 0 6px}.field input,.field select{width:100%;border:1px solid var(--line);background:#0d1016;color:var(--text);border-radius:12px;padding:12px 13px;outline:none}.commander-box{display:flex;gap:10px}.commander-box input{flex:1}.filters{padding:14px;display:grid;grid-template-columns:1fr 170px 170px 190px;gap:10px;margin-bottom:16px}.section-title{display:flex;align-items:center;justify-content:space-between;margin:0 0 10px}.section-title h2{font-size:17px;margin:0}.count{color:var(--muted);font-size:13px}.results{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:12px}.card{overflow:hidden;background:#11151d;border:1px solid var(--line);border-radius:15px}.card img{display:block;width:100%;aspect-ratio:488/680;object-fit:cover;background:#20242c}.card-body{padding:10px}.card-name{font-weight:750;font-size:14px;min-height:36px}.card-type{color:var(--muted);font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin:4px 0 10px}.card-actions{display:flex;gap:7px}.card-actions button{flex:1;padding:8px;border-radius:10px;border:1px solid var(--line);background:#1a1f29;color:var(--text)}.card-actions .add{background:linear-gradient(135deg,var(--gold),#aa7d2d);color:#111;font-weight:900}.deck{position:sticky;top:90px;height:calc(100vh - 110px);display:flex;flex-direction:column;overflow:hidden}.deck-head{padding:16px;border-bottom:1px solid var(--line)}.deck-head h2{margin:0;font-size:19px}.deck-meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}.pill{border:1px solid var(--line);background:#0d1016;border-radius:999px;padding:6px 9px;color:var(--muted);font-size:12px}.deck-list{overflow:auto;padding:10px 12px 90px}.group-title{position:sticky;top:0;background:#11141c;padding:9px 4px;color:var(--gold2);font-weight:800;border-bottom:1px solid var(--line)}.deck-row{display:grid;grid-template-columns:34px minmax(0,1fr) auto;gap:8px;align-items:center;padding:9px 2px;border-bottom:1px solid rgba(45,51,64,.65)}.qty{width:32px;height:32px;border-radius:9px;display:grid;place-items:center;background:#202632;color:var(--gold2);font-weight:800}.deck-card-name{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:14px}.row-actions{display:flex;gap:5px}.iconbtn{width:31px;height:31px;border-radius:9px;border:1px solid var(--line);background:#191e27;color:var(--text)}.empty{padding:36px 18px;text-align:center;color:var(--muted)}.status{padding:10px 18px;color:var(--muted);font-size:13px}.modal{position:fixed;inset:0;z-index:100;background:rgba(0,0,0,.76);display:none;align-items:center;justify-content:center;padding:18px}.modal.open{display:flex}.modal-card{width:min(1040px,100%);max-height:88vh;display:flex;flex-direction:column;background:#11141c;border:1px solid var(--line);border-radius:18px;overflow:hidden}.modal-head{display:flex;align-items:center;gap:10px;padding:14px;border-bottom:1px solid var(--line)}.modal-head input{flex:1;padding:12px;border-radius:12px;border:1px solid var(--line);background:#0b0e14;color:var(--text)}.modal-results{overflow:auto;padding:14px;display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px}.loading{padding:30px;text-align:center;color:var(--muted)}.mobile-deck-button{display:none;position:fixed;right:16px;bottom:18px;z-index:60;border:0;border-radius:999px;padding:14px 18px;background:linear-gradient(135deg,var(--gold),#a77b2f);font-weight:900;color:#111;box-shadow:var(--shadow)}.badge{position:fixed;left:10px;bottom:8px;z-index:70;background:#0d1016;border:1px solid var(--gold);color:var(--gold2);padding:5px 8px;border-radius:8px;font-size:11px}
-@media(max-width:1000px){.layout{grid-template-columns:1fr;padding:12px}.setup-grid{grid-template-columns:1fr 1fr}.deck{display:none;position:fixed;z-index:80;inset:0;top:0;height:100vh;border-radius:0}.deck.mobile-open{display:flex}.mobile-deck-button{display:block}.filters{grid-template-columns:1fr 1fr}.filters .search-field{grid-column:1/-1}}
-@media(max-width:620px){.topbar{min-height:64px}.brandmark{width:42px;height:42px}.brand h1{font-size:17px}.brand p{display:none}.top-actions .label{display:none}.setup-grid{grid-template-columns:1fr}.filters{grid-template-columns:1fr}.filters .search-field{grid-column:auto}.results{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.card-body{padding:8px}.card-name{font-size:13px}.card-type{font-size:11px}}
-
-.validation-panel{padding:14px;margin-bottom:16px}
-.validation-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px}
-.check{border:1px solid var(--line);border-radius:12px;padding:10px;background:#0d1016;font-size:13px}
-.check.ok{border-color:rgba(91,209,139,.55)}
-.check.bad{border-color:rgba(239,107,107,.55)}
-.check b{display:block;margin-bottom:3px}
-.check span{color:var(--muted);font-size:12px}
-.archive-card{width:min(760px,100%)}
-.archive-list{padding:14px;overflow:auto}
-.archive-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:center;padding:12px;border:1px solid var(--line);border-radius:13px;margin-bottom:9px;background:#0d1016}
-.archive-row h3{margin:0 0 3px;font-size:15px}.archive-row p{margin:0;color:var(--muted);font-size:12px}
-.archive-actions{display:flex;gap:6px}
-@media(max-width:800px){.validation-grid{grid-template-columns:1fr 1fr}}
-@media(max-width:480px){.validation-grid{grid-template-columns:1fr}.archive-row{grid-template-columns:1fr}}
-
-
-.detail-card{width:min(900px,100%)}
-.detail-body{display:grid;grid-template-columns:minmax(220px,330px) 1fr;gap:18px;padding:18px;overflow:auto}
-.detail-image-wrap img{width:100%;border-radius:16px;display:block;background:#20242c}
-.detail-info{min-width:0}
-.detail-line{display:grid;grid-template-columns:110px 1fr;gap:12px;padding:10px 0;border-bottom:1px solid var(--line)}
-.detail-line span{color:var(--muted)}
-.oracle-box{white-space:pre-wrap;line-height:1.45;padding:16px 0}
-.legality-box{padding:12px;border:1px solid var(--line);border-radius:12px;background:#0d1016}
-.legality-box.ok{border-color:rgba(91,209,139,.55)}
-.legality-box.bad{border-color:rgba(239,107,107,.55)}
-.card-copy{position:absolute;top:8px;right:8px;background:rgba(9,11,16,.9);border:1px solid var(--gold);color:var(--gold2);border-radius:999px;padding:5px 8px;font-size:12px;font-weight:900}
-.card{position:relative}
-.small-note{font-size:11px;color:var(--muted);margin-top:5px}
-@media(max-width:700px){.detail-body{grid-template-columns:1fr}.detail-image-wrap{max-width:300px;margin:auto}}
-
-
-.stats-card{width:min(900px,100%)}
-.stats-body{padding:18px;overflow:auto}
-.stats-summary{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:18px}
-.stat-box{padding:14px;border:1px solid var(--line);border-radius:14px;background:#0d1016}
-.stat-box b{display:block;font-size:23px;color:var(--gold2)}
-.stat-box span{font-size:12px;color:var(--muted)}
-.stats-section{margin-top:18px}.stats-section h3{font-size:15px;margin:0 0 10px}
-.mana-curve{display:grid;grid-template-columns:repeat(8,1fr);gap:8px;align-items:end;min-height:190px;padding:14px;border:1px solid var(--line);border-radius:14px;background:#0d1016}
-.mana-col{display:flex;flex-direction:column;align-items:center;justify-content:end;height:160px}
-.mana-bar{width:100%;min-height:3px;border-radius:8px 8px 3px 3px;background:linear-gradient(180deg,var(--gold2),#8a6223)}
-.mana-label{font-size:11px;color:var(--muted);margin-top:7px}.mana-value{font-size:11px;margin-bottom:5px}
-.type-bars,.color-bars{display:grid;gap:8px}
-.metric-row{display:grid;grid-template-columns:120px 1fr 38px;gap:10px;align-items:center}
-.metric-name{font-size:12px;color:var(--muted)}
-.metric-track{height:12px;border-radius:999px;background:#242a35;overflow:hidden}
-.metric-fill{height:100%;background:linear-gradient(90deg,#8d6727,var(--gold2))}
-.metric-value{text-align:right;font-size:12px}
-.bulk-card{width:min(720px,100%)}
-#bulkText{width:100%;min-height:360px;resize:vertical;background:#0b0e14;color:var(--text);border:1px solid var(--line);border-radius:14px;padding:14px;outline:none;font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
-#bulkText:focus{border-color:var(--gold)}
-.bulk-progress{margin-top:10px;color:var(--muted);font-size:13px}
-@media(max-width:650px){.stats-summary{grid-template-columns:1fr 1fr}.metric-row{grid-template-columns:90px 1fr 32px}}
-
-
-.rules-card{width:min(900px,100%)}
-.rules-body{padding:16px;overflow:auto}
-.rules-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
-.rules-tabs .active{border-color:var(--gold);color:var(--gold2)}
-.rule-pane{display:none}
-.rule-pane.active{display:block}
-.rule-pane h3{margin:0 0 6px}
-.rule-pane textarea{width:100%;min-height:360px;resize:vertical;background:#0b0e14;color:var(--text);border:1px solid var(--line);border-radius:14px;padding:14px;outline:none;font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
-.rule-pane textarea:focus{border-color:var(--gold)}
-.rule-reason{font-size:11px;color:var(--muted);margin-top:4px}
-.legal-dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px}
-.legal-dot.ok{background:var(--ok)}.legal-dot.bad{background:var(--bad)}.legal-dot.warn{background:var(--gold)}
-.deck-row.invalid{background:rgba(239,107,107,.06)}
-.deck-row.valid{background:rgba(91,209,139,.035)}
-.validation-list{display:grid;gap:7px;margin-top:12px}
-.validation-item{padding:9px 10px;border:1px solid var(--line);border-radius:10px;background:#0d1016}
-
-
-.suggest-card{width:min(1180px,100%)}
-.suggest-body{padding:16px;overflow:auto}
-.bracket-pill{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:3px 7px;font-size:10px;color:var(--gold2);margin-top:5px}
-
-
-.print-card{width:min(760px,100%)}
-.print-options{padding:16px;display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.print-option{text-align:left;padding:18px;border:1px solid var(--line);border-radius:14px;background:#0d1016;color:var(--text)}
-.print-option:hover{border-color:var(--gold);transform:translateY(-1px)}
-.print-option b{display:block;color:var(--gold2);margin-bottom:6px}
-.print-option span{display:block;color:var(--muted);font-size:13px;line-height:1.4}
-@media(max-width:620px){.print-options{grid-template-columns:1fr}}
-
-
-/* BUILD 2.7 — VISUAL OVERHAUL */
 :root{
-  --bg:#080a0f;
-  --surface:#11141b;
-  --surface-2:#171b24;
-  --surface-3:#202632;
-  --text:#f5f1e8;
-  --muted:#9da5b3;
-  --line:rgba(255,255,255,.09);
-  --gold:#b8893d;
-  --gold2:#e0bb72;
-  --ok:#61d49a;
-  --bad:#f17878;
-  --shadow:0 18px 60px rgba(0,0,0,.38);
+ --bg:#07090e;--panel:#111722;--panel2:#171e2b;--line:#2a3444;
+ --text:#f4efe4;--muted:#9ba6b5;--gold:#d6a64f;--gold2:#f1cf86;
+ --green:#55d692;--red:#ef7676;--blue:#71a7ff;
 }
-html{scroll-behavior:smooth}
-body.visual-overhaul{
-  background:
-    radial-gradient(circle at 10% -10%,rgba(184,137,61,.15),transparent 30%),
-    radial-gradient(circle at 90% 0%,rgba(86,106,155,.12),transparent 28%),
-    linear-gradient(180deg,#090b10,#080a0f 55%,#05070b);
-  min-height:100vh;
+*{box-sizing:border-box} body{margin:0;font-family:Inter,system-ui,Arial,sans-serif;background:
+radial-gradient(circle at 15% 0%,#342511 0,transparent 27%),
+radial-gradient(circle at 85% 0%,#17233b 0,transparent 25%),var(--bg);color:var(--text)}
+button,input,select{font:inherit}
+button{cursor:pointer}
+.topbar{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:12px;padding:12px 16px;background:#090c12e8;
+backdrop-filter:blur(14px);border-bottom:1px solid #ffffff14}
+.logo{width:42px;height:42px;display:grid;place-items:center;border-radius:12px;background:linear-gradient(145deg,#efca7a,#825617);
+color:#171006;font-weight:1000;box-shadow:0 8px 24px #0008}
+.brand{font-weight:1000;letter-spacing:.08em}.badge{font-size:10px;padding:5px 8px;border-radius:999px;background:#d6a64f1a;color:var(--gold2);border:1px solid #d6a64f44}
+.spacer{flex:1}.toolbar{display:flex;gap:8px}
+.btn{min-height:42px;border:1px solid #ffffff18;border-radius:11px;padding:0 14px;background:linear-gradient(#252d39,#151a23);
+color:var(--text);font-weight:800;box-shadow:inset 0 1px #ffffff12,0 5px 14px #0005}
+.btn:hover{border-color:#d6a64f88;transform:translateY(-1px)}
+.btn.primary{background:linear-gradient(145deg,#efc36e,#9a681f);color:#181005;border-color:#f0c978}
+.btn.danger{color:#ffb2b2}
+main{max-width:1580px;margin:auto;padding:18px}
+.config{display:grid;grid-template-columns:1.4fr 1fr 1fr .7fr auto;gap:12px;padding:16px;border:1px solid var(--line);border-radius:18px;
+background:linear-gradient(180deg,#161d29,#0f141d);box-shadow:0 20px 55px #0006;margin-bottom:16px}
+.field label{display:block;font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:#c1c8d2;font-weight:900;margin:0 0 6px}
+.field input,.field select{width:100%;height:44px;border-radius:10px;border:1px solid #ffffff1d;background:#090d14;color:var(--text);padding:0 11px;outline:none}
+.field input:focus,.field select:focus{border-color:#d6a64faa;box-shadow:0 0 0 3px #d6a64f18}
+.layout{display:grid;grid-template-columns:minmax(0,1.65fr) minmax(340px,.75fr);gap:16px;align-items:start}
+.panel{background:linear-gradient(180deg,#151c27,#0e131b);border:1px solid var(--line);border-radius:18px;overflow:hidden;box-shadow:0 22px 60px #0006}
+.panelhead{display:flex;align-items:center;gap:10px;padding:14px 16px;border-bottom:1px solid var(--line);background:#ffffff05}
+.panelhead h2{font-size:15px;margin:0}.panelhead .grow{flex:1}
+.searchrow{display:grid;grid-template-columns:1fr 180px 180px auto;gap:10px;padding:14px;border-bottom:1px solid var(--line)}
+.searchrow input,.searchrow select{height:42px;border-radius:10px;border:1px solid #ffffff1d;background:#090d14;color:var(--text);padding:0 10px}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:14px;padding:14px;min-height:420px}
+.card{position:relative;background:#141a23;border:1px solid #ffffff18;border-radius:15px;overflow:hidden;box-shadow:0 12px 30px #0007;transition:.18s}
+.card:hover{transform:translateY(-4px);border-color:#d6a64f88}
+.card img{display:block;width:100%;aspect-ratio:488/680;object-fit:cover;background:#090c11}
+.cardbody{padding:11px}.cardname{font-weight:900;font-size:13px;line-height:1.25}.cardtype{font-size:11px;color:var(--muted);min-height:28px;margin-top:4px}
+.cardactions{display:flex;gap:8px;margin-top:9px}.cardactions button{flex:1;height:36px;border-radius:9px}
+.addbtn{max-width:50px;background:linear-gradient(145deg,#efc36e,#94621d);color:#160f05;border:1px solid #f0c978;font-size:21px;font-weight:1000}
+.detailbtn{background:#222a36;color:var(--text);border:1px solid #ffffff16}
+.status{padding:12px 15px;color:var(--muted);font-size:13px;border-bottom:1px solid var(--line)}
+.deckpanel{position:sticky;top:82px;max-height:calc(100vh - 100px);display:flex;flex-direction:column}
+.commander{display:flex;gap:12px;padding:14px;border-bottom:1px solid var(--line);background:linear-gradient(135deg,#d6a64f17,transparent)}
+.commander img{width:78px;height:108px;object-fit:cover;border-radius:10px}.commander h3{margin:3px 0 5px;font-size:15px}.muted{color:var(--muted);font-size:12px}
+.decklist{padding:10px;overflow:auto}.deckrow{display:grid;grid-template-columns:34px 1fr auto;align-items:center;gap:8px;padding:9px;border-radius:10px;margin-bottom:5px;border-left:3px solid #ffffff12}
+.deckrow.ok{border-left-color:var(--green);background:#55d69209}.deckrow.bad{border-left-color:var(--red);background:#ef767609}
+.qty{width:30px;height:30px;border-radius:8px;background:#080b10;color:var(--gold2);display:grid;place-items:center;font-weight:1000}
+.deckname{font-size:12px;font-weight:800}.reason{font-size:10px;color:var(--muted);margin-top:3px}
+.rowbuttons{display:flex;gap:5px}.smallbtn{width:30px;height:30px;border-radius:8px;background:#222a35;border:1px solid #ffffff18;color:var(--text);font-weight:1000}
+.summary{padding:12px 14px;border-top:1px solid var(--line);background:#090d14;display:flex;justify-content:space-between;font-weight:900}
+.empty{grid-column:1/-1;min-height:260px;display:grid;place-items:center;color:var(--muted);border:1px dashed #ffffff1a;border-radius:14px}
+.modal{position:fixed;inset:0;z-index:50;background:#02040acc;backdrop-filter:blur(8px);display:none;place-items:center;padding:18px}
+.modal.open{display:grid}.modalbox{width:min(920px,100%);max-height:90vh;overflow:auto;background:linear-gradient(#171e29,#0e131a);border:1px solid #ffffff20;border-radius:20px;box-shadow:0 30px 90px #000b}
+.modalhead{display:flex;align-items:center;gap:10px;padding:14px 16px;border-bottom:1px solid var(--line)}.modalhead strong{flex:1}
+.detailgrid{display:grid;grid-template-columns:300px 1fr;gap:18px;padding:18px}.detailgrid img{width:100%;border-radius:15px}.oracle{white-space:pre-line;line-height:1.5;color:#d7dce4}
+.mobiletabs{display:none}
+@media(max-width:950px){
+ .config{grid-template-columns:1fr 1fr}.layout{display:block}.deckpanel{position:relative;top:auto;max-height:none;margin-top:14px}
+ .searchrow{grid-template-columns:1fr 1fr}.cards{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .mobiletabs{position:fixed;bottom:10px;left:10px;right:10px;z-index:40;display:grid;grid-template-columns:1fr 1fr;padding:7px;border-radius:16px;background:#111722ee;border:1px solid #ffffff1a;backdrop-filter:blur(12px)}
+ .mobiletabs button{height:48px;border:0;border-radius:11px;background:transparent;color:var(--muted);font-weight:900}
+ .mobiletabs button.active{background:#d6a64f22;color:var(--gold2)}
+ body.showdeck .catalog{display:none}body:not(.showdeck) .deckpanel{display:none}body{padding-bottom:75px}
 }
-body.visual-overhaul:before{
-  content:"";
-  position:fixed;inset:0;pointer-events:none;z-index:-1;
-  background-image:linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.018) 1px,transparent 1px);
-  background-size:34px 34px;
-  mask-image:linear-gradient(to bottom,black,transparent 75%);
+@media(max-width:560px){
+ .topbar{padding:8px}.brand{font-size:12px}.badge{display:none}.toolbar .text{display:none}.toolbar .btn{width:42px;padding:0}
+ .config{grid-template-columns:1fr}.searchrow{grid-template-columns:1fr}.cards{gap:9px;padding:9px}.cardtype{display:none}.detailgrid{grid-template-columns:1fr}
 }
-header{
-  position:sticky;top:0;z-index:50;
-  background:rgba(8,10,15,.78)!important;
-  backdrop-filter:blur(18px);
-  border-bottom:1px solid rgba(255,255,255,.08)!important;
-  box-shadow:0 8px 30px rgba(0,0,0,.22);
-}
-.brand{
-  letter-spacing:.08em;
-  text-transform:uppercase;
-}
-.brand:before{
-  content:"CA";
-  display:grid;place-items:center;
-  width:38px;height:38px;border-radius:12px;
-  margin-right:11px;
-  background:linear-gradient(145deg,#e2bd75,#76501b);
-  color:#100d08;font-weight:1000;font-size:13px;
-  box-shadow:inset 0 1px rgba(255,255,255,.35),0 8px 24px rgba(184,137,61,.25);
-}
-.build-badge{
-  border:1px solid rgba(224,187,114,.25)!important;
-  background:rgba(184,137,61,.1)!important;
-  color:var(--gold2)!important;
-}
-.btn{
-  min-height:40px;
-  border-radius:11px!important;
-  border:1px solid rgba(255,255,255,.09)!important;
-  background:linear-gradient(180deg,rgba(255,255,255,.055),rgba(255,255,255,.025))!important;
-  box-shadow:inset 0 1px rgba(255,255,255,.04);
-  transition:.18s ease;
-}
-.btn:hover{transform:translateY(-1px);border-color:rgba(224,187,114,.38)!important}
-.btn.gold{
-  background:linear-gradient(135deg,#c99a4d,#8e6224)!important;
-  color:#130f08!important;border-color:#d8ad63!important;font-weight:900;
-}
-main{max-width:1600px!important;padding:22px!important}
-.panel{
-  border-radius:19px!important;
-  border:1px solid rgba(255,255,255,.085)!important;
-  background:linear-gradient(180deg,rgba(24,28,37,.96),rgba(14,17,24,.98))!important;
-  box-shadow:var(--shadow);
-  overflow:hidden;
-}
-.panel-head{
-  min-height:64px;
-  padding:14px 17px!important;
-  border-bottom:1px solid var(--line)!important;
-  background:linear-gradient(180deg,rgba(255,255,255,.035),transparent);
-}
-.panel-head strong{font-size:15px;letter-spacing:.03em}
-.field label{
-  color:#c5cad3!important;
-  font-size:11px!important;
-  font-weight:800!important;
-  letter-spacing:.06em;
-  text-transform:uppercase;
-}
-input,select{
-  min-height:44px!important;
-  border-radius:11px!important;
-  background:#0b0e14!important;
-  border:1px solid rgba(255,255,255,.1)!important;
-  color:var(--text)!important;
-  box-shadow:inset 0 1px 4px rgba(0,0,0,.28);
-}
-input:focus,select:focus{
-  border-color:rgba(224,187,114,.62)!important;
-  box-shadow:0 0 0 3px rgba(184,137,61,.12)!important;
-}
-.setup{
-  padding:16px!important;
-  background:linear-gradient(180deg,rgba(184,137,61,.035),transparent);
-}
-.workspace{
-  gap:18px!important;
-  align-items:start;
-}
-.catalog-panel,.deck-panel{min-height:72vh}
-.results{
-  display:grid!important;
-  grid-template-columns:repeat(auto-fill,minmax(190px,1fr))!important;
-  gap:16px!important;
-  padding:17px!important;
-}
-.card{
-  border-radius:16px!important;
-  background:linear-gradient(180deg,#1a1e27,#11151c)!important;
-  border:1px solid rgba(255,255,255,.09)!important;
-  box-shadow:0 12px 30px rgba(0,0,0,.3);
-  overflow:hidden!important;
-  transform:translateZ(0);
-  transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease;
-}
-.card:hover{
-  transform:translateY(-4px);
-  border-color:rgba(224,187,114,.38)!important;
-  box-shadow:0 18px 38px rgba(0,0,0,.42);
-}
-.card>img{
-  width:100%!important;
-  aspect-ratio:488/680;
-  object-fit:cover!important;
-  background:#090b10;
-}
-.card-body{padding:12px!important}
-.card-name{font-size:14px!important;font-weight:900!important;line-height:1.25}
-.card-type{font-size:11px!important;min-height:28px;color:var(--muted)!important}
-.card-actions{gap:8px!important;margin-top:10px!important}
-.card-actions button{
-  min-height:37px!important;border-radius:9px!important;
-}
-.card-actions .add{
-  width:42px!important;font-size:20px!important;
-  background:linear-gradient(135deg,#d3a653,#8b6025)!important;
-  color:#130f08!important;
-}
-.card-copy{
-  top:10px!important;right:10px!important;
-  padding:6px 9px!important;
-  box-shadow:0 5px 15px rgba(0,0,0,.35);
-}
-.bracket-pill{
-  border:0!important;
-  background:rgba(184,137,61,.12);
-  padding:4px 8px!important;
-}
-.deck-panel{
-  position:sticky;top:86px;
-  max-height:calc(100vh - 108px);
-  display:flex;flex-direction:column;
-}
-.deck-list{overflow:auto;padding:10px!important}
-.deck-row{
-  border-radius:11px!important;
-  border:1px solid transparent!important;
-  padding:10px!important;
-  margin-bottom:6px;
-  transition:.15s ease;
-}
-.deck-row:hover{background:rgba(255,255,255,.04)!important;border-color:rgba(255,255,255,.07)!important}
-.deck-row.valid{border-left:3px solid rgba(97,212,154,.6)!important}
-.deck-row.invalid{border-left:3px solid rgba(241,120,120,.7)!important}
-.deck-card-name{font-weight:750!important;line-height:1.25}
-.qty{
-  width:31px;height:31px;border-radius:9px;
-  display:grid;place-items:center;
-  background:#090c11;color:var(--gold2);font-weight:900;
-}
-.iconbtn{
-  width:31px!important;height:31px!important;border-radius:9px!important;
-}
-.commander-box{
-  margin:12px!important;
-  border-radius:15px!important;
-  overflow:hidden;
-  border:1px solid rgba(224,187,114,.24)!important;
-  background:
-    linear-gradient(135deg,rgba(184,137,61,.14),transparent 55%),
-    #10141b!important;
-}
-.commander-box img{
-  width:72px!important;height:100px!important;
-  object-fit:cover!important;border-radius:10px!important;
-  box-shadow:0 8px 22px rgba(0,0,0,.38);
-}
-.validation{
-  margin:10px 12px 12px!important;
-  border-radius:14px!important;
-  background:#0b0e14!important;
-}
-.modal{
-  backdrop-filter:blur(10px);
-  background:rgba(2,4,8,.74)!important;
-}
-.modal-card{
-  border-radius:21px!important;
-  border:1px solid rgba(255,255,255,.12)!important;
-  background:linear-gradient(180deg,#191e28,#0f1219)!important;
-  box-shadow:0 30px 90px rgba(0,0,0,.62)!important;
-}
-.modal-head{
-  min-height:68px;
-  background:linear-gradient(180deg,rgba(255,255,255,.045),transparent);
-}
-.status{
-  margin:0 16px 15px!important;
-  padding:11px 13px!important;
-  border-radius:11px;
-  background:#0a0d12;
-  border:1px solid rgba(255,255,255,.06);
-}
-.empty{
-  grid-column:1/-1;
-  padding:50px 20px!important;
-  border:1px dashed rgba(255,255,255,.12);
-  border-radius:14px;
-  background:rgba(255,255,255,.018);
-}
-::-webkit-scrollbar{width:10px;height:10px}
-::-webkit-scrollbar-track{background:#090b10}
-::-webkit-scrollbar-thumb{background:#2a303b;border-radius:999px;border:2px solid #090b10}
-::-webkit-scrollbar-thumb:hover{background:#3a4350}
-
-/* mobile app-like navigation */
-.mobile-nav{display:none}
-@media(max-width:920px){
-  body{padding-bottom:74px}
-  header .actions .label{display:none}
-  header .actions{gap:6px}
-  header .actions .btn{width:42px;padding:0!important;font-size:0}
-  header .actions .btn:first-letter{font-size:17px}
-  main{padding:12px!important}
-  .workspace{display:block!important}
-  .catalog-panel,.deck-panel{min-height:auto}
-  .deck-panel{
-    position:relative;top:auto;max-height:none;margin-top:14px;
-  }
-  .results{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px!important;padding:10px!important}
-  .card-body{padding:10px!important}
-  .card-name{font-size:12px!important}
-  .card-type{display:none}
-  .card-actions button:first-child{font-size:11px}
-  .setup{grid-template-columns:1fr 1fr!important}
-  .mobile-nav{
-    display:grid;grid-template-columns:1fr 1fr;
-    position:fixed;left:10px;right:10px;bottom:10px;z-index:90;
-    padding:7px;border-radius:17px;
-    background:rgba(14,17,23,.9);backdrop-filter:blur(18px);
-    border:1px solid rgba(255,255,255,.1);
-    box-shadow:0 15px 45px rgba(0,0,0,.5);
-  }
-  .mobile-nav button{
-    min-height:48px;border:0;background:transparent;color:var(--muted);font-weight:850;border-radius:12px;
-  }
-  .mobile-nav button.active{background:rgba(184,137,61,.15);color:var(--gold2)}
-  body.mobile-deck .catalog-panel{display:none}
-  body:not(.mobile-deck) .deck-panel{display:none}
-}
-@media(max-width:520px){
-  header{padding:8px 10px!important}
-  .brand{font-size:13px}
-  .brand:before{width:34px;height:34px}
-  .build-badge{display:none}
-  .setup{grid-template-columns:1fr!important}
-  .results{grid-template-columns:repeat(2,minmax(0,1fr))!important}
-  .card-actions button:first-child{display:none}
-  .card-actions .add{width:100%!important}
-  .commander-box img{width:60px!important;height:84px!important}
-}
-
-
-/* BUILD 2.8 — GRAPHICAL BUTTON SYSTEM */
-.btn{
-  position:relative;
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  gap:9px;
-  padding:0 14px!important;
-  font-weight:850!important;
-  letter-spacing:.015em;
-  overflow:hidden;
-  isolation:isolate;
-}
-.btn:before{
-  content:"";
-  position:absolute;
-  inset:1px;
-  border-radius:9px;
-  background:
-    linear-gradient(180deg,rgba(255,255,255,.08),transparent 42%),
-    linear-gradient(90deg,transparent,rgba(255,255,255,.025),transparent);
-  pointer-events:none;
-  z-index:-1;
-}
-.btn:after{
-  content:"";
-  position:absolute;
-  left:10%;right:10%;bottom:2px;
-  height:1px;
-  background:linear-gradient(90deg,transparent,rgba(224,187,114,.55),transparent);
-  opacity:.45;
-}
-.btn:active{
-  transform:translateY(1px)!important;
-  box-shadow:inset 0 3px 7px rgba(0,0,0,.42)!important;
-}
-.btn-icon .ui-icon{
-  display:grid;
-  place-items:center;
-  width:24px;height:24px;
-  border-radius:7px;
-  background:linear-gradient(145deg,#2b303a,#151922);
-  border:1px solid rgba(255,255,255,.08);
-  color:var(--gold2);
-  text-shadow:0 1px 6px rgba(224,187,114,.25);
-  box-shadow:inset 0 1px rgba(255,255,255,.06),0 3px 8px rgba(0,0,0,.28);
-  font-size:13px;
-  flex:0 0 auto;
-}
-.btn-arcane{
-  border-color:rgba(128,109,194,.35)!important;
-  background:
-    radial-gradient(circle at 50% 0%,rgba(145,119,231,.22),transparent 65%),
-    linear-gradient(180deg,rgba(255,255,255,.055),rgba(255,255,255,.025))!important;
-}
-.btn-arcane .ui-icon{
-  color:#c9b8ff;
-  background:linear-gradient(145deg,#312a49,#171421);
-}
-.btn.gold{
-  text-shadow:0 1px rgba(255,255,255,.15);
-  box-shadow:
-    inset 0 1px rgba(255,255,255,.28),
-    inset 0 -2px rgba(65,39,9,.28),
-    0 7px 18px rgba(110,72,19,.26)!important;
-}
-.btn.gold:before{
-  background:
-    linear-gradient(180deg,rgba(255,255,255,.25),transparent 38%),
-    repeating-linear-gradient(120deg,rgba(255,255,255,.025) 0 2px,transparent 2px 5px);
-}
-.btn-emblem:before{
-  content:"◆";
-  position:static;
-  display:inline-grid;
-  place-items:center;
-  width:20px;height:20px;
-  color:#2a1b08;
-  font-size:10px;
-  background:none;
-}
-.btn-action{
-  border-color:rgba(224,187,114,.2)!important;
-}
-.card-actions .add{
-  position:relative;
-  border-radius:10px!important;
-  border:1px solid #d5ab63!important;
-  box-shadow:
-    inset 0 1px rgba(255,255,255,.28),
-    inset 0 -2px rgba(59,34,4,.3),
-    0 6px 15px rgba(105,68,18,.28)!important;
-  text-shadow:0 1px rgba(255,255,255,.18);
-}
-.card-actions .add:before{
-  content:"+";
-  font-size:23px;
-  line-height:1;
-}
-.card-actions .add{
-  font-size:0!important;
-}
-.card-actions .add:hover{
-  filter:brightness(1.08);
-  transform:translateY(-1px);
-}
-.iconbtn{
-  position:relative;
-  display:grid!important;
-  place-items:center;
-  border:1px solid rgba(255,255,255,.11)!important;
-  background:linear-gradient(180deg,#282d37,#161a21)!important;
-  color:#e8e4da!important;
-  box-shadow:inset 0 1px rgba(255,255,255,.06),0 3px 8px rgba(0,0,0,.22);
-  font-weight:900!important;
-}
-.iconbtn:hover{
-  border-color:rgba(224,187,114,.38)!important;
-  color:var(--gold2)!important;
-}
-.print-option{
-  position:relative;
-  overflow:hidden;
-  min-height:120px;
-  transition:.2s ease;
-}
-.print-option:before{
-  content:"";
-  position:absolute;
-  width:72px;height:72px;
-  right:-18px;bottom:-18px;
-  border-radius:50%;
-  background:radial-gradient(circle,rgba(184,137,61,.18),transparent 70%);
-}
-.print-option:hover{
-  transform:translateY(-3px);
-  box-shadow:0 14px 28px rgba(0,0,0,.28);
-}
-.rules-tabs .btn.active{
-  background:
-    linear-gradient(180deg,rgba(184,137,61,.24),rgba(184,137,61,.1))!important;
-  border-color:rgba(224,187,114,.5)!important;
-  color:var(--gold2)!important;
-  box-shadow:inset 0 1px rgba(255,255,255,.09),0 5px 14px rgba(0,0,0,.2);
-}
-.mobile-nav button{
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  gap:3px;
-  font-size:11px;
-}
-.mobile-icon{
-  display:block;
-  font-size:19px;
-  line-height:1;
-}
-.mobile-nav button.active{
-  box-shadow:inset 0 0 0 1px rgba(224,187,114,.18);
-}
-@media(max-width:920px){
-  header .actions .btn{
-    font-size:initial!important;
-  }
-  header .actions .btn .ui-icon{
-    width:27px;height:27px;
-  }
-  header .actions .btn .label{
-    display:none;
-  }
-}
-
 </style>
 </head>
-<body class="visual-overhaul">
-<div class="app">
-<header class="topbar"><div class="brandmark">CA</div><div class="brand"><h1>Commander Armies</h1><p>Deck builder · versione GitHub</p></div><div class="top-actions"><button class="btn btn-icon" id="printBtn"><span class="ui-icon">🖨</span><span class="label">Stampa</span></button>
-      <button class="btn btn-icon btn-arcane" id="suggestBtn"><span class="ui-icon">✦</span><span class="label">Suggerimenti</span></button>
-      <button class="btn btn-icon" id="rulesBtn"><span class="ui-icon">⚙</span><span class="label">Regole</span></button>
-      <button class="btn btn-icon" id="statsBtn"><span class="ui-icon">◫</span><span class="label">Analisi</span></button>
-      <button class="btn btn-icon" id="archiveBtn"><span class="ui-icon">▤</span><span class="label">Archivio</span></button>
-      <button class="btn" id="newDeckBtn">＋ <span class="label">Nuovo mazzo</span></button><button class="btn gold" id="saveBtn">💾 <span class="label">Salva</span></button></div></header>
-<main class="layout">
-<section>
-<div class="panel setup"><div class="setup-grid">
-<div class="field"><label>Nome mazzo</label><input id="deckName" value="Nuovo mazzo"></div>
-<div class="field"><label>Comandante</label><div class="commander-box"><input id="commanderName" placeholder="Nessun comandante" readonly><button class="btn gold" id="chooseCommanderBtn">Scegli</button></div></div>
-<div class="field"><label>Tribe</label><input id="tribe" placeholder="Es. Goblin"></div>
-<div class="field"><label>Key</label><input id="key" placeholder="Es. Danno"></div>
-          <div class="field"><label>Bracket massimo</label><select id="bracket"><option value="1">1</option><option value="2" selected>2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select></div>
-</div></div>
-<div class="panel filters"><div class="field search-field"><label>Cerca carte</label><input id="searchInput" placeholder="Nome o testo della carta"></div><div class="field"><label>Tipo</label><select id="typeFilter"><option value="">Tutti i tipi</option><option value="creature">Creature</option><option value="artifact">Artefatti</option><option value="enchantment">Incantesimi</option><option value="instant">Istantanei</option><option value="sorcery">Stregonerie</option><option value="planeswalker">Planeswalker</option><option value="land">Terre</option></select></div><div class="field"><label>Mostra</label><select id="validityFilter"><option value="">Tutte le carte</option><option value="valid">Solo valide</option><option value="invalid">Solo da controllare</option></select></div>
-        <div class="field"><label>Ordina</label><select id="sortFilter"><option value="edhrec">Popolarità</option><option value="name">Nome</option><option value="cmc">Valore di mana</option><option value="released">Più recenti</option></select></div></div>
-<div class="section-title"><h2>Catalogo carte</h2><span class="count" id="resultCount">Inserisci una ricerca</span></div><div class="results" id="results"></div><div class="status" id="status">Pronto.</div>
+<body>
+<header class="topbar">
+ <div class="logo">CA</div><div class="brand">Commander Armies</div><div class="badge">BUILD 3.0 · CLEAN</div>
+ <div class="spacer"></div>
+ <div class="toolbar">
+   <button class="btn" id="newBtn">＋ <span class="text">Nuovo</span></button>
+   <button class="btn" id="exportBtn">⇩ <span class="text">Esporta</span></button>
+   <button class="btn primary" id="saveBtn">◆ <span class="text">Salva</span></button>
+ </div>
+</header>
+
+<main>
+<section class="config">
+ <div class="field"><label>Nome mazzo</label><input id="deckName" value="Nuovo mazzo"></div>
+ <div class="field"><label>Tribe</label><select id="tribe"></select></div>
+ <div class="field"><label>Key</label><select id="key"></select></div>
+ <div class="field"><label>Bracket</label><select id="bracket"><option>1</option><option selected>2</option><option>3</option><option>4</option><option>5</option></select></div>
+ <div class="field"><label>&nbsp;</label><button class="btn primary" id="commanderBtn">Scegli comandante</button></div>
 </section>
-<aside class="panel deck" id="deckPanel"><div class="deck-head"><div style="display:flex;align-items:center;gap:8px"><div style="flex:1"><h2>Mazzo attuale</h2><div class="deck-meta"><span class="pill" id="deckCount">0/100 carte</span><span class="pill" id="saveState">Salvato localmente</span></div></div><button class="btn" id="closeDeckBtn" style="display:none">✕</button></div></div><div class="deck-list" id="deckList"><div class="empty">Aggiungi carte dal catalogo.</div></div></aside>
+
+<div class="layout">
+<section class="panel catalog">
+ <div class="panelhead"><h2>Catalogo carte</h2><div class="grow"></div><span class="muted" id="catalogCount"></span></div>
+ <div class="searchrow">
+   <input id="search" placeholder="Cerca una carta…">
+   <select id="typeFilter">
+     <option value="">Tutti i tipi</option><option value="creature">Creature</option><option value="instant">Istantanei</option>
+     <option value="sorcery">Stregonerie</option><option value="artifact">Artefatti</option><option value="enchantment">Incantesimi</option>
+     <option value="planeswalker">Planeswalker</option><option value="land">Terre</option>
+   </select>
+   <select id="legalFilter"><option value="">Tutte</option><option value="legal">Solo valide</option><option value="illegal">Solo non valide</option></select>
+   <button class="btn primary" id="searchBtn">Cerca</button>
+ </div>
+ <div class="status" id="status">Seleziona un comandante oppure cerca una carta.</div>
+ <div class="cards" id="cards"><div class="empty">Il catalogo apparirà qui.</div></div>
+</section>
+
+<aside class="panel deckpanel">
+ <div class="panelhead"><h2>Il tuo mazzo</h2><div class="grow"></div><button class="btn danger" id="clearBtn">Svuota</button></div>
+ <div class="commander" id="commanderBox"><div><h3>Nessun comandante</h3><div class="muted">Scegli il comandante per impostare l’identità colore.</div></div></div>
+ <div class="decklist" id="decklist"><div class="empty" style="min-height:180px">Nessuna carta aggiunta.</div></div>
+ <div class="summary"><span id="validation">Configurazione incompleta</span><span id="total">0/100</span></div>
+</aside>
+</div>
 </main>
-<button class="mobile-deck-button" id="mobileDeckBtn">Mazzo · <span id="mobileDeckCount">0</span>/100</button><div class="badge">BUILD 2.8 · BUTTONS</div>
-</div>
-<div class="modal" id="commanderModal"><div class="modal-card"><div class="modal-head"><input id="commanderSearch" placeholder="Cerca un comandante..."><select id="colorFilter" class="btn"><option value="">Tutti i colori</option><option value="W">Bianco</option><option value="U">Blu</option><option value="B">Nero</option><option value="R">Rosso</option><option value="G">Verde</option><option value="C">Incolore</option></select><button class="btn" id="closeModalBtn">✕</button></div><div class="modal-results" id="commanderResults"><div class="loading">Scrivi almeno 2 lettere per cercare.</div></div></div></div>
 
+<nav class="mobiletabs"><button id="catalogTab" class="active">▦ Catalogo</button><button id="deckTab">🂠 Mazzo</button></nav>
 
-
-
-
-
-<div class="modal" id="printModal">
-  <div class="modal-card print-card">
-    <div class="modal-head">
-      <div style="flex:1">
-        <strong>Stampa ed esportazione</strong>
-        <div style="font-size:12px;color:var(--muted);margin-top:3px">Decklist, proxy e report</div>
-      </div>
-      <button class="btn" id="closePrintBtn">✕</button>
-    </div>
-    <div class="print-options">
-      <button class="print-option" id="printDecklistBtn">
-        <b>Decklist stampabile</b>
-        <span>Lista ordinata con comandante, Tribe, Key e bracket.</span>
-      </button>
-      <button class="print-option" id="printProxyBtn">
-        <b>Foglio proxy</b>
-        <span>Griglia di immagini pronta per la stampa.</span>
-      </button>
-      <button class="print-option" id="printValidationBtn">
-        <b>Report di validazione</b>
-        <span>Carte valide, non valide e relativa motivazione.</span>
-      </button>
-      <button class="print-option" id="exportFullBtn">
-        <b>Esporta mazzo completo</b>
-        <span>File JSON con mazzo e regole locali.</span>
-      </button>
-    </div>
-  </div>
+<div class="modal" id="commanderModal">
+ <div class="modalbox">
+  <div class="modalhead"><strong>Scegli comandante</strong><button class="btn" data-close="commanderModal">✕</button></div>
+  <div class="searchrow"><input id="commanderSearch" placeholder="Nome del comandante"><button class="btn primary" id="commanderSearchBtn">Cerca</button></div>
+  <div class="status" id="commanderStatus">Cerca una creatura leggendaria.</div>
+  <div class="cards" id="commanderResults"></div>
+ </div>
 </div>
 
-<div class="modal" id="suggestModal">
-  <div class="modal-card suggest-card">
-    <div class="modal-head">
-      <div style="flex:1">
-        <strong>Suggerimenti Commander Armies</strong>
-        <div style="font-size:12px;color:var(--muted);margin-top:3px">Basati su Tribe, Key e comandante</div>
-      </div>
-      <button class="btn gold btn-emblem" id="refreshSuggestionsBtn">Aggiorna</button>
-      <button class="btn" id="closeSuggestBtn">✕</button>
-    </div>
-    <div class="suggest-body">
-      <div id="suggestStatus" class="status">Configura Tribe e Key per ottenere suggerimenti.</div>
-      <div class="results" id="suggestResults"></div>
-    </div>
-  </div>
-</div>
-
-<div class="modal" id="rulesModal">
-  <div class="modal-card rules-card">
-    <div class="modal-head">
-      <div style="flex:1">
-        <strong>Regole Commander Armies</strong>
-        <div style="font-size:12px;color:var(--muted);margin-top:3px">Database locale amministrabile</div>
-      </div>
-      <button class="btn" id="resetRulesBtn">Ripristina</button>
-      <button class="btn gold btn-emblem" id="saveRulesBtn">Salva regole</button>
-      <button class="btn" id="closeRulesBtn">✕</button>
-    </div>
-    <div class="rules-body">
-      <div class="rules-tabs">
-        <button class="btn active" data-rule-tab="keys">Keys</button>
-        <button class="btn" data-rule-tab="evergreen">Evergreen</button>
-        <button class="btn" data-rule-tab="aliases">Alias</button>
-        <button class="btn" data-rule-tab="exceptions">Eccezioni</button>
-        <button class="btn" data-rule-tab="banlist">Banlist</button>
-        <button class="btn" data-rule-tab="brackets">Bracket</button>
-      </div>
-      <div class="rule-pane active" id="rule-keys">
-        <h3>Keys</h3>
-        <p class="small-note">Una riga per Key. Formato: Nome | termini separati da virgola</p>
-        <textarea id="keysText"></textarea>
-      </div>
-      <div class="rule-pane" id="rule-evergreen">
-        <h3>Evergreen</h3>
-        <p class="small-note">Una carta per riga. Queste carte sono sempre ammesse.</p>
-        <textarea id="evergreenText"></textarea>
-      </div>
-      <div class="rule-pane" id="rule-aliases">
-        <h3>Alias di Tribe</h3>
-        <p class="small-note">Formato: Tribe | alias1, alias2</p>
-        <textarea id="aliasesText"></textarea>
-      </div>
-      <div class="rule-pane" id="rule-exceptions">
-        <h3>Eccezioni</h3>
-        <p class="small-note">Formato: Nome carta | allow oppure deny</p>
-        <textarea id="exceptionsText"></textarea>
-      </div>
-      <div class="rule-pane" id="rule-banlist">
-        <h3>Banlist</h3>
-        <p class="small-note">Una carta per riga.</p>
-        <textarea id="banlistText"></textarea>
-      </div>
-      <div class="rule-pane" id="rule-brackets">
-        <h3>Bracket delle carte</h3>
-        <p class="small-note">Formato: Nome carta | numero bracket</p>
-        <textarea id="bracketsText"></textarea>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="modal" id="statsModal">
-  <div class="modal-card stats-card">
-    <div class="modal-head">
-      <div style="flex:1"><strong>Analisi del mazzo</strong><div style="font-size:12px;color:var(--muted);margin-top:3px">Statistiche aggiornate automaticamente</div></div>
-      <button class="btn" id="closeStatsBtn">✕</button>
-    </div>
-    <div class="stats-body">
-      <div class="stats-summary" id="statsSummary"></div>
-      <div class="stats-section"><h3>Curva di mana</h3><div class="mana-curve" id="manaCurve"></div></div>
-      <div class="stats-section"><h3>Tipi di carta</h3><div class="type-bars" id="typeBars"></div></div>
-      <div class="stats-section"><h3>Distribuzione colori</h3><div class="color-bars" id="colorBars"></div></div>
-    </div>
-  </div>
-</div>
-
-<div class="modal" id="bulkModal">
-  <div class="modal-card bulk-card">
-    <div class="modal-head">
-      <div style="flex:1"><strong>Importa una lista</strong><div style="font-size:12px;color:var(--muted);margin-top:3px">Formato: 1 Nome della carta</div></div>
-      <button class="btn gold btn-emblem" id="runBulkImportBtn">Importa</button>
-      <button class="btn" id="closeBulkBtn">✕</button>
-    </div>
-    <div style="padding:16px">
-      <textarea id="bulkText" placeholder="1 Sol Ring&#10;1 Arcane Signet&#10;10 Swamp"></textarea>
-      <div class="bulk-progress" id="bulkProgress">Le carte verranno cercate su Scryfall.</div>
-    </div>
-  </div>
-</div>
-
-<div class="modal" id="cardModal">
-  <div class="modal-card detail-card">
-    <div class="modal-head">
-      <div style="flex:1"><strong id="detailTitle">Dettagli carta</strong></div>
-      <button class="btn gold" id="detailAddBtn">＋ Aggiungi</button>
-      <button class="btn" id="closeCardModalBtn">✕</button>
-    </div>
-    <div class="detail-body">
-      <div class="detail-image-wrap"><img id="detailImage" alt=""></div>
-      <div class="detail-info">
-        <div class="detail-line"><span>Tipo</span><b id="detailType"></b></div>
-        <div class="detail-line"><span>Costo</span><b id="detailMana"></b></div>
-        <div class="detail-line"><span>Identità</span><b id="detailIdentity"></b></div>
-        <div class="oracle-box" id="detailOracle"></div>
-        <div class="legality-box" id="detailLegality"></div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="modal" id="archiveModal">
-  <div class="modal-card archive-card">
-    <div class="modal-head">
-      <div style="flex:1">
-        <strong>Archivio mazzi</strong>
-        <div style="font-size:12px;color:var(--muted);margin-top:3px">Salvati sul dispositivo</div>
-      </div>
-      <button class="btn btn-action" id="exportTxtBtn">Esporta lista</button>
-      <button class="btn btn-action" id="bulkImportBtn">Importa lista</button>
-      <button class="btn btn-action" id="exportBtn">Esporta JSON</button>
-      <label class="btn" style="cursor:pointer">Importa JSON<input id="importInput" type="file" accept=".json,application/json" hidden></label>
-      <button class="btn" id="closeArchiveBtn">✕</button>
-    </div>
-    <div class="archive-list" id="archiveList"></div>
-  </div>
+<div class="modal" id="detailModal">
+ <div class="modalbox">
+  <div class="modalhead"><strong id="detailTitle">Dettagli</strong><button class="btn" data-close="detailModal">✕</button></div>
+  <div class="detailgrid"><img id="detailImg"><div><div class="muted" id="detailType"></div><h2 id="detailName"></h2><div class="oracle" id="detailOracle"></div><p id="detailLegal"></p></div></div>
+ </div>
 </div>
 
 <script>
-const $=s=>document.querySelector(s);const state={deck:{name:"Nuovo mazzo",commander:null,tribe:"",key:"",cards:{}}};let searchTimer,commanderTimer;
-function imgOf(c){return c.image_uris?.normal||c.card_faces?.[0]?.image_uris?.normal||""}
-function typeGroup(c){const t=(c.type_line||"").toLowerCase();if(t.includes("land"))return"Terre";if(t.includes("creature"))return"Creature";if(t.includes("artifact"))return"Artefatti";if(t.includes("enchantment"))return"Incantesimi";if(t.includes("instant"))return"Istantanei";if(t.includes("sorcery"))return"Stregonerie";if(t.includes("planeswalker"))return"Planeswalker";return"Altro"}
-
-function allDeckCards(){
-  const arr=Object.values(state.deck.cards||{}).map(c=>({...c}));
-  if(state.deck.commander)arr.push({...state.deck.commander,qty:1,commander:true});
-  return arr;
-}
-function manaValue(c){
-  const v=Number(c.cmc);
-  return Number.isFinite(v)?v:0;
-}
-function renderStats(){
-  const cards=allDeckCards();
-  const total=cards.reduce((n,c)=>n+(c.qty||1),0);
-  const nonlands=cards.filter(c=>!(c.type_line||"").toLowerCase().includes("land"));
-  const weighted=nonlands.reduce((n,c)=>n+manaValue(c)*(c.qty||1),0);
-  const nonlandCount=nonlands.reduce((n,c)=>n+(c.qty||1),0);
-  const avg=nonlandCount?weighted/nonlandCount:0;
-  const lands=cards.filter(c=>(c.type_line||"").toLowerCase().includes("land")).reduce((n,c)=>n+(c.qty||1),0);
-  const creatures=cards.filter(c=>(c.type_line||"").toLowerCase().includes("creature")).reduce((n,c)=>n+(c.qty||1),0);
-  $("#statsSummary").innerHTML=`
-    <div class="stat-box"><b>${total}</b><span>Carte totali</span></div>
-    <div class="stat-box"><b>${lands}</b><span>Terre</span></div>
-    <div class="stat-box"><b>${creatures}</b><span>Creature</span></div>
-    <div class="stat-box"><b>${avg.toFixed(2)}</b><span>Mana medio, senza terre</span></div>`;
-  const curve=Array(8).fill(0);
-  cards.forEach(c=>{
-    if((c.type_line||"").toLowerCase().includes("land"))return;
-    const i=Math.min(7,Math.floor(manaValue(c)));curve[i]+=c.qty||1;
-  });
-  const max=Math.max(1,...curve);
-  $("#manaCurve").innerHTML=curve.map((v,i)=>`
-    <div class="mana-col"><div class="mana-value">${v}</div><div class="mana-bar" style="height:${Math.max(v?5:0,v/max*125)}px"></div><div class="mana-label">${i===7?"7+":i}</div></div>`).join("");
-  const typeCounts={};
-  cards.forEach(c=>{const g=typeGroup(c);typeCounts[g]=(typeCounts[g]||0)+(c.qty||1)});
-  renderMetrics("#typeBars",typeCounts);
-  const colors={W:0,U:0,B:0,R:0,G:0,C:0};
-  cards.forEach(c=>{
-    const ids=c.color_identity||[];
-    if(!ids.length)colors.C+=(c.qty||1);
-    else ids.forEach(x=>colors[x]=(colors[x]||0)+(c.qty||1));
-  });
-  renderMetrics("#colorBars",{"Bianco":colors.W,"Blu":colors.U,"Nero":colors.B,"Rosso":colors.R,"Verde":colors.G,"Incolore":colors.C});
-}
-function renderMetrics(selector,obj){
-  const max=Math.max(1,...Object.values(obj));
-  $(selector).innerHTML=Object.entries(obj).sort((a,b)=>b[1]-a[1]).map(([k,v])=>`
-    <div class="metric-row"><div class="metric-name">${k}</div><div class="metric-track"><div class="metric-fill" style="width:${v/max*100}%"></div></div><div class="metric-value">${v}</div></div>`).join("");
-}
-function exportTextDeck(){
-  const lines=[];
-  if(state.deck.commander)lines.push("// COMMANDER",`1 ${state.deck.commander.name}`,"");
-  const grouped={};
-  Object.values(state.deck.cards||{}).forEach(c=>(grouped[typeGroup(c)]??=[]).push(c));
-  Object.entries(grouped).forEach(([g,list])=>{
-    lines.push(`// ${g.toUpperCase()}`);
-    list.sort((a,b)=>a.name.localeCompare(b.name)).forEach(c=>lines.push(`${c.qty} ${c.name}`));
-    lines.push("");
-  });
-  const blob=new Blob([lines.join("\n")],{type:"text/plain;charset=utf-8"});
-  const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=(state.deck.name||"mazzo").replace(/[^\w\-]+/g,"-")+".txt";a.click();URL.revokeObjectURL(a.href);
-}
-async function importBulkList(){
-  const raw=$("#bulkText").value.trim();
-  if(!raw){$("#bulkProgress").textContent="Inserisci almeno una carta.";return}
-  const rows=raw.split(/\n+/).map(x=>x.trim()).filter(Boolean).filter(x=>!x.startsWith("//"));
-  const parsed=rows.map(line=>{
-    const m=line.match(/^(\d+)\s+(.+)$/);return m?{qty:Number(m[1]),name:m[2].trim()}:{qty:1,name:line};
-  });
-  $("#bulkProgress").textContent=`Importazione di ${parsed.length} righe…`;
-  let ok=0,missing=[];
-  for(let i=0;i<parsed.length;i++){
-    const item=parsed[i];
-    $("#bulkProgress").textContent=`${i+1}/${parsed.length}: ${item.name}`;
-    try{
-      const r=await fetch(`https://api.scryfall.com/cards/named?exact=${encodeURIComponent(item.name)}`);
-      const c=await r.json();if(!r.ok)throw new Error();
-      const check=preliminaryLegality(c); const army=armyLegality(c);
-      if(!check.ok && !isBasicLand(c) && item.qty>1)item.qty=1;
-      state.deck.cards[c.id]={...c,qty:item.qty};ok++;
-    }catch(e){missing.push(item.name)}
-    await new Promise(res=>setTimeout(res,80));
-  }
-  renderDeck();saveDeck();
-  $("#bulkProgress").textContent=`Importate ${ok} carte.${missing.length?" Non trovate: "+missing.join(", "):""}`;
-}
-
-
-async function loadSuggestions(){
-  const tribe=(state.deck.tribe||"").trim(), key=(state.deck.key||"").trim();
-  if(!tribe&&!key){$("#suggestStatus").textContent="Configura almeno Tribe o Key.";$("#suggestResults").innerHTML="";return}
-  $("#suggestStatus").textContent="Ricerca suggerimenti…";$("#suggestResults").innerHTML="";
-  const r=getRules();
-  const terms=(r.keys?.[key]||[]).slice(0,3);
-  let query=`game:paper`;
-  if(tribe)query+=` (${tribe} or oracle:${tribe})`;
-  if(terms.length)query+=` (${terms.map(t=>`oracle:"${t}"`).join(" or ")})`;
-  if(state.deck.commander?.color_identity?.length)query+=` id<=${state.deck.commander.color_identity.join("")}`;
-  try{
-    const res=await fetch(`https://api.scryfall.com/cards/search?q=${encodeURIComponent(query)}&order=edhrec&unique=cards`);
-    const data=await res.json();if(!res.ok)throw new Error(data.details||"Nessun suggerimento");
-    const filtered=data.data.filter(c=>armyLegality(c).ok===true && !state.deck.cards?.[c.id]).slice(0,24);
-    $("#suggestResults").innerHTML=filtered.length?filtered.map(c=>cardHTML(c)).join(""):'<div class="empty">Nessun suggerimento valido trovato.</div>';
-    $("#suggestStatus").textContent=`${filtered.length} suggerimenti disponibili.`;
-  }catch(e){$("#suggestStatus").textContent=e.message;$("#suggestResults").innerHTML='<div class="empty">Modifica Tribe, Key o regole e riprova.</div>'}
-}
-
-
-function escHtml(s){
-  return String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[m]));
-}
-function openPrintDocument(title, body, extraCss=""){
-  const w=window.open("","_blank");
-  if(!w){alert("Il browser ha bloccato la finestra di stampa.");return}
-  w.document.write(`<!doctype html><html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width">
-  <title>${escHtml(title)}</title><style>
-  *{box-sizing:border-box}body{font-family:Arial,sans-serif;color:#111;margin:24px}h1,h2,h3{margin:0 0 10px}
-  .meta{margin:0 0 18px;color:#444}.group{margin:20px 0}.row{display:grid;grid-template-columns:42px 1fr;gap:8px;padding:5px 0;border-bottom:1px solid #ddd}
-  .ok{color:#146c3b}.bad{color:#a32020}.warn{color:#8a6511}
-  @page{margin:12mm}${extraCss}
-/* BUILD 2.7 — VISUAL OVERHAUL */
-:root{
-  --bg:#080a0f;
-  --surface:#11141b;
-  --surface-2:#171b24;
-  --surface-3:#202632;
-  --text:#f5f1e8;
-  --muted:#9da5b3;
-  --line:rgba(255,255,255,.09);
-  --gold:#b8893d;
-  --gold2:#e0bb72;
-  --ok:#61d49a;
-  --bad:#f17878;
-  --shadow:0 18px 60px rgba(0,0,0,.38);
-}
-html{scroll-behavior:smooth}
-body.visual-overhaul{
-  background:
-    radial-gradient(circle at 10% -10%,rgba(184,137,61,.15),transparent 30%),
-    radial-gradient(circle at 90% 0%,rgba(86,106,155,.12),transparent 28%),
-    linear-gradient(180deg,#090b10,#080a0f 55%,#05070b);
-  min-height:100vh;
-}
-body.visual-overhaul:before{
-  content:"";
-  position:fixed;inset:0;pointer-events:none;z-index:-1;
-  background-image:linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.018) 1px,transparent 1px);
-  background-size:34px 34px;
-  mask-image:linear-gradient(to bottom,black,transparent 75%);
-}
-header{
-  position:sticky;top:0;z-index:50;
-  background:rgba(8,10,15,.78)!important;
-  backdrop-filter:blur(18px);
-  border-bottom:1px solid rgba(255,255,255,.08)!important;
-  box-shadow:0 8px 30px rgba(0,0,0,.22);
-}
-.brand{
-  letter-spacing:.08em;
-  text-transform:uppercase;
-}
-.brand:before{
-  content:"CA";
-  display:grid;place-items:center;
-  width:38px;height:38px;border-radius:12px;
-  margin-right:11px;
-  background:linear-gradient(145deg,#e2bd75,#76501b);
-  color:#100d08;font-weight:1000;font-size:13px;
-  box-shadow:inset 0 1px rgba(255,255,255,.35),0 8px 24px rgba(184,137,61,.25);
-}
-.build-badge{
-  border:1px solid rgba(224,187,114,.25)!important;
-  background:rgba(184,137,61,.1)!important;
-  color:var(--gold2)!important;
-}
-.btn{
-  min-height:40px;
-  border-radius:11px!important;
-  border:1px solid rgba(255,255,255,.09)!important;
-  background:linear-gradient(180deg,rgba(255,255,255,.055),rgba(255,255,255,.025))!important;
-  box-shadow:inset 0 1px rgba(255,255,255,.04);
-  transition:.18s ease;
-}
-.btn:hover{transform:translateY(-1px);border-color:rgba(224,187,114,.38)!important}
-.btn.gold{
-  background:linear-gradient(135deg,#c99a4d,#8e6224)!important;
-  color:#130f08!important;border-color:#d8ad63!important;font-weight:900;
-}
-main{max-width:1600px!important;padding:22px!important}
-.panel{
-  border-radius:19px!important;
-  border:1px solid rgba(255,255,255,.085)!important;
-  background:linear-gradient(180deg,rgba(24,28,37,.96),rgba(14,17,24,.98))!important;
-  box-shadow:var(--shadow);
-  overflow:hidden;
-}
-.panel-head{
-  min-height:64px;
-  padding:14px 17px!important;
-  border-bottom:1px solid var(--line)!important;
-  background:linear-gradient(180deg,rgba(255,255,255,.035),transparent);
-}
-.panel-head strong{font-size:15px;letter-spacing:.03em}
-.field label{
-  color:#c5cad3!important;
-  font-size:11px!important;
-  font-weight:800!important;
-  letter-spacing:.06em;
-  text-transform:uppercase;
-}
-input,select{
-  min-height:44px!important;
-  border-radius:11px!important;
-  background:#0b0e14!important;
-  border:1px solid rgba(255,255,255,.1)!important;
-  color:var(--text)!important;
-  box-shadow:inset 0 1px 4px rgba(0,0,0,.28);
-}
-input:focus,select:focus{
-  border-color:rgba(224,187,114,.62)!important;
-  box-shadow:0 0 0 3px rgba(184,137,61,.12)!important;
-}
-.setup{
-  padding:16px!important;
-  background:linear-gradient(180deg,rgba(184,137,61,.035),transparent);
-}
-.workspace{
-  gap:18px!important;
-  align-items:start;
-}
-.catalog-panel,.deck-panel{min-height:72vh}
-.results{
-  display:grid!important;
-  grid-template-columns:repeat(auto-fill,minmax(190px,1fr))!important;
-  gap:16px!important;
-  padding:17px!important;
-}
-.card{
-  border-radius:16px!important;
-  background:linear-gradient(180deg,#1a1e27,#11151c)!important;
-  border:1px solid rgba(255,255,255,.09)!important;
-  box-shadow:0 12px 30px rgba(0,0,0,.3);
-  overflow:hidden!important;
-  transform:translateZ(0);
-  transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease;
-}
-.card:hover{
-  transform:translateY(-4px);
-  border-color:rgba(224,187,114,.38)!important;
-  box-shadow:0 18px 38px rgba(0,0,0,.42);
-}
-.card>img{
-  width:100%!important;
-  aspect-ratio:488/680;
-  object-fit:cover!important;
-  background:#090b10;
-}
-.card-body{padding:12px!important}
-.card-name{font-size:14px!important;font-weight:900!important;line-height:1.25}
-.card-type{font-size:11px!important;min-height:28px;color:var(--muted)!important}
-.card-actions{gap:8px!important;margin-top:10px!important}
-.card-actions button{
-  min-height:37px!important;border-radius:9px!important;
-}
-.card-actions .add{
-  width:42px!important;font-size:20px!important;
-  background:linear-gradient(135deg,#d3a653,#8b6025)!important;
-  color:#130f08!important;
-}
-.card-copy{
-  top:10px!important;right:10px!important;
-  padding:6px 9px!important;
-  box-shadow:0 5px 15px rgba(0,0,0,.35);
-}
-.bracket-pill{
-  border:0!important;
-  background:rgba(184,137,61,.12);
-  padding:4px 8px!important;
-}
-.deck-panel{
-  position:sticky;top:86px;
-  max-height:calc(100vh - 108px);
-  display:flex;flex-direction:column;
-}
-.deck-list{overflow:auto;padding:10px!important}
-.deck-row{
-  border-radius:11px!important;
-  border:1px solid transparent!important;
-  padding:10px!important;
-  margin-bottom:6px;
-  transition:.15s ease;
-}
-.deck-row:hover{background:rgba(255,255,255,.04)!important;border-color:rgba(255,255,255,.07)!important}
-.deck-row.valid{border-left:3px solid rgba(97,212,154,.6)!important}
-.deck-row.invalid{border-left:3px solid rgba(241,120,120,.7)!important}
-.deck-card-name{font-weight:750!important;line-height:1.25}
-.qty{
-  width:31px;height:31px;border-radius:9px;
-  display:grid;place-items:center;
-  background:#090c11;color:var(--gold2);font-weight:900;
-}
-.iconbtn{
-  width:31px!important;height:31px!important;border-radius:9px!important;
-}
-.commander-box{
-  margin:12px!important;
-  border-radius:15px!important;
-  overflow:hidden;
-  border:1px solid rgba(224,187,114,.24)!important;
-  background:
-    linear-gradient(135deg,rgba(184,137,61,.14),transparent 55%),
-    #10141b!important;
-}
-.commander-box img{
-  width:72px!important;height:100px!important;
-  object-fit:cover!important;border-radius:10px!important;
-  box-shadow:0 8px 22px rgba(0,0,0,.38);
-}
-.validation{
-  margin:10px 12px 12px!important;
-  border-radius:14px!important;
-  background:#0b0e14!important;
-}
-.modal{
-  backdrop-filter:blur(10px);
-  background:rgba(2,4,8,.74)!important;
-}
-.modal-card{
-  border-radius:21px!important;
-  border:1px solid rgba(255,255,255,.12)!important;
-  background:linear-gradient(180deg,#191e28,#0f1219)!important;
-  box-shadow:0 30px 90px rgba(0,0,0,.62)!important;
-}
-.modal-head{
-  min-height:68px;
-  background:linear-gradient(180deg,rgba(255,255,255,.045),transparent);
-}
-.status{
-  margin:0 16px 15px!important;
-  padding:11px 13px!important;
-  border-radius:11px;
-  background:#0a0d12;
-  border:1px solid rgba(255,255,255,.06);
-}
-.empty{
-  grid-column:1/-1;
-  padding:50px 20px!important;
-  border:1px dashed rgba(255,255,255,.12);
-  border-radius:14px;
-  background:rgba(255,255,255,.018);
-}
-::-webkit-scrollbar{width:10px;height:10px}
-::-webkit-scrollbar-track{background:#090b10}
-::-webkit-scrollbar-thumb{background:#2a303b;border-radius:999px;border:2px solid #090b10}
-::-webkit-scrollbar-thumb:hover{background:#3a4350}
-
-/* mobile app-like navigation */
-.mobile-nav{display:none}
-@media(max-width:920px){
-  body{padding-bottom:74px}
-  header .actions .label{display:none}
-  header .actions{gap:6px}
-  header .actions .btn{width:42px;padding:0!important;font-size:0}
-  header .actions .btn:first-letter{font-size:17px}
-  main{padding:12px!important}
-  .workspace{display:block!important}
-  .catalog-panel,.deck-panel{min-height:auto}
-  .deck-panel{
-    position:relative;top:auto;max-height:none;margin-top:14px;
-  }
-  .results{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px!important;padding:10px!important}
-  .card-body{padding:10px!important}
-  .card-name{font-size:12px!important}
-  .card-type{display:none}
-  .card-actions button:first-child{font-size:11px}
-  .setup{grid-template-columns:1fr 1fr!important}
-  .mobile-nav{
-    display:grid;grid-template-columns:1fr 1fr;
-    position:fixed;left:10px;right:10px;bottom:10px;z-index:90;
-    padding:7px;border-radius:17px;
-    background:rgba(14,17,23,.9);backdrop-filter:blur(18px);
-    border:1px solid rgba(255,255,255,.1);
-    box-shadow:0 15px 45px rgba(0,0,0,.5);
-  }
-  .mobile-nav button{
-    min-height:48px;border:0;background:transparent;color:var(--muted);font-weight:850;border-radius:12px;
-  }
-  .mobile-nav button.active{background:rgba(184,137,61,.15);color:var(--gold2)}
-  body.mobile-deck .catalog-panel{display:none}
-  body:not(.mobile-deck) .deck-panel{display:none}
-}
-@media(max-width:520px){
-  header{padding:8px 10px!important}
-  .brand{font-size:13px}
-  .brand:before{width:34px;height:34px}
-  .build-badge{display:none}
-  .setup{grid-template-columns:1fr!important}
-  .results{grid-template-columns:repeat(2,minmax(0,1fr))!important}
-  .card-actions button:first-child{display:none}
-  .card-actions .add{width:100%!important}
-  .commander-box img{width:60px!important;height:84px!important}
-}
-
-
-/* BUILD 2.8 — GRAPHICAL BUTTON SYSTEM */
-.btn{
-  position:relative;
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  gap:9px;
-  padding:0 14px!important;
-  font-weight:850!important;
-  letter-spacing:.015em;
-  overflow:hidden;
-  isolation:isolate;
-}
-.btn:before{
-  content:"";
-  position:absolute;
-  inset:1px;
-  border-radius:9px;
-  background:
-    linear-gradient(180deg,rgba(255,255,255,.08),transparent 42%),
-    linear-gradient(90deg,transparent,rgba(255,255,255,.025),transparent);
-  pointer-events:none;
-  z-index:-1;
-}
-.btn:after{
-  content:"";
-  position:absolute;
-  left:10%;right:10%;bottom:2px;
-  height:1px;
-  background:linear-gradient(90deg,transparent,rgba(224,187,114,.55),transparent);
-  opacity:.45;
-}
-.btn:active{
-  transform:translateY(1px)!important;
-  box-shadow:inset 0 3px 7px rgba(0,0,0,.42)!important;
-}
-.btn-icon .ui-icon{
-  display:grid;
-  place-items:center;
-  width:24px;height:24px;
-  border-radius:7px;
-  background:linear-gradient(145deg,#2b303a,#151922);
-  border:1px solid rgba(255,255,255,.08);
-  color:var(--gold2);
-  text-shadow:0 1px 6px rgba(224,187,114,.25);
-  box-shadow:inset 0 1px rgba(255,255,255,.06),0 3px 8px rgba(0,0,0,.28);
-  font-size:13px;
-  flex:0 0 auto;
-}
-.btn-arcane{
-  border-color:rgba(128,109,194,.35)!important;
-  background:
-    radial-gradient(circle at 50% 0%,rgba(145,119,231,.22),transparent 65%),
-    linear-gradient(180deg,rgba(255,255,255,.055),rgba(255,255,255,.025))!important;
-}
-.btn-arcane .ui-icon{
-  color:#c9b8ff;
-  background:linear-gradient(145deg,#312a49,#171421);
-}
-.btn.gold{
-  text-shadow:0 1px rgba(255,255,255,.15);
-  box-shadow:
-    inset 0 1px rgba(255,255,255,.28),
-    inset 0 -2px rgba(65,39,9,.28),
-    0 7px 18px rgba(110,72,19,.26)!important;
-}
-.btn.gold:before{
-  background:
-    linear-gradient(180deg,rgba(255,255,255,.25),transparent 38%),
-    repeating-linear-gradient(120deg,rgba(255,255,255,.025) 0 2px,transparent 2px 5px);
-}
-.btn-emblem:before{
-  content:"◆";
-  position:static;
-  display:inline-grid;
-  place-items:center;
-  width:20px;height:20px;
-  color:#2a1b08;
-  font-size:10px;
-  background:none;
-}
-.btn-action{
-  border-color:rgba(224,187,114,.2)!important;
-}
-.card-actions .add{
-  position:relative;
-  border-radius:10px!important;
-  border:1px solid #d5ab63!important;
-  box-shadow:
-    inset 0 1px rgba(255,255,255,.28),
-    inset 0 -2px rgba(59,34,4,.3),
-    0 6px 15px rgba(105,68,18,.28)!important;
-  text-shadow:0 1px rgba(255,255,255,.18);
-}
-.card-actions .add:before{
-  content:"+";
-  font-size:23px;
-  line-height:1;
-}
-.card-actions .add{
-  font-size:0!important;
-}
-.card-actions .add:hover{
-  filter:brightness(1.08);
-  transform:translateY(-1px);
-}
-.iconbtn{
-  position:relative;
-  display:grid!important;
-  place-items:center;
-  border:1px solid rgba(255,255,255,.11)!important;
-  background:linear-gradient(180deg,#282d37,#161a21)!important;
-  color:#e8e4da!important;
-  box-shadow:inset 0 1px rgba(255,255,255,.06),0 3px 8px rgba(0,0,0,.22);
-  font-weight:900!important;
-}
-.iconbtn:hover{
-  border-color:rgba(224,187,114,.38)!important;
-  color:var(--gold2)!important;
-}
-.print-option{
-  position:relative;
-  overflow:hidden;
-  min-height:120px;
-  transition:.2s ease;
-}
-.print-option:before{
-  content:"";
-  position:absolute;
-  width:72px;height:72px;
-  right:-18px;bottom:-18px;
-  border-radius:50%;
-  background:radial-gradient(circle,rgba(184,137,61,.18),transparent 70%);
-}
-.print-option:hover{
-  transform:translateY(-3px);
-  box-shadow:0 14px 28px rgba(0,0,0,.28);
-}
-.rules-tabs .btn.active{
-  background:
-    linear-gradient(180deg,rgba(184,137,61,.24),rgba(184,137,61,.1))!important;
-  border-color:rgba(224,187,114,.5)!important;
-  color:var(--gold2)!important;
-  box-shadow:inset 0 1px rgba(255,255,255,.09),0 5px 14px rgba(0,0,0,.2);
-}
-.mobile-nav button{
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  gap:3px;
-  font-size:11px;
-}
-.mobile-icon{
-  display:block;
-  font-size:19px;
-  line-height:1;
-}
-.mobile-nav button.active{
-  box-shadow:inset 0 0 0 1px rgba(224,187,114,.18);
-}
-@media(max-width:920px){
-  header .actions .btn{
-    font-size:initial!important;
-  }
-  header .actions .btn .ui-icon{
-    width:27px;height:27px;
-  }
-  header .actions .btn .label{
-    display:none;
-  }
-}
-
-</style></head><body class="visual-overhaul">${body}<script>setTimeout(()=>window.print(),250)<\/script>
-<nav class="mobile-nav" aria-label="Navigazione mobile">
-  <button id="mobileCatalogBtn" class="active"><span class="mobile-icon">▦</span><span>Catalogo</span></button>
-  <button id="mobileDeckBtn"><span class="mobile-icon">🂠</span><span>Mazzo</span></button>
-</nav>
-
-</body></html>`);
-  w.document.close();
-}
-function printDecklist(){
-  const d=state.deck, groups={};
-  Object.values(d.cards||{}).forEach(c=>(groups[typeGroup(c)]??=[]).push(c));
-  const body=`<h1>${escHtml(d.name||"Mazzo")}</h1>
-  <div class="meta"><b>Comandante:</b> ${escHtml(d.commander?.name||"—")} · <b>Tribe:</b> ${escHtml(d.tribe||"—")} · <b>Key:</b> ${escHtml(d.key||"—")} · <b>Bracket:</b> ${d.bracket||2}</div>
-  ${d.commander?`<div class="group"><h2>Comandante</h2><div class="row"><b>1</b><span>${escHtml(d.commander.name)}</span></div></div>`:""}
-  ${Object.entries(groups).map(([g,list])=>`<div class="group"><h2>${escHtml(g)}</h2>${list.sort((a,b)=>a.name.localeCompare(b.name)).map(c=>`<div class="row"><b>${c.qty}</b><span>${escHtml(c.name)}</span></div>`).join("")}</div>`).join("")}
-  <p><b>Totale:</b> ${totalCards()}/100</p>`;
-  openPrintDocument(`${d.name||"Mazzo"} - Decklist`,body);
-}
-function printValidation(){
-  const cards=Object.values(state.deck.cards||{}).sort((a,b)=>a.name.localeCompare(b.name));
-  const valid=cards.filter(c=>armyLegality(c).ok===true).length;
-  const invalid=cards.filter(c=>armyLegality(c).ok===false).length;
-  const pending=cards.length-valid-invalid;
-  const rows=cards.map(c=>{
-    const l=armyLegality(c), cls=l.ok===true?"ok":l.ok===false?"bad":"warn";
-    return `<div style="padding:8px 0;border-bottom:1px solid #ddd"><b class="${cls}">${l.ok===true?"VALIDA":l.ok===false?"NON VALIDA":"DA CONTROLLARE"}</b> · ${escHtml(c.name)}<div style="font-size:12px;color:#555;margin-top:3px">${escHtml(l.reason)}</div></div>`;
-  }).join("");
-  const body=`<h1>Report di validazione</h1><div class="meta">${escHtml(state.deck.name||"Mazzo")} · ${valid} valide · ${invalid} non valide · ${pending} da controllare</div>${rows}`;
-  openPrintDocument("Report di validazione",body);
-}
-function printProxies(){
-  const cards=[];
-  if(state.deck.commander)cards.push({...state.deck.commander,qty:1});
-  Object.values(state.deck.cards||{}).forEach(c=>{
-    for(let i=0;i<(c.qty||1);i++)cards.push(c);
-  });
-  const body=`<h1 style="margin-bottom:12px">${escHtml(state.deck.name||"Mazzo")} · Proxy</h1><div class="proxy-grid">
-  ${cards.map(c=>`<div class="proxy">${imgOf(c)?`<img src="${imgOf(c)}" alt="${escHtml(c.name)}">`:`<div class="proxy-missing">${escHtml(c.name)}</div>`}</div>`).join("")}</div>`;
-  const css=`
-  .proxy-grid{display:grid;grid-template-columns:repeat(3,63mm);gap:3mm;justify-content:center}
-  .proxy{width:63mm;height:88mm;overflow:hidden;border:1px solid #bbb;break-inside:avoid}
-  .proxy img{width:100%;height:100%;object-fit:cover;display:block}
-  .proxy-missing{height:100%;display:grid;place-items:center;text-align:center;padding:8mm}
-  @media print{body{margin:0}.proxy-grid{gap:2mm}h1{display:none}}`;
-  openPrintDocument("Foglio proxy",body,css);
-}
-function exportFullDeck(){
-  const payload={
-    format:"Commander Armies",
-    version:"2.6",
-    exportedAt:new Date().toISOString(),
-    deck:state.deck,
-    rules:getRules()
-  };
-  const blob=new Blob([JSON.stringify(payload,null,2)],{type:"application/json"});
-  const a=document.createElement("a");
-  a.href=URL.createObjectURL(blob);
-  a.download=(state.deck.name||"commander-armies").replace(/[^\w\-]+/g,"-")+"-completo.json";
-  a.click();URL.revokeObjectURL(a.href);
-}
-
-function saveDeck(){state.deck.name=$("#deckName").value.trim()||"Nuovo mazzo";state.deck.tribe=$("#tribe").value.trim();state.deck.key=$("#key").value.trim();localStorage.setItem(STORAGE_CURRENT,JSON.stringify(state.deck)); archiveCurrent();$("#saveState").textContent="✓ Salvato localmente"}
-function loadDeck(){try{const d=JSON.parse(localStorage.getItem(STORAGE_CURRENT));if(d)state.deck=d}catch(e){}$("#deckName").value=state.deck.name||"Nuovo mazzo";$("#tribe").value=state.deck.tribe||"";$("#key").value=state.deck.key||"";$("#bracket").value=String(state.deck.bracket||2);$("#commanderName").value=state.deck.commander?.name||"";renderDeck()}
-function totalCards(){return Object.values(state.deck.cards||{}).reduce((n,x)=>n+x.qty,0)+(state.deck.commander?1:0)}
-function renderDeck(){const cards=Object.values(state.deck.cards||{}),total=totalCards();$("#deckCount").textContent=`${total}/100 carte`;$("#mobileDeckCount").textContent=total; validateDeck();if(!cards.length&&!state.deck.commander){$("#deckList").innerHTML='<div class="empty">Aggiungi carte dal catalogo.</div>';return}const groups={};if(state.deck.commander)groups["Comandante"]=[{...state.deck.commander,qty:1,commander:true}];cards.forEach(c=>(groups[typeGroup(c)]??=[]).push(c));$("#deckList").innerHTML=Object.entries(groups).map(([g,list])=>`<div class="group-title">${g} · ${list.reduce((n,c)=>n+c.qty,0)}</div>${list.sort((a,b)=>a.name.localeCompare(b.name)).map(c=>`<div class="deck-row"><div class="qty">${c.qty}</div><div class="deck-card-name">${c.name}</div><div class="row-actions">${c.commander?"":`<button class="iconbtn" onclick="changeQty('${c.id}',-1)">−</button><button class="iconbtn" onclick="changeQty('${c.id}',1)">＋</button>`}</div></div>`).join("")}`).join("")}
-
-function commanderIdentityAllows(c){
-  const cmd=state.deck.commander?.color_identity||[];
-  const ci=c.color_identity||[];
-  return ci.every(x=>cmd.includes(x));
-}
-function permitsAnyNumber(c){
-  const text=(c.oracle_text||c.card_faces?.map(f=>f.oracle_text).join(" ")||"").toLowerCase();
-  return text.includes("a deck can have any number of cards named") || text.includes("a deck can have up to");
-}
-function isBasicLand(c){return (c.type_line||"").toLowerCase().includes("basic land")}
-function preliminaryLegality(c){
-  if(state.deck.commander && !commanderIdentityAllows(c)) return {ok:false,text:"L’identità di colore non rientra in quella del comandante."};
-  const existing=state.deck.cards?.[c.id]?.qty||0;
-  if(existing>=1 && !isBasicLand(c) && !permitsAnyNumber(c)) return {ok:false,text:"Commander usa normalmente una sola copia per carta, salvo eccezioni."};
-  return {ok:true,text:"Identità di colore e limite copie compatibili. La legalità Commander Armies completa verrà controllata dal database Tribe/Key."};
-}
-
-function addCard(c){const existing=state.deck.cards[c.id];state.deck.cards[c.id]=existing?{...existing,qty:existing.qty+1}:{...c,qty:1};renderDeck();saveDeck()}
-window.changeQty=(id,d)=>{const c=state.deck.cards[id];if(!c)return;c.qty+=d;if(c.qty<=0)delete state.deck.cards[id];renderDeck();saveDeck()};
-function cardHTML(c,commander=false){
-  const img=imgOf(c);
-  const copies=state.deck.cards?.[c.id]?.qty||0;
-  return `<article class="card">${copies?`<div class="card-copy">${copies}× nel mazzo</div>`:""}${img?`<img src="${img}" alt="${c.name}" loading="lazy">`:""}
-  <div class="card-body"><div class="card-name">${c.name}</div><div class="card-type">${c.type_line||""}</div>
-  <div class="card-actions"><button onclick='showCard(${JSON.stringify(c).replace(/'/g,"&#39;")},${commander})'>Dettagli</button>
-  <button class="add" onclick='${commander?"selectCommander":"addCard"}(${JSON.stringify(c).replace(/'/g,"&#39;")})'>${commander?"Scegli":"＋"}</button></div>
-  ${!commander&&copies?`<div class="small-note">${copies} copie presenti</div>`:""}<div class="bracket-pill">Bracket ${Number(getRules().brackets?.[c.name]||1)}</div></div></article>`;
+const $=s=>document.querySelector(s);
+const STORAGE="commanderArmiesBuild3";
+const TRIBES=["Advisor","Angel","Artificer","Assassin","Beast","Bird","Cat","Cleric","Demon","Dog","Dragon","Druid","Dwarf","Eldrazi","Elemental","Elf","Faerie","Goblin","Human","Knight","Merfolk","Minotaur","Monk","Mutant","Ninja","Orc","Phyrexian","Pirate","Rogue","Samurai","Shaman","Skeleton","Sliver","Soldier","Spirit","Vampire","Warrior","Wizard","Wolf","Zombie"];
+const KEYS={
+ "Danno":["damage","deals damage"],
+ "Sacrificio":["sacrifice","dies"],
+ "Segnalini":["counter","counters"],
+ "Cimitero":["graveyard","dies"],
+ "Pedine":["token","tokens"],
+ "Pescata":["draw a card","draw cards"],
+ "Equipaggiamento":["equipment","equip"],
+ "Incantesimi":["enchantment","aura"],
+ "Artefatti":["artifact"],
+ "Lifegain":["gain life","life you gained"]
 };
-$("#importInput").onchange=async e=>{
-  const file=e.target.files?.[0];if(!file)return;
-  try{
-    const data=JSON.parse(await file.text());const imported=data.decks||data;
-    if(!imported||typeof imported!=="object")throw new Error();
-    setArchive({...getArchive(),...imported});renderArchive();alert("Importazione completata.");
-  }catch(err){alert("File JSON non valido.");}
-  e.target.value="";
-};
+const state={name:"Nuovo mazzo",tribe:"Vampire",key:"Danno",bracket:2,commander:null,cards:{}};
 
-
-$("#closeCardModalBtn").onclick=()=>$("#cardModal").classList.remove("open");
-$("#cardModal").onclick=e=>{if(e.target===$("#cardModal"))$("#cardModal").classList.remove("open")};
-$("#detailAddBtn").onclick=()=>{
-  if(!currentDetailCard)return;
-  if(currentDetailCard.commander)selectCommander(currentDetailCard.card); else addCard(currentDetailCard.card);
-  $("#cardModal").classList.remove("open");
-};
-
-
-$("#statsBtn").onclick=()=>{renderStats();$("#statsModal").classList.add("open")};
-$("#closeStatsBtn").onclick=()=>$("#statsModal").classList.remove("open");
-$("#statsModal").onclick=e=>{if(e.target===$("#statsModal"))$("#statsModal").classList.remove("open")};
-$("#exportTxtBtn").onclick=exportTextDeck;
-$("#bulkImportBtn").onclick=()=>{$("#bulkModal").classList.add("open")};
-$("#closeBulkBtn").onclick=()=>$("#bulkModal").classList.remove("open");
-$("#bulkModal").onclick=e=>{if(e.target===$("#bulkModal"))$("#bulkModal").classList.remove("open")};
-$("#runBulkImportBtn").onclick=importBulkList;
-
-
-$("#rulesBtn").onclick=()=>{fillRulesUI();$("#rulesModal").classList.add("open")};
-$("#closeRulesBtn").onclick=()=>$("#rulesModal").classList.remove("open");
-$("#rulesModal").onclick=e=>{if(e.target===$("#rulesModal"))$("#rulesModal").classList.remove("open")};
-document.querySelectorAll("[data-rule-tab]").forEach(btn=>btn.onclick=()=>{
-  document.querySelectorAll("[data-rule-tab]").forEach(x=>x.classList.remove("active"));
-  document.querySelectorAll(".rule-pane").forEach(x=>x.classList.remove("active"));
-  btn.classList.add("active");$("#rule-"+btn.dataset.ruleTab).classList.add("active");
-});
-$("#saveRulesBtn").onclick=()=>{setRules(parseRulesFromUI());renderDeck();validateDeck();$("#rulesModal").classList.remove("open")};
-$("#resetRulesBtn").onclick=()=>{if(confirm("Ripristinare le regole predefinite?")){setRules(DEFAULT_RULES);fillRulesUI();renderDeck();validateDeck()}};
-
-
-$("#suggestBtn").onclick=()=>{$("#suggestModal").classList.add("open");loadSuggestions()};
-$("#refreshSuggestionsBtn").onclick=loadSuggestions;
-$("#closeSuggestBtn").onclick=()=>$("#suggestModal").classList.remove("open");
-$("#suggestModal").onclick=e=>{if(e.target===$("#suggestModal"))$("#suggestModal").classList.remove("open")};
-
-
-$("#printBtn").onclick=()=>$("#printModal").classList.add("open");
-$("#closePrintBtn").onclick=()=>$("#printModal").classList.remove("open");
-$("#printModal").onclick=e=>{if(e.target===$("#printModal"))$("#printModal").classList.remove("open")};
-$("#printDecklistBtn").onclick=printDecklist;
-$("#printProxyBtn").onclick=printProxies;
-$("#printValidationBtn").onclick=printValidation;
-$("#exportFullBtn").onclick=exportFullDeck;
-
-
-const mobileCatalogBtn=document.getElementById("mobileCatalogBtn");
-const mobileDeckBtn=document.getElementById("mobileDeckBtn");
-function setMobileView(view){
-  document.body.classList.toggle("mobile-deck",view==="deck");
-  mobileCatalogBtn?.classList.toggle("active",view==="catalog");
-  mobileDeckBtn?.classList.toggle("active",view==="deck");
-  window.scrollTo({top:0,behavior:"smooth"});
+function fillSelects(){
+ $("#tribe").innerHTML=TRIBES.map(x=>`<option>${x}</option>`).join("");
+ $("#key").innerHTML=Object.keys(KEYS).map(x=>`<option>${x}</option>`).join("");
+ $("#tribe").value=state.tribe;$("#key").value=state.key;$("#bracket").value=String(state.bracket);
 }
-mobileCatalogBtn?.addEventListener("click",()=>setMobileView("catalog"));
-mobileDeckBtn?.addEventListener("click",()=>setMobileView("deck"));
-
-loadDeck();
+function imageOf(c){return c.image_uris?.normal||c.card_faces?.[0]?.image_uris?.normal||""}
+function textOf(c){return [c.name,c.type_line,c.oracle_text,c.card_faces?.map(f=>[f.name,f.type_line,f.oracle_text].join(" ")).join(" ")].filter(Boolean).join(" ").toLowerCase()}
+function legal(c){
+ if(!state.tribe&&!state.key)return {ok:null,reason:"Scegli Tribe e Key."};
+ const t=textOf(c),tribe=(state.tribe||"").toLowerCase(),terms=KEYS[state.key]||[];
+ if(t.includes(tribe))return {ok:true,reason:"Corrisponde alla Tribe."};
+ if(terms.some(x=>t.includes(x)))return {ok:true,reason:"Corrisponde alla Key."};
+ if(["sol ring","arcane signet","command tower"].includes(c.name.toLowerCase()))return {ok:true,reason:"Evergreen."};
+ return {ok:false,reason:"Non corrisponde a Tribe o Key."};
+}
+function save(){
+ state.name=$("#deckName").value.trim()||"Nuovo mazzo";state.tribe=$("#tribe").value;state.key=$("#key").value;state.bracket=Number($("#bracket").value);
+ localStorage.setItem(STORAGE,JSON.stringify(state));renderDeck();
+}
+function load(){
+ try{Object.assign(state,JSON.parse(localStorage.getItem(STORAGE)||"{}"))}catch(e){}
+ $("#deckName").value=state.name||"Nuovo mazzo";fillSelects();renderDeck();
+}
+function total(){return (state.commander?1:0)+Object.values(state.cards).reduce((n,c)=>n+c.qty,0)}
+function addCard(c){if(state.commander?.id===c.id)return;state.cards[c.id]?state.cards[c.id].qty++:state.cards[c.id]={...c,qty:1};save()}
+function changeQty(id,d){const c=state.cards[id];if(!c)return;c.qty+=d;if(c.qty<=0)delete state.cards[id];save()}
+window.changeQty=changeQty;
+function renderDeck(){
+ const cb=$("#commanderBox");
+ cb.innerHTML=state.commander?`<img src="${imageOf(state.commander)}"><div><h3>${state.commander.name}</h3><div class="muted">${state.commander.type_line||""}</div><div class="muted">Colori: ${(state.commander.color_identity||[]).join(" ")||"Incolore"}</div></div>`:
+ `<div><h3>Nessun comandante</h3><div class="muted">Scegli il comandante per impostare l’identità colore.</div></div>`;
+ const cards=Object.values(state.cards).sort((a,b)=>a.name.localeCompare(b.name));
+ $("#decklist").innerHTML=cards.length?cards.map(c=>{const l=legal(c);return `<div class="deckrow ${l.ok?"ok":"bad"}"><div class="qty">${c.qty}</div><div><div class="deckname">${c.name}</div><div class="reason">${l.reason}</div></div><div class="rowbuttons"><button class="smallbtn" onclick="changeQty('${c.id}',-1)">−</button><button class="smallbtn" onclick="changeQty('${c.id}',1)">＋</button></div></div>`}).join(""):`<div class="empty" style="min-height:180px">Nessuna carta aggiunta.</div>`;
+ $("#total").textContent=`${total()}/100`;
+ const bad=cards.filter(c=>!legal(c).ok).length;
+ $("#validation").textContent=!state.commander?"Manca il comandante":bad?`${bad} carte da controllare`:total()===100?"Mazzo completo":"Mazzo valido, ma incompleto";
+}
+function cardMarkup(c,commander=false){
+ const l=legal(c);return `<article class="card"><img loading="lazy" src="${imageOf(c)}" alt=""><div class="cardbody"><div class="cardname">${c.name}</div><div class="cardtype">${c.type_line||""}</div><div class="cardactions"><button class="detailbtn" data-detail="${c.id}">Dettagli</button><button class="addbtn" data-${commander?"commander":"add"}="${c.id}">+</button></div></div></article>`;
+}
+let currentCards=[];
+function bindCards(root,commander=false){
+ root.querySelectorAll("[data-detail]").forEach(b=>b.onclick=()=>showDetail(currentCards.find(c=>c.id===b.dataset.detail)));
+ root.querySelectorAll(commander?"[data-commander]":"[data-add]").forEach(b=>b.onclick=()=>{
+  const c=currentCards.find(x=>x.id===(commander?b.dataset.commander:b.dataset.add));
+  if(commander){state.commander=c;save();$("#commanderModal").classList.remove("open");searchCards()}else addCard(c);
+ });
+}
+async function fetchCards(query,commander=false){
+ const status=commander?$("#commanderStatus"):$("#status"),root=commander?$("#commanderResults"):$("#cards");
+ status.textContent="Ricerca in corso…";root.innerHTML="";
+ try{
+  const res=await fetch(`https://api.scryfall.com/cards/search?q=${encodeURIComponent(query)}&order=edhrec&unique=cards`);
+  const data=await res.json();if(!res.ok)throw new Error(data.details||"Nessun risultato");
+  currentCards=data.data;
+  if(!commander){
+   const f=$("#legalFilter").value; if(f)currentCards=currentCards.filter(c=>f==="legal"?legal(c).ok:!legal(c).ok);
+   $("#catalogCount").textContent=`${currentCards.length} risultati`;
+  }
+  root.innerHTML=currentCards.length?currentCards.slice(0,60).map(c=>cardMarkup(c,commander)).join(""):`<div class="empty">Nessun risultato.</div>`;
+  status.textContent=commander?"Scegli una carta come comandante.":"Clicca + per aggiungere una carta.";
+  bindCards(root,commander);
+ }catch(e){status.textContent=e.message;root.innerHTML=`<div class="empty">Ricerca non riuscita.</div>`}
+}
+function searchCards(){
+ save();let q=$("#search").value.trim()||"*";const type=$("#typeFilter").value;
+ if(type)q+=` type:${type}`;if(state.commander?.color_identity?.length)q+=` id<=${state.commander.color_identity.join("")}`;
+ fetchCards(q,false);
+}
+function showDetail(c){
+ if(!c)return;const l=legal(c);$("#detailTitle").textContent=c.name;$("#detailName").textContent=c.name;$("#detailImg").src=imageOf(c);
+ $("#detailType").textContent=c.type_line||"";$("#detailOracle").textContent=c.oracle_text||c.card_faces?.map(f=>f.oracle_text).filter(Boolean).join("\n\n")||"";
+ $("#detailLegal").textContent=`Commander Armies: ${l.reason}`;$("#detailLegal").style.color=l.ok?"var(--green)":"var(--red)";$("#detailModal").classList.add("open");
+}
+$("#searchBtn").onclick=searchCards;$("#search").onkeydown=e=>{if(e.key==="Enter")searchCards()};
+$("#commanderBtn").onclick=()=>$("#commanderModal").classList.add("open");
+$("#commanderSearchBtn").onclick=()=>{const q=$("#commanderSearch").value.trim();if(q)fetchCards(`${q} is:commander`,true)};
+$("#commanderSearch").onkeydown=e=>{if(e.key==="Enter")$("#commanderSearchBtn").click()};
+document.querySelectorAll("[data-close]").forEach(b=>b.onclick=()=>$("#"+b.dataset.close).classList.remove("open"));
+document.querySelectorAll(".modal").forEach(m=>m.onclick=e=>{if(e.target===m)m.classList.remove("open")});
+["deckName","tribe","key","bracket"].forEach(id=>$("#"+id).onchange=save);
+$("#saveBtn").onclick=save;
+$("#newBtn").onclick=()=>{if(confirm("Creare un nuovo mazzo?")){localStorage.removeItem(STORAGE);location.reload()}};
+$("#clearBtn").onclick=()=>{if(confirm("Rimuovere tutte le carte?")){state.cards={};save()}};
+$("#exportBtn").onclick=()=>{save();const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([JSON.stringify(state,null,2)],{type:"application/json"}));a.download=(state.name||"mazzo")+".json";a.click()};
+$("#catalogTab").onclick=()=>{document.body.classList.remove("showdeck");$("#catalogTab").classList.add("active");$("#deckTab").classList.remove("active")};
+$("#deckTab").onclick=()=>{document.body.classList.add("showdeck");$("#deckTab").classList.add("active");$("#catalogTab").classList.remove("active")};
+load();
 </script>
-
-<nav class="mobile-nav" aria-label="Navigazione mobile">
-  <button id="mobileCatalogBtn" class="active"><span class="mobile-icon">▦</span><span>Catalogo</span></button>
-  <button id="mobileDeckBtn"><span class="mobile-icon">🂠</span><span>Mazzo</span></button>
-</nav>
-
 </body>
 </html>
