@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Commander Armies</title>
+<title>Armies Builder</title>
 <style>
 :root{
  --bg:#07090e;--panel:#111722;--panel2:#171e2b;--line:#2a3444;
@@ -220,11 +220,214 @@ body.builder-mode .builder-hero{display:grid}
  .activity-copy strong{font-size:17px}
 }
 
+
+/* BUILD 3.4 — APPROVED ILLUSTRATED HOME */
+.fantasy-home{
+  max-width:none!important;
+  margin:0!important;
+  padding:0!important;
+  min-height:calc(100vh - 67px);
+  background:#05070a;
+}
+.fantasy-frame{
+  min-height:calc(100vh - 67px);
+  border:1px solid #9b6b2d;
+  background:
+    linear-gradient(#050608aa,#050608aa),
+    url("assets/background.jpg") center top/cover no-repeat;
+  box-shadow:inset 0 0 0 3px #050505,inset 0 0 0 4px #60431d;
+  padding:0 18px 14px;
+}
+.fantasy-top{
+  min-height:74px;
+  margin:0 -18px;
+  padding:0 22px;
+  display:grid;
+  grid-template-columns:220px 1fr 280px;
+  align-items:center;
+  border-bottom:2px solid #7c5526;
+  background:linear-gradient(180deg,#080a0d,#101114 50%,#050608);
+  box-shadow:0 8px 25px #000a;
+}
+.fantasy-home-button{
+  justify-self:start;
+  height:58px;
+  padding:0 24px;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  color:#e9c77d;
+  background:linear-gradient(180deg,#24201a,#0e0e0e);
+  border:1px solid #8e642d;
+  clip-path:polygon(8% 0,92% 0,100% 18%,100% 82%,92% 100%,8% 100%,0 82%,0 18%);
+  font-family:Georgia,serif;
+}
+.fantasy-home-button span{font-size:27px}
+.fantasy-title{
+  text-align:center;
+  font-family:Georgia,serif;
+  font-size:clamp(28px,4vw,58px);
+  font-weight:900;
+  color:#e9c67a;
+  text-shadow:0 2px #000,0 0 18px #9a6328;
+}
+.fantasy-top-actions{display:flex;justify-content:flex-end;gap:22px}
+.fantasy-top-actions button{
+  border:0;background:transparent;color:#d8b66d;display:flex;flex-direction:column;align-items:center;gap:2px
+}
+.fantasy-top-actions span{font-size:25px}
+.fantasy-top-actions small{font-family:Georgia,serif;font-size:11px}
+
+.fantasy-hero{
+  min-height:455px;
+  display:grid;
+  grid-template-columns:minmax(250px,.75fr) minmax(420px,1.5fr) minmax(230px,.65fr);
+  align-items:center;
+  gap:18px;
+  padding:12px 0 4px;
+  background:
+    linear-gradient(90deg,#050607c9,transparent 25%,transparent 75%,#050607c9),
+    url("assets/background.jpg") center/cover no-repeat;
+  border-bottom:1px solid #7d5727;
+}
+.approved-logo{
+  width:min(690px,100%);
+  justify-self:center;
+  filter:drop-shadow(0 18px 28px #000d);
+  mix-blend-mode:screen;
+}
+.hero-copy-panel,.active-deck-panel{
+  background:linear-gradient(145deg,#0b0c0eea,#171411e8);
+  border:1px solid #8a612d;
+  box-shadow:inset 0 0 0 2px #000,0 12px 34px #000b;
+  padding:22px;
+  color:#e9dfcb;
+}
+.hero-copy-panel h2{
+  margin:0 0 18px;
+  font-family:Georgia,serif;
+  color:#e6c477;
+  font-size:20px;
+  border-bottom:1px solid #7b5427;
+  padding-bottom:12px;
+}
+.hero-copy-panel p{font-family:Georgia,serif;font-size:16px;line-height:1.48;margin:8px 0}
+.hero-copy-panel em{color:#e4b84e;font-style:normal}
+.active-deck-panel{text-align:center;align-self:start;margin-top:20px}
+.active-deck-panel span{display:block;color:#d9b66a;font-family:Georgia,serif;border-bottom:1px solid #725026;padding-bottom:8px}
+.active-deck-panel strong{display:block;margin:16px 0;color:#ddd2bc;font-family:Georgia,serif}
+.active-deck-panel button{
+  height:38px;padding:0 16px;background:linear-gradient(#493217,#16100a);
+  border:1px solid #b17b31;color:#efcf83;font-family:Georgia,serif;font-weight:800
+}
+
+.fantasy-actions{
+  display:grid;
+  grid-template-columns:repeat(6,minmax(0,1fr));
+  gap:12px;
+  padding:14px 0;
+}
+.fantasy-card{
+  min-height:350px;
+  padding:12px 12px 16px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  text-align:center;
+  color:#f4e8d2;
+  border:1px solid #9f7032;
+  background:#111;
+  box-shadow:inset 0 0 0 2px #000,0 10px 25px #0009;
+  position:relative;
+  overflow:hidden;
+  transition:.18s ease;
+  clip-path:polygon(5% 0,95% 0,100% 4%,100% 96%,95% 100%,5% 100%,0 96%,0 4%);
+}
+.fantasy-card:before{
+  content:"";position:absolute;inset:0;opacity:.48;pointer-events:none;
+  background:radial-gradient(circle at 50% 25%,currentColor,transparent 54%);
+}
+.fantasy-card:hover{transform:translateY(-5px);filter:brightness(1.08)}
+.fantasy-card img{
+  width:100%;height:190px;object-fit:cover;object-position:center 35%;
+  border-radius:50%;clip-path:circle(43% at 50% 46%);
+  filter:contrast(1.06) saturate(1.12);
+  position:relative;z-index:1;
+}
+.fantasy-card strong{
+  position:relative;z-index:1;
+  font-family:Georgia,serif;
+  font-size:clamp(15px,1.4vw,22px);
+  color:#e8c575;
+  margin:6px 0 8px;
+}
+.fantasy-card small{
+  position:relative;z-index:1;
+  color:#e5dccb;
+  font-family:Georgia,serif;
+  font-size:14px;
+  line-height:1.35;
+}
+.card-arrow{
+  margin-top:auto;
+  width:76%;height:32px;
+  display:grid;place-items:center;
+  background:linear-gradient(180deg,#315f9b,#0c2748);
+  border:1px solid #d2a95f;
+  color:#f4d078;
+  font-size:26px;
+  clip-path:polygon(12% 0,88% 0,100% 50%,88% 100%,12% 100%,0 50%);
+  position:relative;z-index:1;
+}
+.fantasy-card.blue{color:#1464c0;background:linear-gradient(#07172d,#07101c)}
+.fantasy-card.green{color:#477b32;background:linear-gradient(#0d2410,#07130b)}
+.fantasy-card.purple{color:#713a9e;background:linear-gradient(#25102f,#100717)}
+.fantasy-card.red{color:#9b321c;background:linear-gradient(#33120b,#160807)}
+.fantasy-card.gold{color:#9f6414;background:linear-gradient(#35220b,#181006)}
+.fantasy-card.steel{color:#416b7c;background:linear-gradient(#10252d,#071116)}
+.fantasy-card.green .card-arrow{background:linear-gradient(#486d20,#183108)}
+.fantasy-card.purple .card-arrow{background:linear-gradient(#673a82,#251333)}
+.fantasy-card.red .card-arrow{background:linear-gradient(#8a3018,#3c1008)}
+.fantasy-card.gold .card-arrow{background:linear-gradient(#8a5b13,#3b2506)}
+.fantasy-card.steel .card-arrow{background:linear-gradient(#315e70,#112d39)}
+
+.fantasy-footer{
+  display:grid;grid-template-columns:repeat(5,1fr);
+  border-top:1px solid #8c622e;
+  background:linear-gradient(#111214,#060708);
+  min-height:72px;
+}
+.fantasy-footer div{display:flex;align-items:center;justify-content:center;gap:12px;border-right:1px solid #5d431f;color:#c8a65f}
+.fantasy-footer div:last-child{border-right:0}
+.fantasy-footer b{font-size:28px}
+.fantasy-footer span{font-family:Georgia,serif;font-size:12px}
+.fantasy-footer strong{color:#e5c779;font-weight:400}
+
+@media(max-width:1150px){
+  .fantasy-top{grid-template-columns:160px 1fr 180px}
+  .fantasy-hero{grid-template-columns:1fr 1.4fr}
+  .active-deck-panel{display:none}
+  .fantasy-actions{grid-template-columns:repeat(3,1fr)}
+}
+@media(max-width:720px){
+  .fantasy-frame{padding:0 8px 8px}
+  .fantasy-top{margin:0 -8px;grid-template-columns:66px 1fr 76px;padding:0 8px}
+  .fantasy-home-button{width:55px;padding:0;justify-content:center}.fantasy-home-button strong{display:none}
+  .fantasy-title{font-size:28px}
+  .fantasy-top-actions button:first-child{display:none}.fantasy-top-actions small{display:none}
+  .fantasy-hero{grid-template-columns:1fr;min-height:520px;padding:12px}
+  .approved-logo{grid-row:1;max-height:310px;object-fit:contain}
+  .hero-copy-panel{grid-row:2}
+  .fantasy-actions{grid-template-columns:repeat(2,1fr);gap:8px}
+  .fantasy-card{min-height:290px}.fantasy-card img{height:145px}.fantasy-card small{font-size:12px}
+  .fantasy-footer{grid-template-columns:1fr 1fr}.fantasy-footer div{min-height:62px}.fantasy-footer div:nth-child(5){grid-column:1/-1}
+}
+
 </style>
 </head>
 <body>
 <header class="topbar">
- <button class="logo logo-button" id="logoHomeBtn" aria-label="Torna alla Home">CA</button><button class="brand brand-button" id="brandHomeBtn">Commander Armies</button><div class="badge">BUILD 3.3 · HOME</div>
+ <button class="logo logo-button" id="logoHomeBtn" aria-label="Torna alla Home">CA</button><button class="brand brand-button" id="brandHomeBtn">Armies Builder</button><div class="badge">BUILD 3.4 · ILLUSTRATED UI</div>
  <div class="spacer"></div>
  <div class="toolbar"><button class="btn art-btn" id="homeBtn"><span class="button-rune">⌂</span><span class="text">Home</span></button>
    <button class="btn art-btn" id="newBtn"><span class="button-rune">✦</span><span class="text">Nuovo</span></button>
@@ -235,86 +438,84 @@ body.builder-mode .builder-hero{display:grid}
 
 
 
-<section id="homeView" class="home-view">
-  <div class="home-backdrop">
-    <svg class="home-sigil" viewBox="0 0 500 500" aria-hidden="true">
-      <defs>
-        <radialGradient id="homeGlow"><stop stop-color="#efd18b" stop-opacity=".36"/><stop offset="1" stop-color="#efd18b" stop-opacity="0"/></radialGradient>
-        <linearGradient id="homeGold" x1="0" x2="1"><stop stop-color="#f4d78d"/><stop offset=".45" stop-color="#a06d25"/><stop offset=".72" stop-color="#edc36c"/><stop offset="1" stop-color="#704716"/></linearGradient>
-      </defs>
-      <circle cx="250" cy="250" r="230" fill="url(#homeGlow)"/>
-      <circle cx="250" cy="250" r="176" fill="none" stroke="url(#homeGold)" stroke-width="8"/>
-      <circle cx="250" cy="250" r="142" fill="none" stroke="#d8b568" stroke-width="3" stroke-dasharray="5 13"/>
-      <path d="M250 75 L287 176 L395 181 L309 246 L339 350 L250 292 L161 350 L191 246 L105 181 L213 176 Z" fill="none" stroke="url(#homeGold)" stroke-width="9"/>
-      <path d="M250 132 L271 205 L345 209 L285 252 L305 325 L250 282 L195 325 L215 252 L155 209 L229 205 Z" fill="#111722" stroke="#f1cf86" stroke-width="5"/>
-      <path d="M250 171 L274 225 L333 230 L288 269 L301 328 L250 298 L199 328 L212 269 L167 230 L226 225 Z" fill="#a52f3f" opacity=".9"/>
-      <circle cx="250" cy="250" r="31" fill="url(#homeGold)"/>
-      <text x="250" y="261" text-anchor="middle" font-size="31" font-weight="900" fill="#181006">CA</text>
-    </svg>
-    <div class="home-title">
-      <span class="home-kicker">Magic: The Gathering · Formato personalizzato</span>
-      <h1>Commander<br><em>Armies</em></h1>
-      <p>Scegli un comandante, raduna una Tribe e costruisci l’armata attorno alla tua Key.</p>
+
+<section id="homeView" class="home-view fantasy-home">
+  <div class="fantasy-frame">
+    <div class="fantasy-top">
+      <button class="fantasy-home-button" aria-label="Home">
+        <span>⌂</span><strong>HOME</strong>
+      </button>
+      <div class="fantasy-title">ARMIES BUILDER</div>
+      <div class="fantasy-top-actions">
+        <button data-home-action="rules"><span>▤</span><small>REGOLE</small></button>
+        <button data-home-action="settings"><span>⚙</span><small>IMPOSTAZIONI</small></button>
+      </div>
     </div>
-  </div>
 
-  <div class="activity-grid">
-    <button class="activity-card activity-primary" data-open-view="builder">
-      <span class="activity-icon">
-        <svg viewBox="0 0 64 64"><path d="M13 8h30l8 8v40H13z"/><path d="M43 8v10h10M22 29h20M22 38h20M22 47h13"/></svg>
-      </span>
-      <span class="activity-copy"><strong>Crea un mazzo</strong><small>Apri il Builder e costruisci una nuova armata.</small></span>
-      <span class="activity-arrow">›</span>
-    </button>
+    <div class="fantasy-hero">
+      <div class="hero-copy-panel">
+        <h2>COSTRUISCI. GUIDA. CONQUISTA.</h2>
+        <p><strong>Armies Builder</strong> è l’app per costruire e gestire i tuoi mazzi del formato <em>Commander Armies</em>.</p>
+        <p>Scegli la tua Tribe, la tua Key e raduna il tuo esercito.</p>
+      </div>
+      <img class="approved-logo" src="assets/logo.png" alt="Armies Builder">
+      <div class="active-deck-panel">
+        <span>MAZZO ATTIVO</span>
+        <strong id="homeActiveDeck">Nessun mazzo selezionato</strong>
+        <button data-open-view="builder">APRI BUILDER</button>
+      </div>
+    </div>
 
-    <button class="activity-card" data-home-action="archive">
-      <span class="activity-icon">
-        <svg viewBox="0 0 64 64"><path d="M10 16h44v38H10z"/><path d="M7 9h50v12H7zM24 31h16"/></svg>
-      </span>
-      <span class="activity-copy"><strong>Archivio mazzi</strong><small>Visualizza e gestisci le armate salvate.</small></span>
-      <span class="activity-arrow">›</span>
-    </button>
+    <div class="fantasy-actions">
+      <button class="fantasy-card blue" data-open-view="builder">
+        <img src="assets/create.png" alt="">
+        <strong>CREA UN MAZZO</strong>
+        <small>Inizia a costruire il tuo esercito</small>
+        <span class="card-arrow">›</span>
+      </button>
+      <button class="fantasy-card green" data-home-action="archive">
+        <img src="assets/archive.png" alt="">
+        <strong>ARCHIVIO MAZZI</strong>
+        <small>Gestisci e modifica i tuoi mazzi salvati</small>
+        <span class="card-arrow">›</span>
+      </button>
+      <button class="fantasy-card purple" data-home-action="analysis">
+        <img src="assets/analysis.png" alt="">
+        <strong>ANALISI DEL MAZZO</strong>
+        <small>Controlla validità, regole e sinergie</small>
+        <span class="card-arrow">›</span>
+      </button>
+      <button class="fantasy-card red" data-home-action="rules">
+        <img src="assets/rules.png" alt="">
+        <strong>REGOLE ARMIES</strong>
+        <small>Consulta tutte le regole del formato</small>
+        <span class="card-arrow">›</span>
+      </button>
+      <button class="fantasy-card gold" data-home-action="print">
+        <img src="assets/print.png" alt="">
+        <strong>STAMPA ED ESPORTA</strong>
+        <small>Stampa, esporta e condividi i tuoi mazzi</small>
+        <span class="card-arrow">›</span>
+      </button>
+      <button class="fantasy-card steel" data-home-action="settings">
+        <img src="assets/settings.png" alt="">
+        <strong>IMPOSTAZIONI</strong>
+        <small>Personalizza l’app secondo le tue preferenze</small>
+        <span class="card-arrow">›</span>
+      </button>
+    </div>
 
-    <button class="activity-card" data-home-action="analysis">
-      <span class="activity-icon">
-        <svg viewBox="0 0 64 64"><path d="M12 53V29h10v24M27 53V18h10v35M42 53V9h10v44M8 53h49"/></svg>
-      </span>
-      <span class="activity-copy"><strong>Analisi del mazzo</strong><small>Controlla curva di mana, tipi e composizione.</small></span>
-      <span class="activity-arrow">›</span>
-    </button>
-
-    <button class="activity-card" data-home-action="rules">
-      <span class="activity-icon">
-        <svg viewBox="0 0 64 64"><path d="M13 9h29l9 9v37H13z"/><path d="M42 9v11h11M21 29h22M21 38h22M21 47h15"/></svg>
-      </span>
-      <span class="activity-copy"><strong>Regole Armies</strong><small>Consulta Tribe, Key, validità ed eccezioni.</small></span>
-      <span class="activity-arrow">›</span>
-    </button>
-
-    <button class="activity-card" data-home-action="print">
-      <span class="activity-icon">
-        <svg viewBox="0 0 64 64"><path d="M18 9h28v16H18zM17 44h30v12H17z"/><path d="M12 25h40a6 6 0 0 1 6 6v16H47v-3H17v3H6V31a6 6 0 0 1 6-6z"/><circle cx="48" cy="33" r="2"/></svg>
-      </span>
-      <span class="activity-copy"><strong>Stampa ed esporta</strong><small>Esporta il mazzo o prepara la lista da stampare.</small></span>
-      <span class="activity-arrow">›</span>
-    </button>
-
-    <button class="activity-card" data-home-action="settings">
-      <span class="activity-icon">
-        <svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="10"/><path d="M32 7v8M32 49v8M7 32h8M49 32h8M14 14l6 6M44 44l6 6M50 14l-6 6M20 44l-6 6"/></svg>
-      </span>
-      <span class="activity-copy"><strong>Impostazioni</strong><small>Configura il comportamento dell’app e i dati locali.</small></span>
-      <span class="activity-arrow">›</span>
-    </button>
-  </div>
-
-  <div class="home-footer-note">
-    <span class="status-dot"></span>
-    <span>Dati salvati localmente nel browser · Catalogo carte fornito da Scryfall</span>
+    <div class="fantasy-footer">
+      <div><b>⚔</b><span>FORMATO<br><strong>Commander Armies</strong></span></div>
+      <div><b>♟</b><span>GIOCATORI<br><strong>3–6</strong></span></div>
+      <div><b>♛</b><span>BRACKET<br><strong>UPGRADED</strong></span></div>
+      <div><b>▱</b><span>TRIBE + KEY<br><strong>Regola principale</strong></span></div>
+      <div><b>✦</b><span>STRATEGIA<br><strong>Costruisci. Adatta. Vinci.</strong></span></div>
+    </div>
   </div>
 </section>
 
-<section class="illustrated-hero builder-hero" aria-label="Commander Armies">
+<section class="illustrated-hero builder-hero" aria-label="Armies Builder">
   <div class="hero-art hero-left">
     <svg viewBox="0 0 320 190" role="img" aria-label="Stendardo fantasy">
       <defs>
@@ -330,7 +531,7 @@ body.builder-mode .builder-hero{display:grid}
   </div>
   <div class="hero-copy">
     <span class="eyebrow">Costruisci la tua armata</span>
-    <h1>Commander Armies</h1>
+    <h1>Armies Builder</h1>
     <p>Un comandante. Una Tribe. Una Key. Cento carte per guidare l’esercito.</p>
   </div>
   <div class="hero-art hero-right">
@@ -504,6 +705,8 @@ function addCard(c){if(state.commander?.id===c.id)return;state.cards[c.id]?state
 function changeQty(id,d){const c=state.cards[id];if(!c)return;c.qty+=d;if(c.qty<=0)delete state.cards[id];save()}
 window.changeQty=changeQty;
 function renderDeck(){
+ const homeDeck=$("#homeActiveDeck");
+ if(homeDeck)homeDeck.textContent=state.name&&state.name!=="Nuovo mazzo"?state.name:"Nessun mazzo selezionato";
  const cb=$("#commanderBox");
  cb.innerHTML=state.commander?`<img src="${imageOf(state.commander)}"><div><h3>${state.commander.name}</h3><div class="muted">${state.commander.type_line||""}</div><div class="muted">Colori: ${(state.commander.color_identity||[]).join(" ")||"Incolore"}</div></div>`:
  `<div><h3>Nessun comandante</h3><div class="muted">Scegli il comandante per impostare l’identità colore.</div></div>`;
@@ -595,7 +798,7 @@ function searchCards(){
 function showDetail(c){
  if(!c)return;const l=legal(c);$("#detailTitle").textContent=c.name;$("#detailName").textContent=c.name;$("#detailImg").src=imageOf(c);
  $("#detailType").textContent=c.type_line||"";$("#detailOracle").textContent=c.oracle_text||c.card_faces?.map(f=>f.oracle_text).filter(Boolean).join("\n\n")||"";
- $("#detailLegal").textContent=`Commander Armies: ${l.reason}`;$("#detailLegal").style.color=l.ok?"var(--green)":"var(--red)";$("#detailModal").classList.add("open");
+ $("#detailLegal").textContent=`Armies Builder: ${l.reason}`;$("#detailLegal").style.color=l.ok?"var(--green)":"var(--red)";$("#detailModal").classList.add("open");
 }
 $("#searchBtn").onclick=searchCards;
 $("#search").onkeydown=e=>{if(e.key==="Enter")searchCards()};
@@ -638,7 +841,7 @@ document.querySelectorAll("[data-open-view='builder']").forEach(btn=>btn.onclick
 const activityContent={
  archive:{icon:"▤",title:"Archivio mazzi",text:"L’archivio completo verrà collegato ai mazzi salvati. Per ora puoi aprire il Builder e continuare a lavorare sul mazzo salvato nel browser."},
  analysis:{icon:"◫",title:"Analisi del mazzo",text:"L’analisi mostrerà curva di mana, distribuzione dei tipi, colori e composizione dell’armata. Apri il Builder per modificare il mazzo corrente."},
- rules:{icon:"⚖",title:"Regole Commander Armies",text:"Qui troveranno posto Tribe, Key, carte Evergreen, bracket ed eccezioni amministrative del formato."},
+ rules:{icon:"⚖",title:"Regole Armies Builder",text:"Qui troveranno posto Tribe, Key, carte Evergreen, bracket ed eccezioni amministrative del formato."},
  print:{icon:"▣",title:"Stampa ed esporta",text:"Puoi già esportare il mazzo corrente in formato JSON dal Builder. Le stampe grafiche verranno raccolte in questa sezione."},
  settings:{icon:"⚙",title:"Impostazioni",text:"Questa sezione ospiterà configurazione locale, importazione dei dati e preferenze dell’app."}
 };
