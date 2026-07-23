@@ -1,2 +1,0 @@
-# Mtg-armies
-Deck builder
