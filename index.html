@@ -36,7 +36,7 @@ background:linear-gradient(180deg,#161d29,#0f141d);box-shadow:0 20px 55px #0006;
 .panel{background:linear-gradient(180deg,#151c27,#0e131b);border:1px solid var(--line);border-radius:18px;overflow:hidden;box-shadow:0 22px 60px #0006}
 .panelhead{display:flex;align-items:center;gap:10px;padding:14px 16px;border-bottom:1px solid var(--line);background:#ffffff05}
 .panelhead h2{font-size:15px;margin:0}.panelhead .grow{flex:1}
-.searchrow{display:grid;grid-template-columns:1fr 180px 180px auto;gap:10px;padding:14px;border-bottom:1px solid var(--line)}
+.searchrow{display:grid;grid-template-columns:minmax(220px,1fr) 180px 170px 170px auto auto;gap:10px;padding:14px;border-bottom:1px solid var(--line)}
 .searchrow input,.searchrow select{height:42px;border-radius:10px;border:1px solid #ffffff1d;background:#090d14;color:var(--text);padding:0 10px}
 .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:14px;padding:14px;min-height:420px}
 .card{position:relative;background:#141a23;border:1px solid #ffffff18;border-radius:15px;overflow:hidden;box-shadow:0 12px 30px #0007;transition:.18s}
@@ -128,13 +128,105 @@ background:linear-gradient(180deg,#161d29,#0f141d);box-shadow:0 20px 55px #0006;
  .hero-copy{padding:20px 8px}
 }
 
+
+.active-filters{
+  display:flex;flex-wrap:wrap;gap:7px;padding:10px 14px;
+  border-bottom:1px solid var(--line);background:#090d1455;
+}
+.filter-chip{
+  display:inline-flex;align-items:center;gap:6px;padding:5px 9px;border-radius:999px;
+  border:1px solid #d6a64f3d;background:#d6a64f12;color:#e5c77f;font-size:11px;font-weight:800;
+}
+.filter-chip.neutral{border-color:#ffffff1b;background:#ffffff08;color:#b8c0cc}
+@media(max-width:1100px){
+ .searchrow{grid-template-columns:1fr 1fr 1fr}
+}
+@media(max-width:650px){
+ .searchrow{grid-template-columns:1fr}
+}
+
+
+.logo-button,.brand-button{border:0;padding:0;font:inherit}
+.logo-button{cursor:pointer}
+.brand-button{background:transparent;color:var(--text);cursor:pointer}
+#builderView,.builder-hero{display:none}
+body.builder-mode #homeView{display:none}
+body.builder-mode #builderView{display:block}
+body.builder-mode .builder-hero{display:grid}
+
+.home-view{max-width:1580px;margin:0 auto;padding:24px 18px 42px}
+.home-backdrop{
+ min-height:430px;display:grid;grid-template-columns:minmax(300px,.82fr) minmax(360px,1.18fr);align-items:center;
+ border:1px solid #d6a64f38;border-radius:28px;overflow:hidden;position:relative;
+ background:
+ radial-gradient(circle at 22% 45%,#d6a64f1e,transparent 30%),
+ radial-gradient(circle at 83% 25%,#5c469328,transparent 34%),
+ linear-gradient(135deg,#171d28,#090d14 62%);
+ box-shadow:0 32px 90px #0009,inset 0 1px #ffffff0d;
+}
+.home-backdrop:after{
+ content:"";position:absolute;inset:0;pointer-events:none;opacity:.16;
+ background-image:linear-gradient(120deg,transparent 0 48%,#ffffff09 49% 50%,transparent 51% 100%);
+ background-size:42px 42px;
+}
+.home-sigil{width:min(470px,95%);height:auto;justify-self:center;filter:drop-shadow(0 24px 38px #000a);animation:sigilFloat 6s ease-in-out infinite}
+@keyframes sigilFloat{50%{transform:translateY(-8px) rotate(1deg)}}
+.home-title{padding:44px 52px 44px 20px;position:relative;z-index:2}
+.home-kicker{display:block;color:var(--gold2);font-size:11px;letter-spacing:.18em;text-transform:uppercase;font-weight:1000}
+.home-title h1{font-family:Georgia,serif;font-size:clamp(58px,8vw,112px);line-height:.79;margin:20px 0 24px;color:#f6ead0;text-shadow:0 4px 0 #000,0 0 42px #d6a64f25}
+.home-title h1 em{font-style:normal;color:#d6a64f}
+.home-title p{max-width:650px;color:#bac3d0;font-size:18px;line-height:1.55;margin:0}
+
+.activity-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px;margin-top:18px}
+.activity-card{
+ min-height:142px;display:grid;grid-template-columns:66px 1fr 24px;align-items:center;gap:14px;text-align:left;
+ border:1px solid #ffffff16;border-radius:18px;padding:18px;background:linear-gradient(145deg,#18202c,#0e131b);
+ color:var(--text);box-shadow:0 14px 34px #0005;transition:.2s;position:relative;overflow:hidden
+}
+.activity-card:before{content:"";position:absolute;inset:0;background:linear-gradient(115deg,#ffffff08,transparent 30%);pointer-events:none}
+.activity-card:hover{transform:translateY(-4px);border-color:#d6a64f75;box-shadow:0 21px 42px #0008}
+.activity-primary{background:linear-gradient(145deg,#3a2914,#17130d);border-color:#d6a64f70}
+.activity-icon{
+ width:62px;height:62px;border-radius:17px;display:grid;place-items:center;
+ background:radial-gradient(circle at 35% 25%,#f0cf85,#8c5c1c 72%);border:1px solid #f1cf86;
+ box-shadow:inset 0 1px #fff8,0 9px 21px #0008
+}
+.activity-icon svg{width:34px;height:34px;fill:none;stroke:#181006;stroke-width:4;stroke-linecap:round;stroke-linejoin:round}
+.activity-copy{display:flex;flex-direction:column;gap:7px}
+.activity-copy strong{font-family:Georgia,serif;font-size:19px;color:#f4ead2}
+.activity-copy small{color:#9eabba;line-height:1.35;font-size:12px}
+.activity-arrow{font-size:35px;color:#d6a64f;transition:.2s}.activity-card:hover .activity-arrow{transform:translateX(4px)}
+.home-footer-note{display:flex;align-items:center;justify-content:center;gap:9px;color:#7f8996;font-size:11px;margin:20px 0 0}
+.status-dot{width:7px;height:7px;border-radius:50%;background:#55d692;box-shadow:0 0 12px #55d692}
+.activity-modal-box{max-width:560px}
+.activity-modal-content{text-align:center;padding:34px 30px 38px}
+.activity-modal-emblem{width:74px;height:74px;margin:0 auto 18px;border-radius:22px;display:grid;place-items:center;
+ background:linear-gradient(145deg,#efcc7d,#835718);color:#1b1206;font-size:30px;font-weight:1000;box-shadow:0 13px 30px #0007}
+.activity-modal-content h2{font-family:Georgia,serif;font-size:30px;margin:0 0 12px}
+.activity-modal-content p{color:#aeb8c5;line-height:1.55;margin:0 auto 24px;max-width:420px}
+@media(max-width:1050px){
+ .activity-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .home-backdrop{min-height:360px}
+ .home-title{padding-right:30px}.home-title h1{font-size:72px}
+}
+@media(max-width:700px){
+ .home-view{padding:12px 10px 30px}
+ .home-backdrop{grid-template-columns:1fr;min-height:440px;text-align:center}
+ .home-sigil{position:absolute;width:320px;opacity:.35;left:50%;top:42%;transform:translate(-50%,-50%);animation:none}
+ .home-title{padding:54px 24px;z-index:2}.home-title h1{font-size:58px}.home-title p{font-size:15px}
+ .activity-grid{grid-template-columns:1fr;gap:10px}
+ .activity-card{min-height:116px;grid-template-columns:54px 1fr 20px;padding:14px}
+ .activity-icon{width:52px;height:52px;border-radius:14px}.activity-icon svg{width:29px;height:29px}
+ .activity-copy strong{font-size:17px}
+}
+
 </style>
 </head>
 <body>
 <header class="topbar">
- <div class="logo">CA</div><div class="brand">Commander Armies</div><div class="badge">BUILD 3.1 · ILLUSTRATED</div>
+ <button class="logo logo-button" id="logoHomeBtn" aria-label="Torna alla Home">CA</button><button class="brand brand-button" id="brandHomeBtn">Commander Armies</button><div class="badge">BUILD 3.3 · HOME</div>
  <div class="spacer"></div>
- <div class="toolbar">
+ <div class="toolbar"><button class="btn art-btn" id="homeBtn"><span class="button-rune">⌂</span><span class="text">Home</span></button>
    <button class="btn art-btn" id="newBtn"><span class="button-rune">✦</span><span class="text">Nuovo</span></button>
    <button class="btn art-btn" id="exportBtn"><span class="button-rune">⇩</span><span class="text">Esporta</span></button>
    <button class="btn primary art-btn" id="saveBtn"><span class="button-rune">◆</span><span class="text">Salva</span></button>
@@ -142,7 +234,87 @@ background:linear-gradient(180deg,#161d29,#0f141d);box-shadow:0 20px 55px #0006;
 </header>
 
 
-<section class="illustrated-hero" aria-label="Commander Armies">
+
+<section id="homeView" class="home-view">
+  <div class="home-backdrop">
+    <svg class="home-sigil" viewBox="0 0 500 500" aria-hidden="true">
+      <defs>
+        <radialGradient id="homeGlow"><stop stop-color="#efd18b" stop-opacity=".36"/><stop offset="1" stop-color="#efd18b" stop-opacity="0"/></radialGradient>
+        <linearGradient id="homeGold" x1="0" x2="1"><stop stop-color="#f4d78d"/><stop offset=".45" stop-color="#a06d25"/><stop offset=".72" stop-color="#edc36c"/><stop offset="1" stop-color="#704716"/></linearGradient>
+      </defs>
+      <circle cx="250" cy="250" r="230" fill="url(#homeGlow)"/>
+      <circle cx="250" cy="250" r="176" fill="none" stroke="url(#homeGold)" stroke-width="8"/>
+      <circle cx="250" cy="250" r="142" fill="none" stroke="#d8b568" stroke-width="3" stroke-dasharray="5 13"/>
+      <path d="M250 75 L287 176 L395 181 L309 246 L339 350 L250 292 L161 350 L191 246 L105 181 L213 176 Z" fill="none" stroke="url(#homeGold)" stroke-width="9"/>
+      <path d="M250 132 L271 205 L345 209 L285 252 L305 325 L250 282 L195 325 L215 252 L155 209 L229 205 Z" fill="#111722" stroke="#f1cf86" stroke-width="5"/>
+      <path d="M250 171 L274 225 L333 230 L288 269 L301 328 L250 298 L199 328 L212 269 L167 230 L226 225 Z" fill="#a52f3f" opacity=".9"/>
+      <circle cx="250" cy="250" r="31" fill="url(#homeGold)"/>
+      <text x="250" y="261" text-anchor="middle" font-size="31" font-weight="900" fill="#181006">CA</text>
+    </svg>
+    <div class="home-title">
+      <span class="home-kicker">Magic: The Gathering · Formato personalizzato</span>
+      <h1>Commander<br><em>Armies</em></h1>
+      <p>Scegli un comandante, raduna una Tribe e costruisci l’armata attorno alla tua Key.</p>
+    </div>
+  </div>
+
+  <div class="activity-grid">
+    <button class="activity-card activity-primary" data-open-view="builder">
+      <span class="activity-icon">
+        <svg viewBox="0 0 64 64"><path d="M13 8h30l8 8v40H13z"/><path d="M43 8v10h10M22 29h20M22 38h20M22 47h13"/></svg>
+      </span>
+      <span class="activity-copy"><strong>Crea un mazzo</strong><small>Apri il Builder e costruisci una nuova armata.</small></span>
+      <span class="activity-arrow">›</span>
+    </button>
+
+    <button class="activity-card" data-home-action="archive">
+      <span class="activity-icon">
+        <svg viewBox="0 0 64 64"><path d="M10 16h44v38H10z"/><path d="M7 9h50v12H7zM24 31h16"/></svg>
+      </span>
+      <span class="activity-copy"><strong>Archivio mazzi</strong><small>Visualizza e gestisci le armate salvate.</small></span>
+      <span class="activity-arrow">›</span>
+    </button>
+
+    <button class="activity-card" data-home-action="analysis">
+      <span class="activity-icon">
+        <svg viewBox="0 0 64 64"><path d="M12 53V29h10v24M27 53V18h10v35M42 53V9h10v44M8 53h49"/></svg>
+      </span>
+      <span class="activity-copy"><strong>Analisi del mazzo</strong><small>Controlla curva di mana, tipi e composizione.</small></span>
+      <span class="activity-arrow">›</span>
+    </button>
+
+    <button class="activity-card" data-home-action="rules">
+      <span class="activity-icon">
+        <svg viewBox="0 0 64 64"><path d="M13 9h29l9 9v37H13z"/><path d="M42 9v11h11M21 29h22M21 38h22M21 47h15"/></svg>
+      </span>
+      <span class="activity-copy"><strong>Regole Armies</strong><small>Consulta Tribe, Key, validità ed eccezioni.</small></span>
+      <span class="activity-arrow">›</span>
+    </button>
+
+    <button class="activity-card" data-home-action="print">
+      <span class="activity-icon">
+        <svg viewBox="0 0 64 64"><path d="M18 9h28v16H18zM17 44h30v12H17z"/><path d="M12 25h40a6 6 0 0 1 6 6v16H47v-3H17v3H6V31a6 6 0 0 1 6-6z"/><circle cx="48" cy="33" r="2"/></svg>
+      </span>
+      <span class="activity-copy"><strong>Stampa ed esporta</strong><small>Esporta il mazzo o prepara la lista da stampare.</small></span>
+      <span class="activity-arrow">›</span>
+    </button>
+
+    <button class="activity-card" data-home-action="settings">
+      <span class="activity-icon">
+        <svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="10"/><path d="M32 7v8M32 49v8M7 32h8M49 32h8M14 14l6 6M44 44l6 6M50 14l-6 6M20 44l-6 6"/></svg>
+      </span>
+      <span class="activity-copy"><strong>Impostazioni</strong><small>Configura il comportamento dell’app e i dati locali.</small></span>
+      <span class="activity-arrow">›</span>
+    </button>
+  </div>
+
+  <div class="home-footer-note">
+    <span class="status-dot"></span>
+    <span>Dati salvati localmente nel browser · Catalogo carte fornito da Scryfall</span>
+  </div>
+</section>
+
+<section class="illustrated-hero builder-hero" aria-label="Commander Armies">
   <div class="hero-art hero-left">
     <svg viewBox="0 0 320 190" role="img" aria-label="Stendardo fantasy">
       <defs>
@@ -174,7 +346,7 @@ background:linear-gradient(180deg,#161d29,#0f141d);box-shadow:0 20px 55px #0006;
   </div>
 </section>
 
-<main>
+<main id="builderView">
 <section class="config">
  <div class="field"><label>Nome mazzo</label><input id="deckName" value="Nuovo mazzo"></div>
  <div class="field"><label>Tribe</label><select id="tribe"></select><small class="field-note">Elenco completo caricato da Scryfall</small></div>
@@ -187,15 +359,33 @@ background:linear-gradient(180deg,#161d29,#0f141d);box-shadow:0 20px 55px #0006;
 <section class="panel catalog">
  <div class="panelhead"><h2>Catalogo carte</h2><div class="grow"></div><span class="muted" id="catalogCount"></span></div>
  <div class="searchrow">
-   <input id="search" placeholder="Cerca una carta…">
-   <select id="typeFilter">
-     <option value="">Tutti i tipi</option><option value="creature">Creature</option><option value="instant">Istantanei</option>
-     <option value="sorcery">Stregonerie</option><option value="artifact">Artefatti</option><option value="enchantment">Incantesimi</option>
-     <option value="planeswalker">Planeswalker</option><option value="land">Terre</option>
+   <input id="search" placeholder="Nome o testo della carta…">
+   <select id="matchFilter">
+     <option value="army">Tribe oppure Key</option>
+     <option value="tribe">Solo Tribe</option>
+     <option value="key">Solo Key</option>
+     <option value="all">Ignora Tribe e Key</option>
    </select>
-   <select id="legalFilter"><option value="">Tutte</option><option value="legal">Solo valide</option><option value="illegal">Solo non valide</option></select>
+   <select id="typeFilter">
+     <option value="">Tutti i tipi</option>
+     <option value="creature">Creature</option>
+     <option value="instant">Istantanei</option>
+     <option value="sorcery">Stregonerie</option>
+     <option value="artifact">Artefatti</option>
+     <option value="enchantment">Incantesimi</option>
+     <option value="planeswalker">Planeswalker</option>
+     <option value="battle">Battaglie</option>
+     <option value="land">Terre</option>
+   </select>
+   <select id="legalFilter">
+     <option value="">Tutte le validità</option>
+     <option value="legal">Solo valide</option>
+     <option value="illegal">Solo non valide</option>
+   </select>
    <button class="btn primary" id="searchBtn">Cerca</button>
+   <button class="btn" id="resetFiltersBtn">Azzera</button>
  </div>
+ <div class="active-filters" id="activeFilters"></div>
  <div class="status" id="status">Seleziona un comandante oppure cerca una carta.</div>
  <div class="cards" id="cards"><div class="empty">Il catalogo apparirà qui.</div></div>
 </section>
@@ -210,6 +400,19 @@ background:linear-gradient(180deg,#161d29,#0f141d);box-shadow:0 20px 55px #0006;
 </main>
 
 <nav class="mobiletabs"><button id="catalogTab" class="active">▦ Catalogo</button><button id="deckTab">🂠 Mazzo</button></nav>
+
+
+<div class="modal" id="activityModal">
+ <div class="modalbox activity-modal-box">
+  <div class="modalhead"><strong id="activityModalTitle">Attività</strong><button class="btn" data-close="activityModal">✕</button></div>
+  <div class="activity-modal-content">
+    <div class="activity-modal-emblem" id="activityModalIcon">◆</div>
+    <h2 id="activityModalHeading"></h2>
+    <p id="activityModalText"></p>
+    <button class="btn primary" id="activityGoBuilder">Apri il Builder</button>
+  </div>
+ </div>
+</div>
 
 <div class="modal" id="commanderModal">
  <div class="modalbox">
@@ -268,11 +471,24 @@ async function loadCreatureTypes(){
 }
 function imageOf(c){return c.image_uris?.normal||c.card_faces?.[0]?.image_uris?.normal||""}
 function textOf(c){return [c.name,c.type_line,c.oracle_text,c.card_faces?.map(f=>[f.name,f.type_line,f.oracle_text].join(" ")).join(" ")].filter(Boolean).join(" ").toLowerCase()}
+function tribeMatches(c){
+ const tribe=(state.tribe||"").toLowerCase().trim();
+ if(!tribe)return false;
+ const t=textOf(c);
+ const type=(c.type_line||"").toLowerCase();
+ return type.split(/[—/]/).some(part=>part.trim().split(/\s+/).includes(tribe)) || t.includes(tribe);
+}
+function keyMatches(c){
+ const terms=KEYS[state.key]||[];
+ const t=textOf(c);
+ return terms.some(term=>t.includes(term.toLowerCase()));
+}
 function legal(c){
  if(!state.tribe&&!state.key)return {ok:null,reason:"Scegli Tribe e Key."};
- const t=textOf(c),tribe=(state.tribe||"").toLowerCase(),terms=KEYS[state.key]||[];
- if(t.includes(tribe))return {ok:true,reason:"Corrisponde alla Tribe."};
- if(terms.some(x=>t.includes(x)))return {ok:true,reason:"Corrisponde alla Key."};
+ const byTribe=tribeMatches(c),byKey=keyMatches(c);
+ if(byTribe&&byKey)return {ok:true,reason:"Corrisponde sia alla Tribe sia alla Key."};
+ if(byTribe)return {ok:true,reason:"Corrisponde alla Tribe."};
+ if(byKey)return {ok:true,reason:"Corrisponde alla Key."};
  return {ok:false,reason:"Non corrisponde a Tribe o Key."};
 }
 function save(){
@@ -309,60 +525,139 @@ function bindCards(root,commander=false){
  });
 }
 async function fetchCards(query,commander=false){
- const status=commander?$("#commanderStatus"):$("#status"),root=commander?$("#commanderResults"):$("#cards");
+ const status=commander?$("#commanderStatus"):$("#status");
+ const root=commander?$("#commanderResults"):$("#cards");
  status.textContent="Ricerca in corso…";root.innerHTML="";
  try{
-  const res=await fetch(`https://api.scryfall.com/cards/search?q=${encodeURIComponent(query)}&order=edhrec&unique=cards`);
-  const data=await res.json();if(!res.ok)throw new Error(data.details||"Nessun risultato");
-  currentCards=data.data;
-  if(!commander){
-   const f=$("#legalFilter").value; if(f)currentCards=currentCards.filter(c=>f==="legal"?legal(c).ok:!legal(c).ok);
-   $("#catalogCount").textContent=`${currentCards.length} risultati`;
+  let url=`https://api.scryfall.com/cards/search?q=${encodeURIComponent(query)}&order=edhrec&unique=cards`;
+  let gathered=[];
+  for(let page=0;page<3&&url;page++){
+    const res=await fetch(url);
+    const data=await res.json();
+    if(!res.ok)throw new Error(data.details||"Nessun risultato");
+    gathered.push(...data.data);
+    url=data.has_more?data.next_page:null;
   }
-  root.innerHTML=currentCards.length?currentCards.slice(0,60).map(c=>cardMarkup(c,commander)).join(""):`<div class="empty">Nessun risultato.</div>`;
-  status.textContent=commander?"Scegli una carta come comandante.":"Clicca + per aggiungere una carta.";
+  currentCards=gathered;
+  if(!commander){
+    const validity=$("#legalFilter").value;
+    if(validity==="legal")currentCards=currentCards.filter(c=>legal(c).ok===true);
+    if(validity==="illegal")currentCards=currentCards.filter(c=>legal(c).ok===false);
+    $("#catalogCount").textContent=`${currentCards.length} risultati`;
+  }
+  root.innerHTML=currentCards.length?currentCards.slice(0,90).map(c=>cardMarkup(c,commander)).join(""):`<div class="empty">Nessun risultato con questi filtri.</div>`;
+  status.textContent=commander?"Scegli una carta come comandante.":currentCards.length?"Filtri applicati correttamente.":"Prova ad allargare i filtri.";
   bindCards(root,commander);
- }catch(e){status.textContent=e.message;root.innerHTML=`<div class="empty">Ricerca non riuscita.</div>`}
+ }catch(e){
+  status.textContent=e.message;
+  root.innerHTML=`<div class="empty">Ricerca non riuscita.</div>`;
+ }
+}
+function buildArmyQuery(){
+ const mode=$("#matchFilter").value;
+ const tribe=(state.tribe||"").replace(/"/g,"");
+ const terms=KEYS[state.key]||[];
+ const tribeQuery=tribe?`(t:"${tribe}" or o:"${tribe}")`:"";
+ const keyQuery=terms.length?`(${terms.map(x=>`o:"${x.replace(/"/g,"")}"`).join(" or ")})`:"";
+ if(mode==="tribe")return tribeQuery||"*";
+ if(mode==="key")return keyQuery||"*";
+ if(mode==="all")return "*";
+ if(tribeQuery&&keyQuery)return `(${tribeQuery} or ${keyQuery})`;
+ return tribeQuery||keyQuery||"*";
+}
+function updateActiveFilters(){
+ const chips=[];
+ const mode=$("#matchFilter").value;
+ if(mode!=="all"){
+   if(mode==="army"||mode==="tribe")chips.push(`<span class="filter-chip">Tribe: ${state.tribe}</span>`);
+   if(mode==="army"||mode==="key")chips.push(`<span class="filter-chip">Key: ${state.key}</span>`);
+ }else chips.push(`<span class="filter-chip neutral">Tribe e Key ignorate</span>`);
+ if($("#typeFilter").value)chips.push(`<span class="filter-chip neutral">Tipo: ${$("#typeFilter").selectedOptions[0].text}</span>`);
+ if($("#legalFilter").value)chips.push(`<span class="filter-chip neutral">${$("#legalFilter").selectedOptions[0].text}</span>`);
+ if(state.commander)chips.push(`<span class="filter-chip neutral">Identità colore del comandante</span>`);
+ $("#activeFilters").innerHTML=chips.join("");
 }
 function searchCards(){
  save();
  const typed=$("#search").value.trim();
+ let parts=[];
+ const armyQuery=buildArmyQuery();
+ if(armyQuery&&armyQuery!=="*")parts.push(armyQuery);
+ if(typed)parts.push(`("${typed.replace(/"/g,"")}" or o:"${typed.replace(/"/g,"")}")`);
  const type=$("#typeFilter").value;
- const tribe=(state.tribe||"").replace(/"/g,"");
- const terms=KEYS[state.key]||[];
- let q="";
- if(typed){
-   q=`${typed}`;
- }else{
-   const tribeQuery=`(t:${tribe} or o:"${tribe}")`;
-   const keyQuery=terms.length?`(${terms.map(x=>`o:"${x}"`).join(" or ")})`:"";
-   q=keyQuery?`(${tribeQuery} or ${keyQuery})`:tribeQuery;
- }
- if(type)q+=` type:${type}`;
- if(state.commander?.color_identity?.length)q+=` id<=${state.commander.color_identity.join("")}`;
- q+=" game:paper";
- fetchCards(q,false);
+ if(type)parts.push(`type:${type}`);
+ if(state.commander?.color_identity?.length)parts.push(`id<=${state.commander.color_identity.join("")}`);
+ parts.push("game:paper");
+ const query=parts.length?parts.join(" "):"game:paper";
+ updateActiveFilters();
+ fetchCards(query,false);
 }
 function showDetail(c){
  if(!c)return;const l=legal(c);$("#detailTitle").textContent=c.name;$("#detailName").textContent=c.name;$("#detailImg").src=imageOf(c);
  $("#detailType").textContent=c.type_line||"";$("#detailOracle").textContent=c.oracle_text||c.card_faces?.map(f=>f.oracle_text).filter(Boolean).join("\n\n")||"";
  $("#detailLegal").textContent=`Commander Armies: ${l.reason}`;$("#detailLegal").style.color=l.ok?"var(--green)":"var(--red)";$("#detailModal").classList.add("open");
 }
-$("#searchBtn").onclick=searchCards;$("#search").onkeydown=e=>{if(e.key==="Enter")searchCards()};
+$("#searchBtn").onclick=searchCards;
+$("#search").onkeydown=e=>{if(e.key==="Enter")searchCards()};
+["matchFilter","typeFilter","legalFilter"].forEach(id=>$("#"+id).onchange=searchCards);
+$("#resetFiltersBtn").onclick=()=>{
+ $("#search").value="";
+ $("#matchFilter").value="army";
+ $("#typeFilter").value="";
+ $("#legalFilter").value="";
+ searchCards();
+};
 $("#commanderBtn").onclick=()=>$("#commanderModal").classList.add("open");
 $("#commanderSearchBtn").onclick=()=>{const q=$("#commanderSearch").value.trim();if(q)fetchCards(`${q} is:commander`,true)};
 $("#commanderSearch").onkeydown=e=>{if(e.key==="Enter")$("#commanderSearchBtn").click()};
 document.querySelectorAll("[data-close]").forEach(b=>b.onclick=()=>$("#"+b.dataset.close).classList.remove("open"));
 document.querySelectorAll(".modal").forEach(m=>m.onclick=e=>{if(e.target===m)m.classList.remove("open")});
-["deckName","tribe","key","bracket"].forEach(id=>$("#"+id).onchange=save);
+["deckName","bracket"].forEach(id=>$("#"+id).onchange=save);
+["tribe","key"].forEach(id=>$("#"+id).onchange=()=>{save();searchCards()});
 $("#saveBtn").onclick=save;
 $("#newBtn").onclick=()=>{if(confirm("Creare un nuovo mazzo?")){localStorage.removeItem(STORAGE);location.reload()}};
 $("#clearBtn").onclick=()=>{if(confirm("Rimuovere tutte le carte?")){state.cards={};save()}};
 $("#exportBtn").onclick=()=>{save();const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([JSON.stringify(state,null,2)],{type:"application/json"}));a.download=(state.name||"mazzo")+".json";a.click()};
 $("#catalogTab").onclick=()=>{document.body.classList.remove("showdeck");$("#catalogTab").classList.add("active");$("#deckTab").classList.remove("active")};
 $("#deckTab").onclick=()=>{document.body.classList.add("showdeck");$("#deckTab").classList.add("active");$("#catalogTab").classList.remove("active")};
+
+function showHome(){
+ document.body.classList.remove("builder-mode","showdeck");
+ window.scrollTo({top:0,behavior:"smooth"});
+}
+function showBuilder(){
+ document.body.classList.add("builder-mode");
+ window.scrollTo({top:0,behavior:"smooth"});
+ updateActiveFilters();
+}
+$("#homeBtn").onclick=showHome;
+$("#logoHomeBtn").onclick=showHome;
+$("#brandHomeBtn").onclick=showHome;
+document.querySelectorAll("[data-open-view='builder']").forEach(btn=>btn.onclick=showBuilder);
+
+const activityContent={
+ archive:{icon:"▤",title:"Archivio mazzi",text:"L’archivio completo verrà collegato ai mazzi salvati. Per ora puoi aprire il Builder e continuare a lavorare sul mazzo salvato nel browser."},
+ analysis:{icon:"◫",title:"Analisi del mazzo",text:"L’analisi mostrerà curva di mana, distribuzione dei tipi, colori e composizione dell’armata. Apri il Builder per modificare il mazzo corrente."},
+ rules:{icon:"⚖",title:"Regole Commander Armies",text:"Qui troveranno posto Tribe, Key, carte Evergreen, bracket ed eccezioni amministrative del formato."},
+ print:{icon:"▣",title:"Stampa ed esporta",text:"Puoi già esportare il mazzo corrente in formato JSON dal Builder. Le stampe grafiche verranno raccolte in questa sezione."},
+ settings:{icon:"⚙",title:"Impostazioni",text:"Questa sezione ospiterà configurazione locale, importazione dei dati e preferenze dell’app."}
+};
+document.querySelectorAll("[data-home-action]").forEach(btn=>btn.onclick=()=>{
+ const data=activityContent[btn.dataset.homeAction];
+ $("#activityModalIcon").textContent=data.icon;
+ $("#activityModalTitle").textContent=data.title;
+ $("#activityModalHeading").textContent=data.title;
+ $("#activityModalText").textContent=data.text;
+ $("#activityModal").classList.add("open");
+});
+$("#activityGoBuilder").onclick=()=>{
+ $("#activityModal").classList.remove("open");
+ showBuilder();
+};
+
 load();
 loadCreatureTypes();
+updateActiveFilters();
 </script>
 </body>
 </html>
