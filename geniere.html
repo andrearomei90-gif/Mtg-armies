@@ -1,0 +1,260 @@
+<!doctype html><html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Geniere · Armies Builder</title><style>
+:root{--bg:#07090d;--panel:#111722;--line:#ffffff1a;--text:#f4ead7;--muted:#aeb6c2;--gold:#d2a250;--gold2:#f0ca78;--green:#66d394}*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 50% 0,#32220d55,transparent 36%),var(--bg);color:var(--text);font-family:system-ui,-apple-system,sans-serif}header{position:sticky;top:0;z-index:5;display:flex;align-items:center;gap:12px;padding:14px 18px;background:#080b10ee;border-bottom:1px solid #9f7032}header h1{margin:0;font-family:Georgia,serif;color:var(--gold2);font-size:24px}header p{margin:2px 0 0;color:var(--muted);font-size:12px}.back{margin-left:auto;border:1px solid #9f7032;background:#17130d;color:var(--gold2);border-radius:10px;padding:10px 15px;font-weight:900}main{max-width:1180px;margin:auto;padding:18px}.intro{border:1px solid #8a612d;background:linear-gradient(145deg,#121722,#17130e);padding:18px;border-radius:16px;margin-bottom:16px}.intro h2{margin:0 0 7px;font-family:Georgia,serif;color:var(--gold2)}.tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px}.tab{min-height:90px;border:1px solid #8a612d;border-radius:14px;background:#111722;color:var(--text);padding:12px;text-align:left}.tab strong{display:block;color:var(--gold2);font-family:Georgia,serif;font-size:18px}.tab span{font-size:12px;color:var(--muted)}.tab.active{background:linear-gradient(145deg,#4a3212,#17130e);box-shadow:inset 0 0 0 1px #e6c477}.pane{display:none;border:1px solid var(--line);background:var(--panel);border-radius:16px;padding:16px}.pane.active{display:block}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}label{display:grid;gap:6px;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#c8cdd5;font-weight:900}input,select,textarea{width:100%;border:1px solid #ffffff20;background:#090d14;color:var(--text);border-radius:10px;padding:11px;font:inherit}textarea{min-height:85px}.full{grid-column:1/-1}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}button{cursor:pointer}.btn{border:1px solid #ffffff20;background:#1b222d;color:var(--text);border-radius:10px;padding:10px 14px;font-weight:900}.primary{background:linear-gradient(145deg,#efc66e,#98651e);color:#1a1105;border-color:#efcc82}.result{display:grid;gap:10px;margin-top:15px}.card{border:1px solid #d2a25055;background:#d2a2500d;border-radius:12px;padding:12px}.card h3{margin:0 0 7px;color:var(--gold2)}.muted{color:var(--muted);font-size:12px;line-height:1.45}.proposal{border:1px solid var(--line);background:#0d131c;border-radius:11px;padding:11px}.proposal strong{color:var(--gold2)}.ok{color:var(--green)}.score{float:right;background:#66d39420;color:var(--green);padding:4px 8px;border-radius:999px;font-weight:900}
+.choice{width:100%;min-height:43px;text-align:left;border:1px solid #ffffff20;background:#090d14;color:var(--text);border-radius:10px;padding:11px;font:inherit}.choice.selected{border-color:#d2a250;color:var(--gold2)}.modal{position:fixed;inset:0;z-index:50;display:none;background:#000b;padding:18px;overflow:auto}.modal.open{display:block}.modalbox{width:min(980px,100%);margin:3vh auto;background:#101722;border:1px solid #9f7032;border-radius:16px;overflow:hidden}.modalhead{display:flex;align-items:center;gap:10px;padding:14px;border-bottom:1px solid var(--line)}.modalhead strong{font-family:Georgia,serif;color:var(--gold2);font-size:20px}.modalhead .btn{margin-left:auto}.modalcontent{padding:14px}.commandersearch{display:grid;grid-template-columns:1fr auto;gap:9px}.commanderresults{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px;margin-top:14px}.commandercard{display:grid;grid-template-columns:64px 1fr;gap:10px;align-items:center;border:1px solid var(--line);background:#0b1017;border-radius:12px;padding:8px;text-align:left;color:var(--text)}.commandercard img{width:64px;height:89px;object-fit:cover;border-radius:8px}.commandercard strong{color:var(--gold2)}.status{color:var(--muted);font-size:12px;margin-top:9px}.tribe-note{font-size:11px;color:var(--muted);text-transform:none;letter-spacing:0;font-weight:500}
+@media(max-width:700px){.tabs,.grid{grid-template-columns:1fr}main{padding:10px}header h1{font-size:20px}}</style></head><body>
+<header><div><h1>⚙️ Geniere</h1><p>L’assistente strategico di Armies Builder</p></div><button class="back" id="home">Home</button></header><main><section class="intro"><h2>Progetta e perfeziona il tuo grimorio</h2><div class="muted">La sezione è separata dal Builder: la precedente Analisi del mazzo resta invariata. Il Geniere usa un motore locale gratuito collegato a Scryfall e agli stessi filtri Armies del Builder. Non richiede crediti API né abbonamenti.</div></section><div id="aiStatus" class="card" style="margin-bottom:16px"><strong class="ok">Geniere gratuito attivo</strong><div class="muted">Motore locale Armies + Scryfall. Nessun costo API.</div></div>
+<div class="tabs"><button class="tab active" data-tab="design"><strong>Progetta Grimorio</strong><span>Crea una base usando Commander, Tribe, Key e preferenze.</span></button><button class="tab" data-tab="evaluate"><strong>Valuta Grimorio</strong><span>Carica un mazzo archiviato e applica correzioni.</span></button><button class="tab" data-tab="suggest"><strong>Suggerisci</strong><span>Completa o genera una combinazione ottimizzata.</span></button></div>
+<section class="pane active" id="design"><div class="grid"><label>Commander<button type="button" class="choice" id="dCommanderBtn">Scegli Commander</button><input type="hidden" id="dCommander"></label><label>Tribe<select id="dTribe"><option value="">Caricamento Tribe…</option></select><span class="tribe-note">Elenco completo in ordine alfabetico</span></label><label>Key<select id="dKey"></select><span class="tribe-note">Elenco completo delle Key Armies</span></label><label>Livello<select id="dPower"><option>Base</option><option selected>Bilanciato</option><option>Ottimizzato</option></select></label><label>Budget<select id="dBudget"><option>Nessun limite</option><option>Economico</option><option>Medio</option><option>Competitivo</option></select></label><label class="full">Preferenze<textarea id="dPrefs" placeholder="Più creature, maggiore interazione, strategia aggressiva..."></textarea></label></div><div class="actions"><button class="btn primary" id="designBtn">Progetta grimorio</button><button class="btn" data-builder>Manda nel Builder</button></div><div class="result" id="designResult"></div></section>
+<section class="pane" id="evaluate"><div class="grid"><label class="full">Mazzo archiviato<select id="deckSelect"></select></label></div><div class="actions"><button class="btn primary" id="evalBtn">Valuta grimorio</button></div><div class="result" id="evalResult"></div></section>
+<section class="pane" id="suggest"><div class="grid"><label>Commander<button type="button" class="choice" id="sCommanderBtn">Lascia libero / scegli Commander</button><input type="hidden" id="sCommander"></label><label>Tribe<select id="sTribe"><option value="">Lascia libera</option></select><span class="tribe-note">Elenco completo in ordine alfabetico</span></label><label>Key<select id="sKey"></select><span class="tribe-note">Elenco completo delle Key Armies</span></label></div><div class="actions"><button class="btn primary" id="suggestBtn">Suggerisci combinazione</button></div><div class="result" id="suggestResult"></div></section><div class="modal" id="commanderModal"><div class="modalbox"><div class="modalhead"><strong>Scegli Commander</strong><button class="btn" id="closeCommanderModal">Chiudi</button></div><div class="modalcontent"><div class="commandersearch"><input id="commanderSearch" placeholder="Nome del Commander"><button class="btn primary" id="commanderSearchBtn">Cerca</button></div><div id="commanderStatus" class="status">Cerca un comandante come nel Builder.</div><div id="commanderResults" class="commanderresults"></div></div></div></div></main><script>
+const STORAGE='armiesBuilderDecksV45',CURRENT='armiesBuilderCurrentV45',HANDOFF='armiesBuilderEngineerHandoffV45',WORK='armiesBuilderEngineerWorkingV45';
+let tribes=[];
+let commanderTarget='design';
+const selectedCommander={design:null,suggest:null};
+const commanders=['Edgar Markov','Wilhelt, the Rotcleaver','Lathril, Blade of the Elves','The Ur-Dragon','Krenko, Mob Boss','Be’lakor, the Dark Master','Giada, Font of Hope'];
+const keys=["Attacco", "Aura", "Blocco", "Caso", "Copia", "Danno", "Distruzione", "Equipaggiamento", "Esilia - sé stessa", "Esilia - altre carte", "Gira", "Macina", "Manovrare", "Neutralizza", "Paga", "Pedina", "Pesca", "Profetizza", "Regala", "Riprendere", "Rivela", "Sacrifica", "Santuario", "Scarta", "Segnalino", "Soglia", "Spendere", "Terraferma", "Tornare", "Vacuità", "Vita - guadagno", "Vita - perdita", "Vota"];
+const decks=()=>{try{return JSON.parse(localStorage.getItem(STORAGE))||[]}catch{return[]}};
+const esc=s=>String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const imageOf=c=>c?.image_uris?.normal||c?.card_faces?.find(f=>f.image_uris)?.image_uris?.normal||'';
+async function loadTribes(){
+  try{
+    const r=await fetch('https://api.scryfall.com/catalog/creature-types');
+    if(!r.ok)throw new Error('Catalogo Tribe non disponibile');
+    const data=await r.json();
+    tribes=[...(data.data||[])].sort((a,b)=>a.localeCompare(b,'it',{sensitivity:'base'}));
+  }catch(e){
+    tribes=['Angelo','Demone','Drago','Elfo','Goblin','Guerriero','Mago','Soldato','Spirito','Umano','Vampiro','Zombie'].sort((a,b)=>a.localeCompare(b,'it'));
+  }
+  const fill=(el,free)=>{const old=el.value;el.innerHTML=(free?'<option value="">Lascia libera</option>':'<option value="">Scegli Tribe</option>')+tribes.map(t=>`<option value="${esc(t)}">${esc(t)}</option>`).join('');if(tribes.includes(old))el.value=old};
+  fill(dTribe,false);fill(sTribe,true);
+}
+function openCommander(target){commanderTarget=target;commanderModal.classList.add('open');commanderSearch.value='';commanderResults.innerHTML='';commanderStatus.textContent='Cerca un comandante come nel Builder.';setTimeout(()=>commanderSearch.focus(),50)}
+function setCommander(c){selectedCommander[commanderTarget]=c;const isDesign=commanderTarget==='design',input=isDesign?dCommander:sCommander,button=isDesign?dCommanderBtn:sCommanderBtn;input.value=c.name;button.textContent=c.name;button.classList.add('selected');commanderModal.classList.remove('open')}
+async function commanderSearchRun(){const q=commanderSearch.value.trim();if(!q)return;commanderSearchBtn.disabled=true;commanderStatus.textContent='Ricerca in corso…';commanderResults.innerHTML='';try{const url='https://api.scryfall.com/cards/search?order=name&unique=cards&q='+encodeURIComponent(q+' is:commander game:paper legal:commander');const r=await fetch(url);const data=await r.json();if(!r.ok)throw new Error(data.details||'Ricerca fallita');const cards=(data.data||[]).slice(0,40);commanderResults.innerHTML=cards.map(c=>`<button class="commandercard" data-id="${esc(c.id)}"><img src="${esc(imageOf(c))}" alt=""><span><strong>${esc(c.name)}</strong><span class="muted" style="display:block;margin-top:4px">${esc(c.type_line||'')}</span></span></button>`).join('')||'<div class="card">Nessun Commander trovato.</div>';commanderResults.querySelectorAll('[data-id]').forEach(b=>b.onclick=()=>setCommander(cards.find(c=>c.id===b.dataset.id)));commanderStatus.textContent=cards.length+' risultati';}catch(e){commanderStatus.textContent=e.message}finally{commanderSearchBtn.disabled=false}}
+function loadKeys(){
+ dKey.innerHTML=keys.map(k=>`<option value="${esc(k)}">${esc(k)}</option>`).join('');
+ sKey.innerHTML='<option value="">Lascia libera</option>'+keys.map(k=>`<option value="${esc(k)}">${esc(k)}</option>`).join('');
+ dKey.value='Danno';
+}
+dCommanderBtn.onclick=()=>openCommander('design');sCommanderBtn.onclick=()=>openCommander('suggest');closeCommanderModal.onclick=()=>commanderModal.classList.remove('open');commanderModal.onclick=e=>{if(e.target===commanderModal)commanderModal.classList.remove('open')};commanderSearchBtn.onclick=commanderSearchRun;commanderSearch.onkeydown=e=>{if(e.key==='Enter')commanderSearchRun()};loadKeys();loadTribes();
+function refreshDecks(){const s=document.getElementById('deckSelect'),ds=decks();s.innerHTML=ds.length?ds.map(d=>`<option value="${d.id}">${esc(d.name)} · ${esc(d.commander?.name||'senza Commander')}</option>`).join(''):'<option value="">Nessun mazzo salvato</option>'}
+refreshDecks();
+document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{document.querySelectorAll('.tab,.pane').forEach(x=>x.classList.remove('active'));b.classList.add('active');document.getElementById(b.dataset.tab).classList.add('active');refreshDecks()});
+document.getElementById('home').onclick=()=>parent!==window?parent.postMessage('armies-engineer-home','*'):location.href='index.html';
+function handoff(data){localStorage.setItem(HANDOFF,JSON.stringify({...data,createdAt:Date.now()}));if(parent!==window)parent.postMessage('armies-engineer-builder','*');else location.href='builder.html'}
+document.querySelectorAll('[data-builder]').forEach(b=>b.onclick=()=>handoff({commanderName:dCommander.value.trim(),tribe:dTribe.value.trim(),key:dKey.value,source:'design'}));
+
+const KEY_DEFINITIONS={
+ "Attacco":["\\battack(?:s|ed|ing)?\\b","\\braid\\b","\\bbattalion\\b","\\bexalted\\b","\\bmyriad\\b"],
+ "Aura":["\\bauras?\\b","\\benchant(?:ed|ing|s)?\\b","\\bbestow\\b"],
+ "Blocco":["\\bblock(?:s|ed|ing|er|ers)?\\b","\\bmenace\\b","\\breach\\b"],
+ "Caso":["\\brandom\\b","\\bcoin\\b","\\bflip a coin\\b","\\bdice?\\b","\\broll(?:s|ed|ing)?\\b"],
+ "Copia":["\\bcopy|copies|copied|copying\\b","\\bstorm\\b","\\breplicate\\b"],
+ "Danno":["\\bdamage\\b","\\bdeathtouch\\b","\\bfirst strike\\b","\\bdouble strike\\b","\\btrample\\b","\\btoxic\\b","\\binfect\\b","\\bwither\\b"],
+ "Distruzione":["\\bdestroy(?:s|ed|ing)?\\b","\\bindestructible\\b"],
+ "Equipaggiamento":["\\bequipment\\b","\\bequip(?:ped|s|ping)?\\b","\\breconfigure\\b","\\bliving weapon\\b"],
+ "Esilia - sé stessa":["\\bescape\\b","\\bflashback\\b","\\bdelve\\b","\\bforetell\\b","\\bsuspend\\b","\\bplot\\b","\\bexile (?:this|it|this card)\\b"],
+ "Esilia - altre carte":["\\bexile target\\b","\\bexile another\\b","\\bexile all\\b","\\bexile each\\b","\\bexile up to\\b"],
+ "Gira":["\\btransform(?:s|ed|ing)?\\b","\\bmorph\\b","\\bmanifest\\b","\\bdisguise\\b","\\bcloak\\b","\\bface up\\b","\\bface down\\b"],
+ "Macina":["\\bmill(?:s|ed|ing)?\\b","library into .*graveyard"],
+ "Manovrare":["\\bcrew(?:ed|s|ing)?\\b"],
+ "Neutralizza":["\\bcounter target\\b","\\bcounter that\\b","\\bcan't be countered\\b"],
+ "Paga":["\\bpay(?:s|ing|ed)?\\b","\\bpaid\\b"],
+ "Pedina":["\\btokens?\\b","\\bcreate(?:s|d|ing)?\\b","\\bamass\\b","\\bfabricate\\b","\\bincubate\\b","\\bpopulate\\b"],
+ "Pesca":["\\bdraw(?:s|n|ing)?\\b","\\bdrew\\b","\\bcycling\\b"],
+ "Profetizza":["\\bscry\\b","\\bscries\\b","\\bscrying\\b"],
+ "Regala":["\\bgift\\b","\\bpromised a gift\\b"],
+ "Riprendere":["\\brebound\\b"],
+ "Rivela":["\\breveal(?:s|ed|ing)?\\b","\\brevealed\\b"],
+ "Sacrifica":["\\bsacrifice(?:s|d|ing)?\\b","\\bsacrificed\\b","\\bexploit\\b"],
+ "Santuario":["\\bshrine(?:s)?\\b"],
+ "Scarta":["\\bdiscard(?:s|ed|ing)?\\b","\\bmadness\\b","\\bcycling\\b"],
+ "Segnalino":["\\bcounters?\\b","\\bproliferate\\b","\\badapt\\b","\\bamass\\b","\\bbackup\\b","\\bevolve\\b","\\bfabricate\\b","\\bgraft\\b","\\bmentor\\b","\\bmodular\\b","\\briot\\b"],
+ "Soglia":["\\bthreshold\\b"],
+ "Spendere":["\\bspend(?:s|ing)?\\b","\\bspent\\b"],
+ "Terraferma":["\\blandfall\\b","\\ba land enters(?: the battlefield)? under your control\\b"],
+ "Tornare":["\\breturn(?:s|ed|ing)?\\b","\\bunearth\\b","\\bdisturb\\b","\\brecover\\b","\\bgraveyard to (?:your hand|the battlefield)\\b"],
+ "Vacuità":["\\bdevoid\\b"],
+ "Vita - guadagno":["\\bgain(?:s|ed|ing)? [^.!?]{0,20} life\\b","\\blifelink\\b"],
+ "Vita - perdita":["\\blose(?:s|st|ing)? [^.!?]{0,20} life\\b","\\blost [^.!?]{0,20} life\\b"],
+ "Vota":["\\bvote(?:s|d|ing)?\\b","\\bwill of the council\\b","\\bcouncil's dilemma\\b"]
+};
+const AFFINITY_CONCEPTS=[
+ ["token",/\btoken|create(?:s|d|ing)?\b/i],["counter",/\bcounters?\b|proliferate|adapt|evolve|mentor|modular/i],
+ ["sacrifice",/\bsacrific(?:e|es|ed|ing)\b|exploit/i],["graveyard",/\bgraveyard\b|mill|flashback|escape|unearth|reanimate/i],
+ ["attack",/\battack(?:s|ed|ing)?\b|combat damage|raid|battalion|myriad/i],["lifegain",/\bgain(?:s|ed|ing)? [^.!?]{0,20}life\b|lifelink/i],
+ ["draw",/\bdraw(?:s|n|ing)?\b|cycling/i],["discard",/\bdiscard(?:s|ed|ing)?\b|madness/i],
+ ["artifact",/\bartifacts?\b|equipment|treasure/i],["enchantment",/\benchantments?\b|auras?\b/i],
+ ["land",/\blands?\b|landfall/i],["exile",/\bexile(?:s|d|ing)?\b|foretell|suspend|plot/i],["copy",/\bcopy|copies|copied\b|storm/i]
+];
+const oracleOf=c=>c?.oracle_text||c?.card_faces?.map(f=>f.oracle_text||'').join('\n')||'';
+const typeOf=c=>c?.type_line||c?.card_faces?.map(f=>f.type_line||'').join(' // ')||'';
+const facesOf=c=>c?.card_faces?.length?c.card_faces:[c];
+const isCreature=f=>/(^|\s)Creature(\s|$)/i.test(f?.type_line||'');
+const isLand=f=>/(^|\s)Land(\s|$)/i.test(f?.type_line||'');
+const rxEscape=s=>String(s||'').replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
+function mentionsTribe(f,tribe){const safe=rxEscape(tribe),plural=/s$/i.test(tribe)?safe:`${safe}s?`;return new RegExp(`\\b${plural}\\b`,'i').test((f?.type_line||'')+' '+(f?.oracle_text||''))}
+function isChangeling(c){return (c?.keywords||[]).some(k=>String(k).toLowerCase()==='changeling')||/\bchangeling\b/i.test(oracleOf(c))}
+function chosenTypeCreature(f,c){if(!isCreature(f)||isChangeling(c))return false;const o=(f?.oracle_text||'').toLowerCase();return o.includes('choose a creature type')&&(/(?:is|becomes?) the chosen type/.test(o)||/(?:has|gains?) the chosen creature type/.test(o)||/chosen type in addition to/.test(o))}
+function matchesKey(f,key){return (KEY_DEFINITIONS[key]||[]).some(p=>{try{return new RegExp(p,'i').test(f?.oracle_text||'')}catch{return false}})}
+function legalArmies(c,tribe,key){
+ const fs=facesOf(c),creatures=fs.filter(isCreature),lands=fs.filter(isLand),nonlands=fs.filter(f=>!isLand(f));
+ if(lands.length&&nonlands.length===0)return true;
+ if(lands.length&&nonlands.length){
+  if(creatures.some(f=>!mentionsTribe(f,tribe)))return false;
+  return nonlands.some(f=>mentionsTribe(f,tribe)||(!isCreature(f)&&matchesKey(f,key)));
+ }
+ const tribeHit=fs.some(f=>mentionsTribe(f,tribe));
+ const adaptive=fs.some(f=>chosenTypeCreature(f,c));
+ const keyHit=fs.some(f=>!isCreature(f)&&matchesKey(f,key));
+ if(fs.length>1&&keyHit&&creatures.some(f=>!mentionsTribe(f,tribe)))return false;
+ const evergreen=fs.some(f=>!isCreature(f)&&(/commander|choose a creature type/i.test(f?.oracle_text||'')));
+ return tribeHit||adaptive||keyHit||evergreen;
+}
+async function exactCommander(name){
+ const cached=selectedCommander.design?.name===name?selectedCommander.design:selectedCommander.suggest?.name===name?selectedCommander.suggest:null;
+ if(cached)return cached;
+ const r=await fetch('https://api.scryfall.com/cards/named?exact='+encodeURIComponent(name));
+ const d=await r.json();if(!r.ok)throw new Error(d.details||'Commander non trovato');return d;
+}
+async function scrySearch(q,maxPages=8){
+ let url='https://api.scryfall.com/cards/search?unique=cards&order=name&q='+encodeURIComponent(q),out=[];
+ for(let i=0;i<maxPages&&url;i++){const r=await fetch(url),d=await r.json();if(!r.ok){if(r.status===404)break;throw new Error(d.details||'Errore Scryfall')}out.push(...(d.data||[]));url=d.has_more?d.next_page:null}
+ return out;
+}
+function colorPart(commander){const ids=commander.color_identity||[];return ids.length?`id<=${ids.join('')}`:'id:c'}
+function keySearch(key){
+ const simple={
+  "Attacco":'o:attack',"Aura":'(t:aura or o:aura)',"Blocco":'o:block',"Caso":'(o:random or o:coin or o:dice or o:roll)',
+  "Copia":'o:copy',"Danno":'o:damage',"Distruzione":'o:destroy',"Equipaggiamento":'(t:equipment or o:equip)',
+  "Esilia - sé stessa":'(o:escape or o:flashback or o:foretell or o:suspend or o:plot)',"Esilia - altre carte":'o:"exile target"',
+  "Gira":'(o:transform or o:morph or o:manifest or o:disguise)',"Macina":'o:mill',"Manovrare":'o:crew',
+  "Neutralizza":'o:"counter target"',"Paga":'o:pay',"Pedina":'(o:token or o:create)',"Pesca":'o:draw',
+  "Profetizza":'o:scry',"Regala":'o:gift',"Riprendere":'o:rebound',"Rivela":'o:reveal',"Sacrifica":'o:sacrifice',
+  "Santuario":'o:shrine',"Scarta":'o:discard',"Segnalino":'o:counter',"Soglia":'o:threshold',"Spendere":'o:spend',
+  "Terraferma":'o:landfall',"Tornare":'o:return',"Vacuità":'o:devoid',"Vita - guadagno":'o:"gain life"',
+  "Vita - perdita":'o:"lose life"',"Vota":'o:vote'
+ };return simple[key]||'';
+}
+function roleOf(c){
+ const o=oracleOf(c).toLowerCase(),t=typeOf(c);
+ if(/\bLand\b/i.test(t))return 'Terra';
+ if(/add \{|treasure token|search your library for .*land|costs? \{?\d?\}? less/i.test(o))return 'Ramp';
+ if(/\bdraw\b|impulse|exile the top .* play/i.test(o))return 'Pescaggio';
+ if(/destroy target|exile target|counter target|deals? .* damage to any target|return target .* owner'?s hand/i.test(o))return 'Interazione';
+ if(/hexproof|indestructible|protection from|phase out|regenerate/i.test(o))return 'Protezione';
+ if(/\bCreature\b/i.test(t))return 'Creatura';
+ return 'Sinergia';
+}
+function scoreCard(c,commander,tribe,key){
+ let score=0;const o=oracleOf(c),co=oracleOf(commander),fs=facesOf(c);
+ if(fs.some(f=>isCreature(f)&&mentionsTribe(f,tribe)))score+=42;
+ else if(fs.some(f=>mentionsTribe(f,tribe)))score+=26;
+ if(fs.some(f=>chosenTypeCreature(f,c)))score+=24;
+ if(fs.some(f=>!isCreature(f)&&matchesKey(f,key)))score+=22;
+ for(const [,rx] of AFFINITY_CONCEPTS)if(rx.test(co)&&rx.test(o))score+=8;
+ const mv=Number(c.cmc)||0;if(mv<=3)score+=5;else if(mv>=7)score-=5;
+ if(c.edhrec_rank)score+=Math.max(0,12-Math.log10(c.edhrec_rank+1)*3);
+ if(c.released_at)score+=1;
+ return score;
+}
+function basicNames(commander){
+ const ids=commander.color_identity||[];
+ const map={W:'Plains',U:'Island',B:'Swamp',R:'Mountain',G:'Forest'};
+ return ids.length?ids.map(x=>map[x]).filter(Boolean):['Wastes'];
+}
+function addQty(map,name,qty=1){map.set(name,(map.get(name)||0)+qty)}
+async function freeDesign(payload){
+ if(!payload.commander)throw new Error('Scegli prima un Commander.');
+ if(!payload.tribe)throw new Error('Scegli prima una Tribe.');
+ const commander=await exactCommander(payload.commander);
+ const common=`${colorPart(commander)} game:paper legal:commander -is:gamechanger`;
+ const tribe=payload.tribe,key=payload.key;
+ designResult.innerHTML='<div class="card">Il Geniere gratuito sta cercando le carte legali…</div>';
+ const queries=[
+  `t:creature (${`t:"${tribe}"`} or o:"${tribe}") ${common}`,
+  `t:creature o:"choose a creature type" -kw:changeling ${common}`,
+  `-t:creature ${keySearch(key)} ${common}`,
+  `-t:creature (o:commander or o:"choose a creature type") ${common}`,
+  `t:land ${common}`
+ ].filter(q=>!q.includes('  '));
+ let fetched=[];
+ for(let i=0;i<queries.length;i++){designResult.innerHTML=`<div class="card">Ricerca gratuita ${i+1}/${queries.length}…</div>`;fetched.push(...await scrySearch(queries[i],i===4?12:8))}
+ const unique=[...new Map(fetched.map(c=>[c.id,c])).values()].filter(c=>legalArmies(c,tribe,key)&&c.name!==commander.name);
+ const lands=unique.filter(c=>/\bLand\b/i.test(typeOf(c))).sort((a,b)=>scoreCard(b,commander,tribe,key)-scoreCard(a,commander,tribe,key));
+ const nonlands=unique.filter(c=>!/\bLand\b/i.test(typeOf(c))).sort((a,b)=>scoreCard(b,commander,tribe,key)-scoreCard(a,commander,tribe,key));
+ const targets={lands:37,ramp:10,draw:9,interaction:10,protection:4,creatures:30};
+ if(payload.power==='Base'){targets.lands=38;targets.interaction=8}
+ if(payload.power==='Ottimizzato'){targets.lands=35;targets.interaction=12;targets.draw=10}
+ const selected=[],used=new Set();
+ const takeRole=(role,n)=>{
+  for(const c of nonlands){if(n<=0)break;if(used.has(c.id)||roleOf(c)!==role)continue;selected.push(c);used.add(c.id);n--}
+ };
+ takeRole('Ramp',targets.ramp);takeRole('Pescaggio',targets.draw);takeRole('Interazione',targets.interaction);takeRole('Protezione',targets.protection);
+ for(const c of nonlands){if(selected.length>=99-targets.lands)break;if(used.has(c.id))continue;selected.push(c);used.add(c.id)}
+ const deckMap=new Map();
+ selected.slice(0,99-targets.lands).forEach(c=>addQty(deckMap,c.name,1));
+ const nonbasicTarget=Math.min(lands.length,Math.max(8,targets.lands-12));
+ lands.slice(0,nonbasicTarget).forEach(c=>addQty(deckMap,c.name,1));
+ let current=[...deckMap.values()].reduce((a,b)=>a+b,0),basics=basicNames(commander),bi=0;
+ while(current<99){addQty(deckMap,basics[bi%basics.length],1);bi++;current++}
+ const deck_cards=[...deckMap].map(([name,qty])=>({name,qty}));
+ const top=selected.slice(0,12).map(c=>({name:c.name,role:roleOf(c),reason:`Affinità locale ${Math.round(scoreCard(c,commander,tribe,key))}: compatibile con ${tribe} e ${key}.`}));
+ return {name:`${commander.name} · ${tribe}`,summary:`Grimorio creato gratuitamente con i filtri Armies, l'identità colore del Commander e un ordinamento locale per affinità.`,targets,core_cards:top,deck_cards,engine:'local'};
+}
+function renderDesign(x){
+ const t=x.targets||{},deck=Array.isArray(x.deck_cards)?x.deck_cards:[];
+ const total=deck.reduce((n,c)=>n+Math.max(1,Number(c.qty)||1),0),complete=total===99;
+ designResult.innerHTML=`<div class="card"><span class="score">Gratuito</span><h3>${esc(x.name)}</h3><div class="muted">${esc(x.summary)}</div><div class="proposal" style="margin-top:10px"><strong>Struttura consigliata</strong><br>Terre ${t.lands??37} · Ramp ${t.ramp??10} · Pescaggio ${t.draw??9} · Interazione ${t.interaction??10} · Protezione ${t.protection??4} · Creature obiettivo ${t.creatures??30}</div><div class="proposal"><strong>Lista generata</strong><br>${total} carte oltre al Commander${complete?' · <span class="ok">completa</span>':' · incompleta'}</div>${(x.core_cards||[]).map(c=>`<div class="proposal"><strong>${esc(c.name)}</strong> · ${esc(c.role)}<div class="muted">${esc(c.reason)}</div></div>`).join('')}<div class="actions"><button class="btn primary" id="designToBuilder" ${complete?'':'disabled'}>Manda il mazzo nel Builder</button></div></div>`;
+ if(complete)designToBuilder.onclick=()=>handoff({commanderName:dCommander.value.trim(),tribe:dTribe.value.trim(),key:dKey.value,source:'design',blueprint:x});
+}
+designBtn.onclick=async()=>{
+ designBtn.disabled=true;designResult.innerHTML='<div class="card">Il Geniere gratuito sta progettando…</div>';
+ const payload={commander:dCommander.value.trim(),tribe:dTribe.value.trim(),key:dKey.value,power:dPower.value,budget:dBudget.value,preferences:dPrefs.value.trim()};
+ try{renderDesign(await freeDesign(payload))}catch(e){designResult.innerHTML=`<div class="card"><strong>Impossibile completare il grimorio</strong><div class="muted">${esc(e.message)}</div></div>`}finally{designBtn.disabled=false}
+};
+
+function deckPayload(d){return {name:d.name,commander:d.commander?.name||'',tribe:d.tribe||'',key:d.key||'',cards:Object.values(d.cards||{}).map(c=>({name:c.name,qty:c.qty||1,type:c.type_line||''}))}}
+function localEval(d){const qty=Object.values(d.cards||{}).reduce((n,c)=>n+(c.qty||1),0)+(d.commander?1:0),lands=Object.values(d.cards||{}).filter(c=>/Land/i.test(c.type_line||'')).reduce((n,c)=>n+(c.qty||1),0),p=[];if(qty!==100)p.push({severity:'errore',title:`Il mazzo contiene ${qty} carte`,reason:'Un grimorio Commander deve arrivare a 100 carte incluso il comandante.',remove:'',add:''});if(lands<34)p.push({severity:'debolezza',title:`Solo ${lands} terre`,reason:'La base di mana potrebbe essere instabile.',remove:'',add:'Terra base compatibile'});if(lands>42)p.push({severity:'debolezza',title:`${lands} terre`,reason:'La base di mana potrebbe occupare troppo spazio.',remove:'Terra meno utile',add:''});return {score:Math.max(20,100-p.length*18),summary:p.length?'Sono presenti problemi strutturali da correggere.':'Nessun errore strutturale evidente nel controllo locale.',proposals:p}}
+function renderEval(d,x,real){localStorage.setItem(WORK,JSON.stringify(d));evalResult.innerHTML=`<div class="card"><span class="score">${x.score}/100</span><h3>${esc(d.name)}</h3><div class="muted">${esc(x.summary)}</div>${(x.proposals||[]).map((p,i)=>`<div class="proposal" data-proposal="${i}"><strong>${esc(p.severity.toUpperCase())}: ${esc(p.title)}</strong><div class="muted">${esc(p.reason)}</div>${p.remove||p.add?`<div class="muted" style="margin-top:5px">${p.remove?'Rimuovi: '+esc(p.remove):''}${p.remove&&p.add?' · ':''}${p.add?'Aggiungi: '+esc(p.add):''}</div>`:''}<div class="actions"><button class="btn primary" data-apply="${i}">Applica</button><button class="btn" data-ignore>Ignora</button></div></div>`).join('')||'<div class="proposal"><span class="ok">Nessuna modifica necessaria.</span></div>'}<div class="actions"><button class="btn" id="evalBuilder">Manda copia nel Builder</button><button class="btn primary" id="saveCopy">Salva come nuovo mazzo</button></div><div class="muted">Analisi ${real?'IA':'locale'}.</div></div>`;
+ evalResult.querySelectorAll('[data-apply]').forEach(b=>b.onclick=()=>{const p=x.proposals[+b.dataset.apply],w=JSON.parse(localStorage.getItem(WORK));w.engineerChanges=w.engineerChanges||[];w.engineerChanges.push(p);localStorage.setItem(WORK,JSON.stringify(w));b.closest('.proposal').innerHTML='<span class="ok">Modifica registrata. L’inserimento della carta verrà validato nel Builder tramite Scryfall.</span>'});
+ evalResult.querySelectorAll('[data-ignore]').forEach(b=>b.onclick=()=>b.closest('.proposal').remove());
+ evalBuilder.onclick=()=>{const w=JSON.parse(localStorage.getItem(WORK));localStorage.setItem(CURRENT,JSON.stringify({...w,id:''}));handoff({openCurrent:true,source:'evaluate'})};
+ saveCopy.onclick=()=>{const w=JSON.parse(localStorage.getItem(WORK));w.id=crypto.randomUUID?crypto.randomUUID():String(Date.now());w.name=(w.name||'Grimorio')+' - revisione Geniere';const list=decks();list.push(w);localStorage.setItem(STORAGE,JSON.stringify(list));refreshDecks();alert('Copia salvata in Archivio mazzi.')};
+}
+evalBtn.onclick=async()=>{const d=decks().find(x=>x.id===deckSelect.value);if(!d){evalResult.innerHTML='<div class="card">Nessun mazzo disponibile.</div>';return}evalBtn.disabled=true;evalResult.innerHTML='<div class="card">Analisi locale in corso…</div>';try{renderEval(d,localEval(d),false)}finally{evalBtn.disabled=false}};
+
+const CURATED_COMBOS=[
+ {commander:'Edgar Markov',tribe:'Vampire',key:'Attacco',strategy:'Aggro tribale e pressione di massa'},
+ {commander:'Wilhelt, the Rotcleaver',tribe:'Zombie',key:'Sacrifica',strategy:'Sacrificio, pedine e vantaggio dal cimitero'},
+ {commander:'Lathril, Blade of the Elves',tribe:'Elf',key:'Pedina',strategy:'Sciame tribale e produzione di mana'},
+ {commander:'The Ur-Dragon',tribe:'Dragon',key:'Attacco',strategy:'Minacce tribali e riduzione dei costi'},
+ {commander:'Krenko, Mob Boss',tribe:'Goblin',key:'Pedina',strategy:'Produzione esplosiva di pedine'},
+ {commander:'Giada, Font of Hope',tribe:'Angel',key:'Segnalino',strategy:'Crescita tribale tramite segnalini'},
+ {commander:'Be’lakor, the Dark Master',tribe:'Demon',key:'Danno',strategy:'Demoni e danni in ingresso'}
+];
+function bestKeyForCommander(c){
+ const o=oracleOf(c);let best='Danno',score=-1;
+ for(const k of keys){const s=(KEY_DEFINITIONS[k]||[]).reduce((n,p)=>{try{return n+(new RegExp(p,'i').test(o)?1:0)}catch{return n}},0);if(s>score){score=s;best=k}}
+ return best;
+}
+function commanderTribesLocal(c){
+ const line=typeOf(c).split('—')[1]||'',found=tribes.filter(t=>new RegExp(`\\b${rxEscape(t)}s?\\b`,'i').test(line+' '+oracleOf(c)));
+ return found.filter(t=>t!=='Army');
+}
+async function freeSuggest(){
+ const fixedCommander=sCommander.value.trim(),fixedTribe=sTribe.value.trim(),fixedKey=sKey.value;
+ if(fixedCommander){
+  const c=await exactCommander(fixedCommander),possible=commanderTribesLocal(c);
+  const tribe=fixedTribe||possible[0]||'Human',key=fixedKey||bestKeyForCommander(c);
+  return {commander:c.name,tribe,key,score:88,strategy:`Sinergia locale ${tribe} / ${key}`,reason:'Combinazione ricavata dal testo Oracle, dai tipi del Commander e dalle Key Armies.'};
+ }
+ let pool=CURATED_COMBOS.filter(x=>(!fixedTribe||x.tribe===fixedTribe)&&(!fixedKey||x.key===fixedKey));
+ if(!pool.length)pool=CURATED_COMBOS;
+ const x=pool[Math.floor(Math.random()*pool.length)];
+ return {...x,tribe:fixedTribe||x.tribe,key:fixedKey||x.key,score:84+Math.floor(Math.random()*10),reason:'Combinazione gratuita selezionata tra archetipi Armies con buona coerenza interna.'};
+}
+function renderSuggest(x){suggestResult.innerHTML=`<div class="card"><span class="score">${x.score}/100</span><h3>${esc(x.commander)}</h3><div class="muted"><b>Tribe:</b> ${esc(x.tribe)}<br><b>Key:</b> ${esc(x.key)}<br><b>Strategia:</b> ${esc(x.strategy)}<br>${esc(x.reason)}</div><div class="actions"><button class="btn primary" id="toDesign">Manda al Geniere</button><button class="btn" id="toBuilder">Manda nel Builder</button><button class="btn" id="again">Nuovo suggerimento</button></div><div class="muted">Suggerimento gratuito locale.</div></div>`;toDesign.onclick=()=>{dCommander.value=x.commander;dCommanderBtn.textContent=x.commander;dCommanderBtn.classList.add('selected');if(![...dTribe.options].some(o=>o.value===x.tribe))dTribe.add(new Option(x.tribe,x.tribe));dTribe.value=x.tribe;dKey.value=x.key;document.querySelector('[data-tab=design]').click()};toBuilder.onclick=()=>handoff({commanderName:x.commander,tribe:x.tribe,key:x.key,source:'suggest'});again.onclick=()=>suggestBtn.click()}
+suggestBtn.onclick=async()=>{suggestBtn.disabled=true;suggestResult.innerHTML='<div class="card">Ricerca gratuita della combinazione…</div>';try{renderSuggest(await freeSuggest())}catch(e){suggestResult.innerHTML=`<div class="card">${esc(e.message)}</div>`}finally{suggestBtn.disabled=false}};
+
+</script></body></html>
